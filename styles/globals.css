@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer {
+    .navitem {
+        @apply text-xl font-bold px-3 py-2 cursor-pointer  hover:text-purple-500 rounded-md
+    }
+
+    .sidenavmenu{
+        @apply h-5
+    }
+
+    .dItems{
+        @apply p-2 hover:bg-gray-300 rounded-md
+    }
+}
