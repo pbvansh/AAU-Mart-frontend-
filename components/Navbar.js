@@ -13,19 +13,22 @@ import {
   ShoppingCartIcon,
   UserCircleIcon,
 } from '@heroicons/react/outline'
+import Link from "next/link";
 
 const Navbar = () => {
   return (
     <div className="flex h-20 items-center whitespace-nowrap border-b shadow-md p-2 overflow-x-scroll scrollbar-hide sticky z-50">
       {/* left side */}
       <div className="mx-5 md:mx-10">
-        <h1 className="font-bold text-2xl">AAU-Mart</h1>
+        <Link href={'/'}>
+        <h1 className="font-bold text-2xl cursor-pointer">AAU-Mart</h1>
+        </Link>
       </div>
 
       {/* right side */}
       <div className="flex items-center justify-end space-x-5 md:space-x-2">
         <NavbarItem Icon={HomeIcon} title='Home' />
-        <NavbarItem Icon={ShoppingBagIcon} title='Products' />
+        <NavbarItem Icon={ShoppingBagIcon} title='Products' path={'/addProduct'}/>
         <NavbarItem Icon={FireIcon} title='For You' />
         <NavbarItem Icon={UserIcon} title='Contact' />
       </div>

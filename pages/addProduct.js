@@ -42,7 +42,8 @@ const addProduct = () => {
             const product = await axios.post('http://localhost:5000/api/product/create',{
                 name : proNameRef.current.value,
                 desc : descRef.current.value,
-                price : priceRef.current.value
+                price : priceRef.current.value,
+                category_id : catName
             })
 
             const firestoreImgPath = ref(storage,`Images/${product.data._id}/image`)
@@ -53,7 +54,6 @@ const addProduct = () => {
                     img_url : DURL  
                 })
                 removeImage();
-                console.log(data);
             })
         }
         else{

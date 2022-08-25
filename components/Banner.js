@@ -23,7 +23,7 @@ const Banner = () => {
         >
                 {
                     bannerUrl.map(url=>(
-                        <div>
+                        <div key={url}>
                             <img src={url} loading='lazy'/>
                         </div>
                     ))
