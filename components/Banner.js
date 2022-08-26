@@ -5,9 +5,8 @@ const bannerUrl = [
     'http://surl.li/cjqce',
     'http://surl.li/cjqbi',
     'http://surl.li/cjqbs',
-    'http://surl.li/cjqbv',
-    'http://surl.li/cjqbx',
-    'http://surl.li/cjqca',
+    'https://m.media-amazon.com/images/I/71YfmYhUXzL._SX3000_.jpg',
+    'https://m.media-amazon.com/images/I/61gFPL8x3+L._SX3000_.jpg',
     'https://images-eu.ssl-images-amazon.com/images/G/31/AmazonVideo/2021/X-site/SingleTitle/SamratPrithviraj-PD/3000x1200_Hero-Tall_NP._CB632351883_.jpg'
   ]
 const Banner = () => {
