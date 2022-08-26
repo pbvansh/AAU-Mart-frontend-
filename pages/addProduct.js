@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react"
 import axios from 'axios'
 import { storage } from "../firebase"
 import { getDownloadURL, ref, uploadString } from "firebase/storage"
-const addProduct = () => {
+const AddProduct = () => {
 
     const [productImage, setImage] = useState(null)
     const [catName, setCatName] = useState('Select')
@@ -127,5 +127,5 @@ const addProduct = () => {
     )
 }
 
-export default addProduct;
+export default AddProduct;
 
