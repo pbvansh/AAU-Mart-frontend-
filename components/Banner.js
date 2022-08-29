@@ -12,7 +12,8 @@ const bannerUrl = [
 ]
 const Banner = () => {
   return (
-    <div className='mx-auto'>
+    <div className='mx-auto relative'>
+      <div className='absolute w-full z-10 h-52 bottom-0 bg-gradient-to-t from-white to-transparent'/>
       <Carousel
         autoPlay
         infiniteLoop

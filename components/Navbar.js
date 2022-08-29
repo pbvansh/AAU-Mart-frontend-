@@ -30,7 +30,7 @@ const Navbar = () => {
         <NavbarItem Icon={HomeIcon} title='Home' />
         <NavbarItem Icon={ShoppingBagIcon} title='Products' path={'/addProduct'}/>
         <NavbarItem Icon={FireIcon} title='For You' />
-        <NavbarItem Icon={UserIcon} title='Contact' />
+        <NavbarItem Icon={UserIcon} title='Contact' path={'/contact'}/>
       </div>
 
       {/* serch bar */}

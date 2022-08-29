@@ -14,7 +14,7 @@ const AddProduct = () => {
     const [dropName,setDropName] = useState()
 
     useEffect(()=>{
-             axios.get(`http://localhost:5000/api/category`)
+             axios.get(`https://aaumartbackend.pratikvansh.repl.co/api/category`)
             .then(res =>{
                 const data = res.data;
                 setDropName(data)
@@ -39,18 +39,18 @@ const AddProduct = () => {
     const SubmitData = async(e) => {
         e.preventDefault()
         if(proNameRef.current.value && descRef.current.value && priceRef.current.value){
-            const product = await axios.post('http://localhost:5000/api/product/create',{
+            const product = await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/product/create',{
                 name : proNameRef.current.value,
                 desc : descRef.current.value,
                 price : priceRef.current.value,
-                category_id : catName
+                category : catName
             })
 
             const firestoreImgPath = ref(storage,`Images/${product.data._id}/image`)
             
             await uploadString(firestoreImgPath,productImage,'data_url').then(async snapshot =>{
                 const DURL = await getDownloadURL(firestoreImgPath)
-               const {data} =  await axios.put('http://localhost:5000/api/product/'+product.data._id+'/addImgUrl',{
+               const {data} =  await axios.put('https://aaumartbackend.pratikvansh.repl.co/api/product/'+product.data._id+'/addImgUrl',{
                     img_url : DURL  
                 })
                 removeImage();

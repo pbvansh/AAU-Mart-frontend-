@@ -7,20 +7,29 @@ const ProductFeed = () => {
   const [products, setProducts] = useState([])
 
   useEffect(() => {
-      axios.get('http://localhost:5000/api/product/').then((prod)=>{
-        setProducts(prod.data);
-      }).catch((e)=>console.log(e))
+    axios.get('https://aaumartbackend.pratikvansh.repl.co/api/product').then((prod) => {
+      setProducts(prod.data);
+    }).catch((e) => console.log(e))
   }, [])
 
   return (
-    <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
-      {
-        products && (
-        products.map((prod)=>(
-          <Product key={prod._id} name={prod.name} desc={prod.desc} catname={prod.category_id.name} price={prod.price} url={prod.img_url}/>
-        ))
-        )
-      }
+    <div className='mx-auto'>
+      <div className='grid grid-flow-row-dense sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 -mt-20 lg:-mt-60'>
+        {
+          products && (
+            products.map((prod) => (
+              <Product
+                key={prod._id}
+                name={prod.name}
+                desc={prod.desc}
+                catname={prod.category}
+                price={prod.price}
+                url={prod.img_url}
+              />
+            ))
+          )
+        }
+      </div>
     </div>
   )
 }
