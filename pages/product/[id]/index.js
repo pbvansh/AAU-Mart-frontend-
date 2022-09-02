@@ -6,7 +6,7 @@ import { useRouter } from "next/router"
 import { useRecoilState } from 'recoil'
 import { basketAtomState } from "../../../Atoms/basketAtom";
 
-const index = ({ product }) => {
+const Index = ({ product }) => {
   // const router = useRouter()
   // const pid = router.query.id;
   const [items, setItems] = useRecoilState(basketAtomState)
@@ -57,7 +57,7 @@ const index = ({ product }) => {
   )
 }
 
-export default index;
+export default Index;
 
 export async function getStaticProps(context) {
   const { id } = context.params;
