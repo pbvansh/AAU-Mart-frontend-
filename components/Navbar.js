@@ -21,16 +21,16 @@ const Navbar = () => {
       {/* left side */}
       <div className="mx-5 md:mx-10">
         <Link href={'/'}>
-        <h1 className="font-bold text-2xl cursor-pointer">AAU-Mart</h1>
+          <h1 className="font-bold text-2xl cursor-pointer">AAU-Mart</h1>
         </Link>
       </div>
 
       {/* right side */}
       <div className="flex items-center justify-end space-x-5 md:space-x-2">
         <NavbarItem Icon={HomeIcon} title='Home' />
-        <NavbarItem Icon={ShoppingBagIcon} title='Products' path={'/addProduct'}/>
+        <NavbarItem Icon={ShoppingBagIcon} title='Products' path={'/addProduct'} />
         <NavbarItem Icon={FireIcon} title='For You' />
-        <NavbarItem Icon={UserIcon} title='Contact' path={'/contact'}/>
+        <NavbarItem Icon={UserIcon} title='Contact' path={'/contact'} />
       </div>
 
       {/* serch bar */}
@@ -41,18 +41,24 @@ const Navbar = () => {
 
       {/* side bar */}
       <div className="flex space-x-5 items-center mx-10">
-        <div className="flex flex-col p-1 cursor-pointer group">
-          <UserCircleIcon className="sidenavmenu group-hover:animate-pulse group-hover:text-blue-500" />
-          <p className="text-sm">Profile</p>
-        </div>
-        <div className="flex flex-col p-1 cursor-pointer group">
-          <HeartIcon className="sidenavmenu group-hover:animate-pulse group-hover:text-red-500" />
-          <p className="text-sm">Wishlist</p>
-        </div>
-        <div className="flex flex-col p-1 cursor-pointer group">
-          <ShoppingCartIcon className="sidenavmenu group-hover:animate-pulse group-hover:text-lime-500" />
-          <p className="text-sm">Bag</p>
-        </div>
+        <Link href={'/'}>
+          <div className="flex flex-col p-1 cursor-pointer group">
+            <UserCircleIcon className="sidenavmenu group-hover:animate-pulse group-hover:text-blue-500" />
+            <p className="text-sm">Profile</p>
+          </div>
+        </Link>
+        <Link href={'/'}>
+          <div className="flex flex-col p-1 cursor-pointer group">
+            <HeartIcon className="sidenavmenu group-hover:animate-pulse group-hover:text-red-500" />
+            <p className="text-sm">Wishlist</p>
+          </div>
+        </Link>
+        <Link href={"/basket"}>
+          <div className="flex flex-col p-1 cursor-pointer group">
+            <ShoppingCartIcon className="sidenavmenu group-hover:animate-pulse group-hover:text-lime-500" />
+            <p className="text-sm">Bag</p>
+          </div>
+        </Link>
       </div>
     </div>
   )

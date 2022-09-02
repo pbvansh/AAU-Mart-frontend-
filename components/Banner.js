@@ -3,6 +3,11 @@ import { Carousel } from 'react-responsive-carousel'
 import 'react-responsive-carousel/lib/styles//carousel.min.css'
 const bannerUrl = [
   'https://m.media-amazon.com/images/I/61aURrton0L._SX3000_.jpg',
+  'http://static.aau.in/sites/default/files/imagecache/original-image/sardar_patel_museum.jpg',
+  'http://static.aau.in/sites/default/files/imagecache/original-image/har_ghar_triranga_aug_2022.jpg',
+  'http://static.aau.in/sites/default/files/imagecache/original-image/azadi_ka_amrut_mahotsav_logo_white.jpg',
+  'http://static.aau.in/sites/default/files/imagecache/original-image/ait_clg.jpg',
+  'http://static.aau.in/sites/default/files/imagecache/original-image/slider-statues-of-sardar.jpg',
   'https://m.media-amazon.com/images/I/61HMg7wnMZL._SX3000_.jpg',
   'https://m.media-amazon.com/images/I/71eQVahI6GL._SX3000_.jpg',
   'https://m.media-amazon.com/images/I/61BsKK5N4zL._SX3000_.jpg',

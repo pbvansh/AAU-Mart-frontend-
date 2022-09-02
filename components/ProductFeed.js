@@ -20,6 +20,7 @@ const ProductFeed = () => {
             products.map((prod) => (
               <Product
                 key={prod._id}
+                id = {prod._id}
                 name={prod.name}
                 desc={prod.desc}
                 catname={prod.category}

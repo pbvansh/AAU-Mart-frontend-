@@ -64,9 +64,9 @@ const AddProduct = () => {
     }
 
     return (
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl min-h-[73vh] mt-10 mx-auto">
             <h1 className="font-bold text-2xl p-3">Add Product</h1>
-            <form className="grid grid-cols-3 relative">
+            <form className="grid grid-cols-3 relative space-x-5">
                 <div className="col-span-2 space-y-2">
                     <div className="flex flex-col space-y-2">
                         <label>Enter Product Name*</label>
@@ -78,11 +78,11 @@ const AddProduct = () => {
                     </div>
                     <div className="grid grid-cols-3 space-x-3">
                         <div className="flex flex-col space-y-2">
-                            <label>Price</label>
+                            <label>Price*</label>
                             <input type={'text'} ref={priceRef} className="border border-gray-800 focus:outline-none p-2 rounded-md" />
                         </div>
                         <div className="flex flex-col col-span-2 space-y-2 justify-center">
-                            <label>Category</label>
+                            <label>Category*</label>
                             <div>
                                 <p className="peer w-full text-center cursor-pointer bg-gray-100 p-2 rounded-md hover:bg-gray-200">{catName}</p>
                                 <div className="hidden cursor-pointer peer-hover:flex w-auto hover:flex flex-col overflow-hidden z-10">
@@ -116,7 +116,7 @@ const AddProduct = () => {
                             )
                         }
                         <div className=" flex justify-center m-5 bottom-0 whitespace-nowrap">
-                            <button className="bg-black shadow-sm hover:bg-gray-900 text-sm text-white font-semibold p-3 rounded-md px-100" onClick={SubmitData}>Add Product</button>
+                            <button className="bg-black shadow-sm hover:bg-gray-900 text-sm text-white font-semibold p-3 rounded-md px-8 px-100" onClick={SubmitData}>Add Product</button>
                         </div>
                     </div>
                 </div>
