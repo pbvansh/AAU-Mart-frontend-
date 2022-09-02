@@ -14,8 +14,14 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/outline'
 import Link from "next/link";
+import { useRecoilValue } from "recoil";
+import { basketAtomState } from "../Atoms/basketAtom";
 
 const Navbar = () => {
+
+    const bagItem = useRecoilValue(basketAtomState)
+
+
   return (
     <div className="flex h-20 items-center whitespace-nowrap border-b shadow-md p-2 overflow-x-scroll scrollbar-hide sticky top-0 bg-white z-50">
       {/* left side */}
@@ -54,7 +60,8 @@ const Navbar = () => {
           </div>
         </Link>
         <Link href={"/basket"}>
-          <div className="flex flex-col p-1 cursor-pointer group">
+          <div className="flex flex-col p-1 cursor-pointer group relative">
+            <span className="absolute -top-2 -right-2 border rounded-full text-xs border-gray-400 text-orange-500 px-[0.3rem] font-semibold">{bagItem.length}</span>
             <ShoppingCartIcon className="sidenavmenu group-hover:animate-pulse group-hover:text-lime-500" />
             <p className="text-sm">Bag</p>
           </div>
