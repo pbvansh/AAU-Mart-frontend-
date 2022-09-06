@@ -1,12 +1,15 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import Header from "../components/Header"
-import { basketAtomState } from "../Atoms/basketAtom"
-import { ChevronDoubleLeftIcon, XIcon } from '@heroicons/react/solid'
+import { basketAtomState, basketItemTotalAmountAtom } from "../Atoms/basketAtom"
+import { ChevronDoubleLeftIcon} from '@heroicons/react/solid'
 import Link from "next/link";
+import BagItem from "../components/BagItem";
+import { useState } from "react";
 
 const Cart = () => {
 
   const [items, setItems] = useRecoilState(basketAtomState);
+  const [total,setTotal] = useState()
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -28,26 +31,8 @@ const Cart = () => {
               </div>
               <div className="max-h-96 overflow-y-scroll">
                 {
-                  items.map((item) => (
-                    <div key={item._id} className="grid grid-cols-6 p-3 items-center m-2">
-                      <div className="col-span-2 space-x-10 flex items-center">
-                        <img src={item.img} height={80} width={80} />
-                        <div>
-                          <p className="font-semibold">{item.name}</p>
-                          <p className="text-orange-400">{item.category}</p>
-                        </div>
-                      </div>
-                      <div>
-                        <p className="bg-gray-100 inline p-2"> <span className="text-orange-500">₹ </span>{item.price}</p>
-                      </div>
-                      <div className="flex space-x-5">
-                        <span className="bg-gray-100 px-3 cursor-pointer">-</span>
-                        <p>{item.quantity}</p>
-                        <span className="bg-gray-100 px-2 cursor-pointer">+</span>
-                      </div>
-                      <p> <span className="text-green-500">₹</span> {Number(item.price) * Number(item.quantity)}</p>
-                      <XIcon className="w-5 cursor-pointer" />
-                    </div>
+                  items.map((item,i) => (
+                    <BagItem key={item._id} item={item} idx={i}/>
                   ))
                 }
               </div>
@@ -58,9 +43,13 @@ const Cart = () => {
               </div>
             </div>
             {/* right side */}
-            <div className="m-10 bg-gray-100 p-5 rounded-md max-h-48">
+            <div className="m-10 md:mt-28 bg-gray-100 p-5 rounded-md max-h-48">
               <p className="font-bold text-2xl mb-10">Payment Info.</p>
-              <p className="bg-orange-500 p-3 text-center rounded-sm text-white cursor-pointer font-semibold hover:bg-orange-400">Check Out</p>
+              <div className="flex items-center justify-between max-w-xs mb-3">
+                <p className="text-sm text-gray-600">Subtotal: </p>
+                <p className="bg-gray-100 inline p-2 font-semibold"> <span className="text-orange-500">₹ </span>{total}</p>
+              </div>
+              <p className="bg-orange-500 p-3 text-center m-5 rounded-sm text-white cursor-pointer font-semibold hover:bg-orange-400">Check Out</p>
             </div>
           </main>
         ) : (
