@@ -1,15 +1,25 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import Header from "../components/Header"
 import { basketAtomState, basketItemTotalAmountAtom } from "../Atoms/basketAtom"
-import { ChevronDoubleLeftIcon} from '@heroicons/react/solid'
+import { ChevronDoubleLeftIcon } from '@heroicons/react/solid'
 import Link from "next/link";
 import BagItem from "../components/BagItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Cart = () => {
 
   const [items, setItems] = useRecoilState(basketAtomState);
-  const [total,setTotal] = useState()
+  const [bagTotal,setBagTotale] = useState(0)
+  const basketTotal = useRecoilValue(basketItemTotalAmountAtom)
+  useEffect(() => {
+    let total = 0;
+    for (let i = 0; i < items.length; i++) {
+      let sum = Number(items[i].quantity) * Number(items[i].price)
+      total += sum;
+    }
+    setBagTotale(total)
+  }, [items])
+
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -31,8 +41,8 @@ const Cart = () => {
               </div>
               <div className="max-h-96 overflow-y-scroll">
                 {
-                  items.map((item,i) => (
-                    <BagItem key={item._id} item={item} idx={i}/>
+                  items.map((item, i) => (
+                    <BagItem key={item._id} item={item} idx={i} />
                   ))
                 }
               </div>
@@ -46,8 +56,8 @@ const Cart = () => {
             <div className="m-10 md:mt-28 bg-gray-100 p-5 rounded-md max-h-48">
               <p className="font-bold text-2xl mb-10">Payment Info.</p>
               <div className="flex items-center justify-between max-w-xs mb-3">
-                <p className="text-sm text-gray-600">Subtotal: </p>
-                <p className="bg-gray-100 inline p-2 font-semibold"> <span className="text-orange-500">₹ </span>{total}</p>
+                <p className="text-sm text-gray-600">Subtotal:  </p>
+                <p className="bg-gray-100 inline p-2 font-semibold"> <span className="text-orange-500">₹ </span>{bagTotal}</p>
               </div>
               <p className="bg-orange-500 p-3 text-center m-5 rounded-sm text-white cursor-pointer font-semibold hover:bg-orange-400">Check Out</p>
             </div>
@@ -59,7 +69,7 @@ const Cart = () => {
             </h1>
             <div className="border mx-8" />
             <p className="p-10 text-xl">Your Shopping Bag is Empty.</p>
-            <div className="p-10"> 
+            <div className="p-10">
               <Link href={'/'}>
                 <span className="cursor-pointer p-2 rounded-sm border border-black  hover:bg-gray-300 px-3"><ChevronDoubleLeftIcon className="h-5 inline" /> Continue Shopping </span>
               </Link>

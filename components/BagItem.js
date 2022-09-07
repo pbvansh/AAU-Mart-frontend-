@@ -1,52 +1,51 @@
 import { XIcon } from "@heroicons/react/solid"
-import { useRecoilState, useRecoilValue } from "recoil"
-import { basketAtomState, basketItemTotalAmountAtom } from "../Atoms/basketAtom"
+import { useEffect, useState } from "react"
+import { useRecoilState } from "recoil"
+import { basketAtomState } from "../Atoms/basketAtom"
 
 
-const BagItem = ({ item,idx }) => {
+const BagItem = ({ item, idx }) => {
 
+    const [total, setTotale] = useState(0)
     const [items, setItem] = useRecoilState(basketAtomState)
-    const [basketTotal ,setBasketTotal] = useRecoilState(basketItemTotalAmountAtom)
+
+    useEffect(() => {
+        let num = Number(item.quantity) * Number(item.price)
+        setTotale(num);
+    }, [items])
 
     function addOneItem() {
         const idx = items.findIndex(bagItem => bagItem._id == item._id)
         let newItems = [...items]
         let obj = { ...newItems[idx] }
         obj.quantity++;
-        obj.total = Number(obj.quantity)*Number(item.price)
+        obj.total = Number(obj.quantity) * Number(item.price)
         newItems[idx] = obj;
         setItem(newItems)
     }
-// error is here
+
     function removeItem() {
-        const index = items.findIndex((item,i)=>i === idx)
-        let newItem =[...items];
-        if(index >=0){
-            newItem.splice(index,1)
-        }else{
+        const index = items.findIndex((item, i) => i === idx)
+        let newItem = [...items];
+        if (index >= 0) {
+            newItem.splice(index, 1)
+        } else {
             console.warn(`Cant remove product  as its not in`)
         }
         setItem(newItem)
     }
 
-    function removeOne(){
+    function removeOne() {
         const idx = items.findIndex(bagItem => bagItem._id == item._id)
         let newItems = [...items]
         let obj = { ...newItems[idx] }
         obj.quantity--;
-        if(obj.quantity==0){
+        if (obj.quantity == 0) {
             removeItem()
-        }else{
+        } else {
             newItems[idx] = obj;
             setItem(newItems)
         }
-    }
-
-    function findTotal(){
-        const total = Number(item.price) * Number(item.quantity);
-        // setBasketTotal(basketTotal+total)
-        // console.log(basketTotal);
-        return total;
     }
 
     return (
@@ -66,8 +65,8 @@ const BagItem = ({ item,idx }) => {
                 <p>{item.quantity}</p>
                 <span onClick={addOneItem} className="bg-gray-100 px-2 cursor-pointer">+</span>
             </div>
-            <p> <span className="text-green-500">₹</span> {findTotal()}</p>
-            <XIcon className="w-5 cursor-pointer text-gray-500" onClick={removeItem}/>
+            <p> <span className="text-green-500">₹</span> {total}</p>
+            <XIcon className="w-5 cursor-pointer text-gray-500" onClick={removeItem} />
         </div>
     )
 }

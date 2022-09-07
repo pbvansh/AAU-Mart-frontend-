@@ -61,7 +61,7 @@ export default Index;
 
 export async function getStaticProps(context) {
   const { id } = context.params;
-  const res = await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/product/' + id)
+  const res = await axios.get('https://aaumartbackend.pratikvansh.repl.co/api/product/' + id)
   const product = res.data;
   return {
     props: {
