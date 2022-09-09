@@ -7,6 +7,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <RecoilRoot>
       <Navbar />
+      {/* <Head>
+          <link rel="shortcut icon" href="/favicon.ico" />
+      </Head> */}
       <Component {...pageProps} />
       <Footer />
     </RecoilRoot>

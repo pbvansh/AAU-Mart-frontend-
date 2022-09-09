@@ -1,4 +1,6 @@
+import { async } from "@firebase/util"
 import { XIcon } from "@heroicons/react/solid"
+import axios from "axios"
 import { useEffect, useState } from "react"
 import { useRecoilState } from "recoil"
 import { basketAtomState } from "../Atoms/basketAtom"
@@ -14,7 +16,7 @@ const BagItem = ({ item, idx }) => {
         setTotale(num);
     }, [items])
 
-    function addOneItem() {
+    async function addOneItem() {
         const idx = items.findIndex(bagItem => bagItem._id == item._id)
         let newItems = [...items]
         let obj = { ...newItems[idx] }
@@ -22,20 +24,24 @@ const BagItem = ({ item, idx }) => {
         obj.total = Number(obj.quantity) * Number(item.price)
         newItems[idx] = obj;
         setItem(newItems)
+        await axios.put(`https://aaumartbackend.pratikvansh.repl.co/api/cart/${item._id}`, {
+            quantity: obj.quantity,
+        })
     }
 
-    function removeItem() {
+   async function removeItem() {
         const index = items.findIndex((item, i) => i === idx)
         let newItem = [...items];
         if (index >= 0) {
             newItem.splice(index, 1)
+            await axios.delete(`https://aaumartbackend.pratikvansh.repl.co/api/cart/${item._id}`)
         } else {
-            console.warn(`Cant remove product  as its not in`)
+            console.warn(`Cant remove product as its not in`)
         }
         setItem(newItem)
     }
 
-    function removeOne() {
+    async function removeOne() {
         const idx = items.findIndex(bagItem => bagItem._id == item._id)
         let newItems = [...items]
         let obj = { ...newItems[idx] }
@@ -45,6 +51,9 @@ const BagItem = ({ item, idx }) => {
         } else {
             newItems[idx] = obj;
             setItem(newItems)
+            await axios.put(`https://aaumartbackend.pratikvansh.repl.co/api/cart/${item._id}`, {
+                quantity: obj.quantity,
+            })
         }
     }
 

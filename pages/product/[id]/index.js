@@ -2,7 +2,6 @@
 import { ChevronDoubleLeftIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import Link from "next/link";
-import { useRouter } from "next/router"
 import { useRecoilState } from 'recoil'
 import { basketAtomState } from "../../../Atoms/basketAtom";
 
@@ -10,7 +9,7 @@ const Index = ({ product }) => {
   // const router = useRouter()
   // const pid = router.query.id;
   const [items, setItems] = useRecoilState(basketAtomState)
-  function addProductToBag() {
+  async function addProductToBag() {
     const idx = items.findIndex((item) => item._id == product._id)
     if (idx >= 0) {
 
@@ -19,14 +18,23 @@ const Index = ({ product }) => {
       obj.quantity++;
       newItem[idx] = obj;
       setItems(newItem)
+      await axios.put(`https://aaumartbackend.pratikvansh.repl.co/api/cart/${product._id}`, {
+        quantity: obj.quantity,
+      })
 
     } else {
+
+      await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/cart/addItem', {
+        product_id: product._id,
+        quantity: 1,
+      })
+
       setItems([...items, {
         _id: product._id,
         name: product.name,
         desc: product.desc,
         price: product.price,
-        category : product.category,
+        category: product.category,
         quantity: 1,
         img: product.img_url
       }])
@@ -40,7 +48,7 @@ const Index = ({ product }) => {
         <div className="flex items-center justify-center flex-col">
           <img src={product.img_url} className='max-w-sm mb-10' />
           <Link href={'/'}>
-             <span className="cursor-pointer p-2 rounded-sm bg-gray-100  hover:bg-gray-300 px-3"><ChevronDoubleLeftIcon className="h-5 inline"/> Continue Shopping </span>
+            <span className="cursor-pointer p-2 rounded-sm bg-gray-100  hover:bg-gray-300 px-3"><ChevronDoubleLeftIcon className="h-5 inline" /> Continue Shopping </span>
           </Link>
         </div>
         <div className="flex mx-auto mt-14 md:mt-0 md:mx-0 flex-col justify-center space-y-5">
