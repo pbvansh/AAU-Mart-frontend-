@@ -23,12 +23,6 @@ const Index = ({ product }) => {
       })
 
     } else {
-
-      await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/cart/addItem', {
-        product_id: product._id,
-        quantity: 1,
-      })
-
       setItems([...items, {
         _id: product._id,
         name: product.name,
@@ -38,6 +32,10 @@ const Index = ({ product }) => {
         quantity: 1,
         img: product.img_url
       }])
+      await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/cart/addItem', {
+        product_id: product._id,
+        quantity: 1,
+      })
     }
 
   }
