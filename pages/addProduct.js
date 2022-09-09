@@ -39,7 +39,7 @@ const AddProduct = () => {
     const SubmitData = async(e) => {
         e.preventDefault()
         if(proNameRef.current.value && descRef.current.value && priceRef.current.value){
-            const product = await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/product/createProd',{
+            const product = await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/product/create',{
                 name : proNameRef.current.value,
                 desc : descRef.current.value,
                 price : priceRef.current.value,
