@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const login = () => {
+const Auth = () => {
     const [loginSignup, setLoginSignup] = useState(true);
     return (
 
@@ -85,4 +85,4 @@ const login = () => {
     )
 }
 
-export default login
+export default Auth
