@@ -34,11 +34,12 @@ const BagItem = ({ item, idx }) => {
         let newItem = [...items];
         if (index >= 0) {
             newItem.splice(index, 1)
+            setItem(newItem)
             await axios.delete(`https://aaumartbackend.pratikvansh.repl.co/api/cart/${item._id}`)
         } else {
             console.warn(`Cant remove product as its not in`)
         }
-        setItem(newItem)
+        
     }
 
     async function removeOne() {
