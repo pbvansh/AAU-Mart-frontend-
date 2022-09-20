@@ -10,7 +10,7 @@ const Dropdown = ({ setDropdown }) => {
             <p className="font font-semibold">Welcome</p>
             <span className="text-xs">To access account and manage orders</span>
             <Link href={'/auth'}>
-              <button className="w-fit border px-5 font-medium p-2 border-black text-pink-500 hover:border-pink-500 ">LOGIN/SIGNUP</button>
+              <button className="w-fit border px-5 font-medium p-2 border-gray-300 text-pink-500 hover:border-pink-500 ">LOGIN/SIGNUP</button>
             </Link>
           </div>
         </li>
