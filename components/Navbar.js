@@ -31,7 +31,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="flex h-20 items-center whitespace-nowrap border-b shadow-md p-2 overflow-x-scroll scrollbar-hide sticky top-0 bg-white z-30">
+      <div className="flex h-20 items-center whitespace-nowrap border-b shadow-md p-2 overflow-x-scroll scrollbar-hide sticky top-0 bg-white z-30 overflow-clip">
         {/* left side */}
         <div className="mx-5 md:mx-10">
           <Link href={'/'}>
