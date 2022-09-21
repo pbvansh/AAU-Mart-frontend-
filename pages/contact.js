@@ -14,7 +14,7 @@ const Contact = () => {
             </p>
             <p>
               University Bhavan,<br />
-              <a href='http://www.aau.in' target={'_blank'} ref={'help'} className="text-green-600 font-medium hover:underline">Anand Agricultural University,</a><br />
+              <a href='http://www.aau.in' ref={"noopener noreferrer"} target={'_blank'}  className="text-green-600 font-medium hover:underline">Anand Agricultural University,</a><br />
               Anand : 388110.<br />
               Gujarat (BHARAT) .<br />
             </p>
@@ -33,7 +33,7 @@ const Contact = () => {
             <p>
               Information Technology Center,<br />
               University Bhavan,<br />
-              <a href='http://www.aau.in'  target={'_blank'} ref={'help'} className='hover:underline'>Anand Agricultural University,</a><br />
+              <a href='http://www.aau.in' ref={"noopener noreferrer"} target={'_blank'} className='hover:underline'>Anand Agricultural University,</a><br />
               Anand : 388110.<br />
               Gujarat (BHARAT) .
             </p>
