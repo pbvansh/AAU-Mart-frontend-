@@ -35,7 +35,7 @@ const Navbar = () => {
         {/* left side */}
         <div className="mx-5 md:mx-10">
           <Link href={'/'}>
-            <h1 className="font-bold text-2xl cursor-pointer">AAU-Mart</h1>
+            <h1 className="font-bold text-2xl cursor-pointer select-none">AAU-Mart</h1>
           </Link>
         </div>
 

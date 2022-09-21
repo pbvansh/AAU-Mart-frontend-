@@ -1,5 +1,8 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure()
 
 const Dropdown = ({ setDropdown }) => {
 
@@ -34,7 +37,12 @@ const Dropdown = ({ setDropdown }) => {
         {
           localStorage.getItem('token') &&
           (
-            <li className="inline dropLi" onClick={()=>{localStorage.removeItem('token');localStorage.removeItem('userAAU');setDropdown(false)}}>Logout</li>
+            <li className="inline dropLi" onClick={()=>{
+              localStorage.removeItem('token');
+              localStorage.removeItem('userAAU');
+              setDropdown(false);
+              toast.success('Logout Succsessfully')
+            }}>Logout</li>
           )
         }
       </ul>

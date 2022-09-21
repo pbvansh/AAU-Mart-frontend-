@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react"
 import axios from 'axios'
 import { storage } from "../firebase"
 import { getDownloadURL, ref, uploadString } from "firebase/storage"
+import Header from "../components/Header"
 const AddProduct = () => {
 
     const [productImage, setImage] = useState(null)
@@ -65,6 +66,7 @@ const AddProduct = () => {
 
     return (
         <div className="max-w-2xl min-h-[73vh] mt-10 mx-auto">
+            <Header name='AddProducts'/>
             <h1 className="font-bold text-2xl p-3">Add Product</h1>
             <form className="grid grid-cols-3 relative space-x-5">
                 <div className="col-span-2 space-y-2">
