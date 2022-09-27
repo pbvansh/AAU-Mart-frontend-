@@ -2,11 +2,14 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRecoilState } from "recoil";
+import { isAdminAtomState } from "../Atoms/authAtom";
 toast.configure()
 
 const Dropdown = ({ setDropdown }) => {
 
   const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useRecoilState(isAdminAtomState)
   useEffect(() => {
     setUser(localStorage.getItem('userAAU'))
   })
@@ -41,7 +44,8 @@ const Dropdown = ({ setDropdown }) => {
               localStorage.removeItem('token');
               localStorage.removeItem('userAAU');
               setDropdown(false);
-              toast.success('Logout Succsessfully')
+              setIsAdmin(false)
+              toast.success('Logout Succsessfully',{autoClose:1500})
             }}>Logout</li>
           )
         }

@@ -114,7 +114,7 @@ const Auth = () => {
                             </p>
                             <div className='space-y-1'>
                                 <label className='block font-semibold text-gray-500'>Email</label>
-                                <input type={'email'} value={LEmail} onInput={(e) => setLEmail(e.target.value)} className="border border-gray-500 outline-none rounded-md p-2 w-[300px]" />
+                                <input required type={'email'} value={LEmail} onInput={(e) => setLEmail(e.target.value)} className="border border-gray-500 outline-none rounded-md p-2 w-[300px]" />
                             </div>
                             <div className='space-y-1'>
                                 <label className='block font-semibold text-gray-500'>Password</label>

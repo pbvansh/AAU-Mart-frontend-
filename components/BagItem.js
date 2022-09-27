@@ -66,7 +66,7 @@ const BagItem = ({ item, idx }) => {
                     <p className="font-semibold">{item.name}</p>
                     <p className="text-orange-400">{item.category}</p>
                 </div>
-            </div>
+            </div>  
             <div>
                 <p className="bg-gray-100 inline p-2"> <span className="text-orange-500">₹ </span>{item.price}</p>
             </div>

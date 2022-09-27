@@ -74,7 +74,6 @@ export async function getStaticProps(context) {
       product,
     }
   }
-
 }
 
 export async function getStaticPaths() {

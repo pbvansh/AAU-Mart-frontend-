@@ -4,6 +4,8 @@ import axios from 'axios'
 import { storage } from "../firebase"
 import { getDownloadURL, ref, uploadString } from "firebase/storage"
 import Header from "../components/Header"
+import setHeader from "../Atoms/setHeader"
+import  Loader  from "../components/Loader"
 const AddProduct = () => {
 
     const [productImage, setImage] = useState(null)
@@ -12,7 +14,9 @@ const AddProduct = () => {
     const proNameRef = useRef(null)
     const descRef = useRef(null)
     const priceRef = useRef(null)
+    const formRef = useRef()
     const [dropName,setDropName] = useState()
+    const [loder, setLoder] = useState(false)
 
     useEffect(()=>{
              axios.get('https://aaumartbackend.pratikvansh.repl.co/api/category')
@@ -38,14 +42,15 @@ const AddProduct = () => {
     }
 
     const SubmitData = async(e) => {
+        setLoder(true);
         e.preventDefault()
         if(proNameRef.current.value && descRef.current.value && priceRef.current.value){
             const product = await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/product/create',{
                 name : proNameRef.current.value,
                 desc : descRef.current.value,
-                price : priceRef.current.value,
+                price : Number(priceRef.current.value),
                 category : catName
-            })
+            },setHeader())
 
             const firestoreImgPath = ref(storage,`Images/${product.data._id}/image`)
             
@@ -54,6 +59,8 @@ const AddProduct = () => {
                const {data} =  await axios.put('https://aaumartbackend.pratikvansh.repl.co/api/product/'+product.data._id+'/addImgUrl',{
                     img_url : DURL  
                 })
+                setLoder(false)
+                formRef.current.reset()
                 removeImage();
             })
         }
@@ -65,10 +72,15 @@ const AddProduct = () => {
     }
 
     return (
-        <div className="max-w-2xl min-h-[73vh] mt-10 mx-auto">
+        <div className="max-w-2xl min-h-[73vh] mt-10 mx-auto relative">
             <Header name='AddProducts'/>
+            {loder && (
+                <div className='z-50 flex backdrop-blur-[1px] h-full w-full items-center justify-center absolute mx-auto'>
+                    <Loader className="bg-red-300" />
+                </div>
+            )}
             <h1 className="font-bold text-2xl p-3">Add Product</h1>
-            <form className="grid grid-cols-3 relative space-x-5">
+            <form className="grid grid-cols-3 relative space-x-5" ref={formRef}>
                 <div className="col-span-2 space-y-2">
                     <div className="flex flex-col space-y-2">
                         <label>Enter Product Name*</label>
@@ -124,7 +136,6 @@ const AddProduct = () => {
                 </div>
 
             </form>
-         {/* <p>{JSON.stringify(dropName)}</p> */}
         </div>
     )
 }

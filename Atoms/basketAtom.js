@@ -11,6 +11,7 @@ export const basketItemTotalAmountAtom = atom({
     default : 0,
 })
 
+
 // export const heartIconstatusAtom = atom({
 //     key : 'heartIconstatusAtomKey',
 //     default : false,

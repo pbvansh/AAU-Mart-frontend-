@@ -46,6 +46,7 @@ const Navbar = () => {
           <NavbarItem Icon={FireIcon} title='For You' />
           <NavbarItem Icon={UserIcon} title='Contact' path={'/contact'} />
         </div>
+        
 
         {/* serch bar */}
         <div className="bg-gray-100 flex items-center justify-center mx-5 rounded-full md:rounded-sm border md:flex-grow">
