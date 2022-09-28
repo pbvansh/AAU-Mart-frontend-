@@ -16,7 +16,7 @@ export default function Home() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     const user = JWT.decode(token)
-    if (user?.isAdmin) setIsAdmin(true)
+    if (user?.isAdmin) setIsAdmin(true);
   }, [])
 
   function authUse() {

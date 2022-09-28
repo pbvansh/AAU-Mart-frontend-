@@ -1,10 +1,11 @@
 import { ChartSquareBarIcon, ChevronDownIcon } from "@heroicons/react/outline"
 import { PuzzleIcon, SparklesIcon } from "@heroicons/react/solid"
-
+import Header from '../components/Header'
 
 const admin = () => {
     return (
         <div className="bg-gray-50 p-5">
+            <Header name={'Admin | AAU-Mart'}/>
             <div className="min-h-screen flex max-w-screen-2xl bg-white mx-auto rounded-lg">
                 {/* left side */}
                 <div className="border-r-2 p-5 font-semibold">

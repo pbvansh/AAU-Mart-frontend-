@@ -31,12 +31,7 @@ const AdminDashbord = () => {
                 </div>
                 {/* right side */}
                 <AdminProductFeed />
-
             </div>
-
-            
-
-
         </div >
     )
 }
