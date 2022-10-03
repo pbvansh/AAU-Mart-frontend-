@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
+import EditProductModal from './EditProductModal.';
+import ProductModal from './ProductModal';
 
-const AdminProduct = ({ name, imgurl, cat, price ,desc}) => {
+const AdminProduct = ({idx, id, name, imgurl, cat, price, desc, setshowEditModal, setUpadateProductId }) => {
+    //const [showModal, setshowEditModal] = useState(false);
     return (
         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
             <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white flex space-x-8 items-center">
@@ -16,7 +19,7 @@ const AdminProduct = ({ name, imgurl, cat, price ,desc}) => {
                 {price}
             </td>
             <td className="py-4 px-6 text-right">
-                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => {setUpadateProductId(idx);setshowEditModal(true);}}>Edit</a>
             </td>
             <td className="py-4 px-6 text-right">
                 <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>

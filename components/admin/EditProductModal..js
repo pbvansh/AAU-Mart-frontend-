@@ -3,9 +3,9 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 
 
-const ProductModal = ({setShowModal}) => {
+const EditProductModal = ({ setshowEditModal, Eimg_url, Ename, Eprice, Edesc, Ecategory }) => {
     const [productImage, setImage] = useState(null)
-    const [catName, setCatName] = useState('Select')
+    const [catName, setCatName] = useState(Ecategory)
     const imageRef = useRef(null)
     const proNameRef = useRef(null)
     const descRef = useRef(null)
@@ -42,54 +42,52 @@ const ProductModal = ({setShowModal}) => {
         setLoder(true);
         e.preventDefault()
         if (proNameRef.current.value && descRef.current.value && priceRef.current.value) {
-            const product = await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/product/create', {
+            const product = await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/product/' + product.data._id + '/update', {
                 name: proNameRef.current.value,
                 desc: descRef.current.value,
                 price: Number(priceRef.current.value),
                 category: catName
             }, setHeader())
 
-            const firestoreImgPath = ref(storage, `Images/${product.data._id}/image`)
+            // const firestoreImgPath = ref(storage, `Images/${product.data._id}/image`)
 
-            await uploadString(firestoreImgPath, productImage, 'data_url').then(async snapshot => {
-                const DURL = await getDownloadURL(firestoreImgPath)
-                const { data } = await axios.put('https://aaumartbackend.pratikvansh.repl.co/api/product/' + product.data._id + '/addImgUrl', {
-                    img_url: DURL
-                })
-                setLoder(false);
-                formRef.current.reset();
-                removeImage();
-                setadditemdone(1);
-            })
+            // await uploadString(firestoreImgPath, productImage, 'data_url').then(async snapshot => {
+            //     const DURL = await getDownloadURL(firestoreImgPath)
+            //     const { data } = await axios.put('https://aaumartbackend.pratikvansh.repl.co/api/product/' + product.data._id + '/addImgUrl', {
+            //         img_url: DURL
+            //     })
+            //     setLoder(false);
+            //     formRef.current.reset();
+            //     removeImage();
+            //     setadditemdone(1);
+            // })
         }
         else {
             console.log('please provide all details');
         }
-
-
     }
     return (
         <div className="fixed inset-0 z-10 overflow-y-auto">
             <div
                 className="fixed inset-0 w-full h-full bg-black opacity-40"
-                onClick={() => setShowModal(false)}
+                onClick={() => setshowEditModal(false)}
             ></div>
             <div className="flex items-center justify-center min-h-screen px-4 py-8">
                 <form className="grid grid-cols-3 relative space-x-5 bg-white p-10 rounded-lg" ref={formRef}>
-                    <XIcon onClick={() => setShowModal(false)} className="h-8 w-8 inline absolute -right-5 -top-5  text-white cursor-pointer p-2 rounded-full bg-black duration-300 ease-in-out hover:bg-white hover:text-black " />
+                    <XIcon onClick={() => setshowEditModal(false)} className="h-8 w-8 inline absolute -right-5 -top-5  text-white cursor-pointer p-2 rounded-full bg-black duration-300 ease-in-out hover:bg-white hover:text-black " />
                     <div className="col-span-2 space-y-2">
                         <div className="flex flex-col space-y-2">
                             <label>Enter Product Name*</label>
-                            <input type={'text'} ref={proNameRef} className="border border-gray-300 focus:outline-none p-2 rounded-md focus:border-gray-800" />
+                            <input type={'text'} defaultValue={Ename} ref={proNameRef} className="border border-gray-300 focus:outline-none p-2 rounded-md focus:border-gray-800" />
                         </div>
                         <div className="flex flex-col space-y-2 col-span-2">
                             <label>Enter Product Description*</label>
-                            <textarea ref={descRef} className="border border-gray-300 focus:outline-none p-2 rounded-md focus:border-gray-800" />
+                            <textarea ref={descRef} defaultValue={Edesc} className="border border-gray-300 focus:outline-none p-2 rounded-md focus:border-gray-800" />
                         </div>
                         <div className="grid grid-cols-3 space-x-3">
                             <div className="flex flex-col space-y-2">
                                 <label>Price*</label>
-                                <input type={'text'} ref={priceRef} className="border border-gray-300 focus:outline-none p-2 rounded-md focus:border-gray-800" />
+                                <input type={'text'} defaultValue={Eprice} ref={priceRef} className="border border-gray-300 focus:outline-none p-2 rounded-md focus:border-gray-800" />
                             </div>
                             <div className="flex flex-col col-span-2 space-y-2 justify-center">
                                 <label>Category*</label>
@@ -137,4 +135,4 @@ const ProductModal = ({setShowModal}) => {
     )
 }
 
-export default ProductModal
+export default EditProductModal

@@ -1,15 +1,19 @@
 
-import { PlusIcon, PuzzleIcon, SparklesIcon } from "@heroicons/react/solid"
-import { useEffect, useRef, useState } from "react"
+import { PlusIcon} from "@heroicons/react/solid"
+import { useEffect, useState } from "react"
 import axios from 'axios'
 import AdminProduct from "./AdminProduct"
 import ProductModal from "./ProductModal"
+import EditProductModal from "./EditProductModal."
 
 
 const AdminProductFeed = () => {
     const [showModal, setShowModal] = useState(false);
-    const [products, setProducts] = useState([])
-    const [additemdone, setadditemdone] = useState(0)
+    const [showEditModal,setshowEditModal] = useState(false)
+    const [updateProductId,setUpadateProductId] = useState(null)
+    const [products, setProducts] = useState([]);
+    const [additemdone, setadditemdone] = useState(0);
+
     useEffect(() => {
         axios.get('https://aaumartbackend.pratikvansh.repl.co/api/product').then((prod) => {
             setProducts(prod.data);
@@ -48,19 +52,24 @@ const AdminProductFeed = () => {
                 </thead>
                 <tbody>
                     {
-                        products?.map((pro,_i) => (
-                            <AdminProduct key={_i} name={pro.name} desc={pro.desc} cat={pro.category} price={pro.price} imgurl={pro.img_url} />
+                        products?.map((pro, _i) => (
+                            <AdminProduct key={_i} idx={_i} id={pro._id} name={pro.name} desc={pro.desc} cat={pro.category} price={pro.price} imgurl={pro.img_url} setshowEditModal={setshowEditModal} setUpadateProductId={setUpadateProductId}/>
                         ))
                     }
                 </tbody>
             </table>
             {showModal ? (
                 <>
-                    <ProductModal setShowModal={setShowModal}/>
+                    <ProductModal setShowModal={setShowModal} />
+                </>
+            ) : null}
+            {showEditModal ? (
+                <>
+                    <EditProductModal setshowEditModal={setshowEditModal} Ename={products[updateProductId]?.name} Edesc={products[updateProductId]?.desc} Eprice={products[updateProductId]?.price} Eimg_url={products[updateProductId]?.img_url} Ecategory={products[updateProductId]?.category}/>
                 </>
             ) : null}
         </div>
     )
 }
 
-export default AdminProductFeed
+export default AdminProductFeed;
