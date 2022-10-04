@@ -1,9 +1,13 @@
 import { XIcon, PhotographIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
+import { getDownloadURL, ref, uploadString } from 'firebase/storage';
+import setHeader from "../../Atoms/setHeader";
+import { useRecoilState } from "recoil";
+import { addItemDoneState } from "../../Atoms/adminProductAtom";
+// import { storage } from '../firebase';
 
-
-const EditProductModal = ({ setshowEditModal, Eimg_url, Ename, Eprice, Edesc, Ecategory }) => {
+const EditProductModal = ({ setshowEditModal, Eid, Eimg_url, Ename, Eprice, Edesc, Ecategory}) => {
     const [productImage, setImage] = useState(null)
     const [catName, setCatName] = useState(Ecategory)
     const imageRef = useRef(null)
@@ -13,8 +17,7 @@ const EditProductModal = ({ setshowEditModal, Eimg_url, Ename, Eprice, Edesc, Ec
     const formRef = useRef()
     const [dropName, setDropName] = useState()
     const [loder, setLoder] = useState(false)
-    const [products, setProducts] = useState([])
-    const [additemdone, setadditemdone] = useState(0)
+    const [additemdone,setAddItemDone] = useRecoilState(addItemDoneState)
     useEffect(() => {
         axios.get('https://aaumartbackend.pratikvansh.repl.co/api/category')
             .then(res => {
@@ -42,13 +45,15 @@ const EditProductModal = ({ setshowEditModal, Eimg_url, Ename, Eprice, Edesc, Ec
         setLoder(true);
         e.preventDefault()
         if (proNameRef.current.value && descRef.current.value && priceRef.current.value) {
-            const product = await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/product/' + product.data._id + '/update', {
+            const newProduct = await axios.put('https://aaumartbackend.pratikvansh.repl.co/api/product/' + Eid + '/update', {
                 name: proNameRef.current.value,
                 desc: descRef.current.value,
                 price: Number(priceRef.current.value),
-                category: catName
+                category: catName,
             }, setHeader())
-
+            setAddItemDone(!additemdone)
+            setshowEditModal(false)
+            
             // const firestoreImgPath = ref(storage, `Images/${product.data._id}/image`)
 
             // await uploadString(firestoreImgPath, productImage, 'data_url').then(async snapshot => {

@@ -5,6 +5,8 @@ import axios from 'axios'
 import AdminProduct from "./AdminProduct"
 import ProductModal from "./ProductModal"
 import EditProductModal from "./EditProductModal."
+import { useRecoilValue } from "recoil"
+import { addItemDoneState } from "../../Atoms/adminProductAtom"
 
 
 const AdminProductFeed = () => {
@@ -12,7 +14,7 @@ const AdminProductFeed = () => {
     const [showEditModal,setshowEditModal] = useState(false)
     const [updateProductId,setUpadateProductId] = useState(null)
     const [products, setProducts] = useState([]);
-    const [additemdone, setadditemdone] = useState(0);
+    const additemdone = useRecoilValue(addItemDoneState)
 
     useEffect(() => {
         axios.get('https://aaumartbackend.pratikvansh.repl.co/api/product').then((prod) => {
@@ -60,12 +62,12 @@ const AdminProductFeed = () => {
             </table>
             {showModal ? (
                 <>
-                    <ProductModal setShowModal={setShowModal} />
+                    <ProductModal setShowModal={setShowModal}/>
                 </>
             ) : null}
             {showEditModal ? (
                 <>
-                    <EditProductModal setshowEditModal={setshowEditModal} Ename={products[updateProductId]?.name} Edesc={products[updateProductId]?.desc} Eprice={products[updateProductId]?.price} Eimg_url={products[updateProductId]?.img_url} Ecategory={products[updateProductId]?.category}/>
+                    <EditProductModal setshowEditModal={setshowEditModal} Eid={products[updateProductId]?._id} Ename={products[updateProductId]?.name} Edesc={products[updateProductId]?.desc} Eprice={products[updateProductId]?.price} Eimg_url={products[updateProductId]?.img_url} Ecategory={products[updateProductId]?.category}/>
                 </>
             ) : null}
         </div>

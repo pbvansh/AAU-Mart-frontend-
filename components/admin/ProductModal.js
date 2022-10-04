@@ -1,7 +1,11 @@
 import { XIcon, PhotographIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
-
+import setHeader from "../../Atoms/setHeader";
+import  {storage}  from "../../firebase";
+import { getDownloadURL, ref, uploadString } from 'firebase/storage';
+import { useRecoilState } from "recoil";
+import { addItemDoneState } from "../../Atoms/adminProductAtom";
 
 const ProductModal = ({setShowModal}) => {
     const [productImage, setImage] = useState(null)
@@ -13,8 +17,7 @@ const ProductModal = ({setShowModal}) => {
     const formRef = useRef()
     const [dropName, setDropName] = useState()
     const [loder, setLoder] = useState(false)
-    const [products, setProducts] = useState([])
-    const [additemdone, setadditemdone] = useState(0)
+    const [additemdone,setAddItemDone] = useRecoilState(addItemDoneState)
     useEffect(() => {
         axios.get('https://aaumartbackend.pratikvansh.repl.co/api/category')
             .then(res => {
@@ -59,7 +62,8 @@ const ProductModal = ({setShowModal}) => {
                 setLoder(false);
                 formRef.current.reset();
                 removeImage();
-                setadditemdone(1);
+                setAddItemDone(!additemdone);
+                setShowModal(false)
             })
         }
         else {
