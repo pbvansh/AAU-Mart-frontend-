@@ -86,7 +86,7 @@ const admin = () => {
                             </tr>
                             <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white flex space-x-8 items-center">
-                                    <img src="ait_clg.jpg" height={80} width={80} /> <span>Apple MacBook Pro 17"</span>
+                                    <img src="ait_clg.jpg" height={80} width={80} /> <span>Apple MacBook Pro 17</span>
                                 </th>
                                 <td className="py-4 px-6">
                                     Black
