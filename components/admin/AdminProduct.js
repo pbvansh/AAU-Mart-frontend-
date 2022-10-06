@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import EditProductModal from './EditProductModal.';
 import ProductModal from './ProductModal';
 
-const AdminProduct = ({idx, id, name, imgurl, cat, price, desc, setshowEditModal, setUpadateProductId }) => {
+const AdminProduct = ({idx, id, name, imgurl, cat, price, desc, setshowEditModal, setUpadateProductId,setDeleteProductId,setShowDeleteModal }) => {
     //const [showModal, setshowEditModal] = useState(false);
     return (
         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -22,7 +22,7 @@ const AdminProduct = ({idx, id, name, imgurl, cat, price, desc, setshowEditModal
                 <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={() => {setUpadateProductId(idx);setshowEditModal(true);}}>Edit</a>
             </td>
             <td className="py-4 px-6 text-right">
-                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline" onClick={()=>{setDeleteProductId(id);setShowDeleteModal(true)}}>Delete</a>
             </td>
         </tr>
 

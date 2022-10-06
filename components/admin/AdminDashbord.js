@@ -1,12 +1,27 @@
-import { ChartSquareBarIcon, ChevronDownIcon } from "@heroicons/react/outline"
-import { PlusIcon, PuzzleIcon, SparklesIcon } from "@heroicons/react/solid"
-import { PhotographIcon } from "@heroicons/react/solid"
-import { XIcon } from "@heroicons/react/outline"
+import { ChevronDownIcon } from "@heroicons/react/outline"
 import { useState } from "react"
 import AdminProductFeed from "./AdminProductFeed"
+import AdminCategory from "./AdminCategory"
+import AdminOrder from "./AdminOrder"
 
 
 const AdminDashbord = () => {
+    const [option, setOption] = useState('Product');
+    const showComponent =(option)=>{
+        if(option=='Product'){
+            return(
+                <AdminProductFeed />
+            )
+        }else if(option=='Categories'){
+            return(
+                <AdminCategory/>
+            )
+        }else if(option=='Order'){
+            return (
+                <AdminOrder/>
+            )
+        }
+    }
     return (
         <div className="bg-gray-50 p-5">
             <div className="min-h-screen flex max-w-screen-2xl bg-white mx-auto rounded-lg">
@@ -23,14 +38,16 @@ const AdminDashbord = () => {
                             </span>
                             <ChevronDownIcon className="h-5 inline" />
                         </p>
-                        <p className="p-2 px-10 mx-10 hover:text-blue-600 cursor-pointer border border-white hover:border-blue-300">Products</p>
-                        <p className="p-2 px-10 mx-10 hover:text-blue-600 cursor-pointer border border-white hover:border-blue-300">Categories</p>
-                        <p className="p-2 px-10 mx-10 hover:text-blue-600 cursor-pointer border border-white hover:border-blue-300">Order</p>
+                        <p onClick={()=>setOption('Product')} className="p-2 px-10 mx-10 hover:text-blue-600 cursor-pointer border border-white hover:border-blue-300">Products</p>
+                        <p onClick={()=>setOption('Categories')} className="p-2 px-10 mx-10 hover:text-blue-600 cursor-pointer border border-white hover:border-blue-300">Categories</p>
+                        <p  onClick={()=>setOption('Order')} className="p-2 px-10 mx-10 hover:text-blue-600 cursor-pointer border border-white hover:border-blue-300">Order</p>
                         <p></p>
                     </section>
                 </div>
                 {/* right side */}
-                <AdminProductFeed />
+                    {
+                        showComponent(option)
+                    }
             </div>
         </div >
     )

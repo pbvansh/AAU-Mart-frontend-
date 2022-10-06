@@ -6,6 +6,8 @@ import  {storage}  from "../../firebase";
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { useRecoilState } from "recoil";
 import { addItemDoneState } from "../../Atoms/adminProductAtom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductModal = ({setShowModal}) => {
     const [productImage, setImage] = useState(null)
@@ -44,7 +46,7 @@ const ProductModal = ({setShowModal}) => {
     const SubmitData = async (e) => {
         setLoder(true);
         e.preventDefault()
-        if (proNameRef.current.value && descRef.current.value && priceRef.current.value) {
+        if (proNameRef.current.value && descRef.current.value && priceRef.current.value && productImage) {
             const product = await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/product/create', {
                 name: proNameRef.current.value,
                 desc: descRef.current.value,
@@ -64,9 +66,11 @@ const ProductModal = ({setShowModal}) => {
                 removeImage();
                 setAddItemDone(!additemdone);
                 setShowModal(false)
+                toast.success('Product created successfuly',{position: toast.POSITION.BOTTOM_RIGHT,autoClose:1500})
             })
         }
         else {
+            toast.warning('please provide all details',{position: toast.POSITION.BOTTOM_RIGHT,autoClose:1500})
             console.log('please provide all details');
         }
 
@@ -130,7 +134,7 @@ const ProductModal = ({setShowModal}) => {
                                 )
                             }
                             <div className=" flex justify-center m-5 bottom-0 whitespace-nowrap">
-                                <button className="bg-black shadow-sm hover:bg-gray-900 text-sm text-white font-semibold p-3 rounded-md px-8 px-100" onClick={SubmitData}>Add Product</button>
+                                <button className="bg-black shadow-sm border border-black  hover:bg-white hover:text-black duration-500 text-sm text-white font-semibold p-3 rounded-md px-8 px-100" onClick={SubmitData}>Add Product</button>
                             </div>
                         </div>
                     </div>
