@@ -1,41 +1,48 @@
 
 import { ChevronDoubleLeftIcon } from "@heroicons/react/solid";
 import axios from "axios";
+import { JsonWebTokenError } from "jsonwebtoken";
 import Link from "next/link";
 import { useRecoilState } from 'recoil'
 import { basketAtomState } from "../../../Atoms/basketAtom";
+import JWT from 'jsonwebtoken'
 
 const Index = ({ product }) => {
   // const router = useRouter()
   // const pid = router.query.id;
   const [items, setItems] = useRecoilState(basketAtomState)
   async function addProductToBag() {
-    const idx = items.findIndex((item) => item._id == product._id)
-    if (idx >= 0) {
 
-      let newItem = [...items]
-      let obj = { ...newItem[idx] }
-      obj.quantity++;
-      newItem[idx] = obj;
-      setItems(newItem)
-      await axios.put(`https://aaumartbackend.pratikvansh.repl.co/api/cart/${product._id}`, {
-        quantity: obj.quantity,
-      })
+    if (localStorage.getItem('token')) {
+      const { userId } = JWT.decode(localStorage.getItem('token'));
+    
+      const idx = items.findIndex((item) => item._id == product._id)
+      if (idx >= 0) {
+        let newItem = [...items]
+        let obj = { ...newItem[idx] }
+        obj.quantity++;
+        newItem[idx] = obj;
+        setItems(newItem)
+        await axios.put(`https://aaumartbackend.pratikvansh.repl.co/api/cart/${product._id}`, {
+          quantity: obj.quantity,
+        })
 
-    } else {
-      setItems([...items, {
-        _id: product._id,
-        name: product.name,
-        desc: product.desc,
-        price: product.price,
-        category: product.category,
-        quantity: 1,
-        img: product.img_url
-      }])
-      await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/cart/addItem', {
-        product_id: product._id,
-        quantity: 1,
-      })
+      } else {
+        setItems([...items, {
+          _id: product._id,
+          name: product.name,
+          desc: product.desc,
+          price: product.price,
+          category: product.category,
+          quantity: 1,
+          img: product.img_url
+        }])
+        await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/cart/addItem', {
+          user_id: userId,
+          product_id: product._id,
+          quantity: 1,
+        })
+      }
     }
 
   }

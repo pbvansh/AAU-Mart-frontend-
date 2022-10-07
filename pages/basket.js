@@ -5,27 +5,34 @@ import { ChevronDoubleLeftIcon } from '@heroicons/react/solid'
 import Link from "next/link";
 import BagItem from "../components/BagItem";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import JWT from 'jsonwebtoken'
 
 const Cart = () => {
 
-  const [items, setItems] = useRecoilState(basketAtomState);
-  const [bagTotal,setBagTotale] = useState(0)
-  const basketTotal = useRecoilValue(basketItemTotalAmountAtom)
+  const [bagTotal, setBagTotale] = useState(0)
+  const [basketItem, setBasketItem] = useRecoilState(basketAtomState);
+  const basketTotal = useRecoilValue(basketItemTotalAmountAtom);
+
   useEffect(() => {
-    let total = 0;
-    for (let i = 0; i < items.length; i++) {
-      let sum = Number(items[i].quantity) * Number(items[i].price)
-      total += sum;
-    }
-    setBagTotale(total)
-  }, [items])
+    const { userId } = JWT.decode(localStorage.getItem('token'))
+    axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/cart/' + userId).then((res) => {
+      setBasketItem(res.data);
+      let total = 0;
+      for (let i = 0; i < basketItem.length; i++) {
+        let sum = Number(basketItem[i].quantity) * Number(basketItem[i].product_id.price)
+        total += sum;
+      }
+      setBagTotale(total)
+    })
+  }, []);
 
-
+  
   return (
     <div className="min-h-screen bg-gray-100 select-none">
       <Header name='Basket' />
       {
-        items.length > 0 ? (
+        basketItem.length > 0 ? (
           <main className="bg-white max-w-screen-2xl mx-auto lg:flex">
             {/* left side */}
             <div className="flex-grow m-10 ">
@@ -41,9 +48,11 @@ const Cart = () => {
               </div>
               <div className="max-h-96 overflow-y-scroll">
                 {
-                  items.map((item, i) => (
-                    <BagItem key={item._id} item={item} idx={i} />
-                  ))
+                  basketItem &&
+                  (
+                    basketItem.map((item, i) => (
+                      <BagItem key={i} item={item} idx={i} />
+                    )))
                 }
               </div>
               <div className="m-10 items-center">

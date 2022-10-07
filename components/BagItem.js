@@ -12,7 +12,7 @@ const BagItem = ({ item, idx }) => {
     const [items, setItem] = useRecoilState(basketAtomState)
 
     useEffect(() => {
-        let num = Number(item.quantity) * Number(item.price)
+        let num = Number(item.quantity) * Number(item.product_id.price)
         setTotale(num);
     }, [items])
 
@@ -21,7 +21,7 @@ const BagItem = ({ item, idx }) => {
         let newItems = [...items]
         let obj = { ...newItems[idx] }
         obj.quantity++;
-        obj.total = Number(obj.quantity) * Number(item.price)
+        obj.total = Number(obj.quantity) * Number(item.product_id.price)
         newItems[idx] = obj;
         setItem(newItems)
         await axios.put(`https://aaumartbackend.pratikvansh.repl.co/api/cart/${item._id}`, {
@@ -59,16 +59,16 @@ const BagItem = ({ item, idx }) => {
     }
 
     return (
-        <div key={item._id} className="grid grid-cols-6 p-3 items-center m-2">
+        <div className="grid grid-cols-6 p-3 items-center m-2">
             <div className="col-span-2 space-x-10 flex items-center">
-                <img src={item.img} height={80} width={80} />
+                <img src={item.product_id.img_url} height={80} width={80} />
                 <div>
                     <p className="font-semibold">{item.name}</p>
-                    <p className="text-orange-400">{item.category}</p>
+                    <p className="text-orange-400">{item.product_id.category}</p>
                 </div>
             </div>  
             <div>
-                <p className="bg-gray-100 inline p-2"> <span className="text-orange-500">₹ </span>{item.price}</p>
+                <p className="bg-gray-100 inline p-2"> <span className="text-orange-500">₹ </span>{item.product_id.price}</p>
             </div>
             <div className="flex space-x-5">
                 <span onClick={removeOne} className="bg-gray-100 px-3 cursor-pointer">-</span>

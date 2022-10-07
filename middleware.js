@@ -22,7 +22,7 @@ export function middleware(req) {
        // url.pathname = '/admin'
        const loginurl = new URL('/auth',req.nextUrl);
        //loginurl.searchParams.set('from',req.nextUrl.pathname)
-       return NextResponse.redirect(loginurl)
+       //return NextResponse.redirect(loginurl)
     }
     //const url = req.nextUrl.clone()
     //url.pathname = '/admin'
