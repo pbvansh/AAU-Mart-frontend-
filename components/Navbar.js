@@ -66,7 +66,7 @@ const Navbar = () => {
         <div className="flex space-x-5 items-center mx-10">
           {route.asPath != '/auth' &&
             <Link href={'/'}>
-              <div className="flex flex-col p-1 cursor-pointer group" onMouseEnter={() => setshowDrop(true)}>
+              <div className="flex flex-col p-1 cursor-pointer group" onClick={() => setshowDrop(true)}>
                 <UserCircleIcon className="sidenavmenu group-hover:animate-pulse group-hover:text-blue-500" />
                 <p className="text-sm">Profile</p>
               </div>
