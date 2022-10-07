@@ -39,7 +39,7 @@ const AdminCategory = () => {
             <div>
                 {
                     catogory.map((cat) => (
-                        <div className='flex border border-gray-300 hover:bg-gray-100 rounded-sm m-1 p-3 hover:border-[#84c2b2]'>
+                        <div key={cat.name} className='flex border border-gray-300 hover:bg-gray-100 rounded-sm m-1 p-3 hover:border-[#84c2b2]'>
                             <p key={cat.name} className=' flex-grow text-[20px]'>{cat.name}</p>
                             <TrashIcon onClick={() => deleteCat(cat._id)} className='h-5 mr-2 cursor-pointer' />
                         </div>
