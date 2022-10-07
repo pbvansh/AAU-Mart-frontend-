@@ -34,13 +34,13 @@ const AdminCategory = () => {
         <div className="relative h-fit w-full p-10">
             <div className="flex justify-between p-5 m-5 whitespace-nowrap">
                 <p className="text-4xl font-semibold">Catogory</p>
-                <button onClick={() => setShoCatModal(true)} className="bg-blue-500 flex items-center text-white text-[1.2rem] p-2 px-4 rounded-sm hover:bg-blue-600 justify-center"><PlusIcon className="h-5 inline mr-2" />Add new</button>
+                <button onClick={() => setShoCatModal(true)} className="bg-[#45C9A5] flex items-center text-white text-[1.2rem] p-2 px-4 rounded-sm hover:bg-[#1ebb91] hover:shadow-lg justify-center"><PlusIcon className="h-5 inline mr-2" />Add new</button>
             </div>
             <div>
                 {
                     catogory.map((cat) => (
-                        <div className='flex border border-gray-300 hover:bg-gray-100 rounded-sm m-1 p-3'>
-                            <p key={cat.name} className=' flex-grow '>{cat.name}</p>
+                        <div className='flex border border-gray-300 hover:bg-gray-100 rounded-sm m-1 p-3 hover:border-[#84c2b2]'>
+                            <p key={cat.name} className=' flex-grow text-[20px]'>{cat.name}</p>
                             <TrashIcon onClick={() => deleteCat(cat._id)} className='h-5 mr-2 cursor-pointer' />
                         </div>
                     ))

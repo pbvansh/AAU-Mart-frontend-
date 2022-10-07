@@ -20,7 +20,7 @@
     }
 
     .dropLi{
-        @apply hover:text-black text-gray-500 tracking-wide mx-5 px-10  py-3 rounded-md cursor-pointer hover:font-semibold
+        @apply hover:text-black text-gray-500 text-[17px] mx-5 px-10  py-3 rounded-md cursor-pointer hover:underline font-semibold
     }
 }
 

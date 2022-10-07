@@ -58,8 +58,6 @@ const Auth = () => {
             setLoder(false)
             notify('warning', 'Invalid Email')
         }
-
-
     }
 
     const LOGIN = () => {

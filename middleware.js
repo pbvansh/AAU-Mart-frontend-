@@ -20,7 +20,7 @@ export function middleware(req) {
         console.log(cookie);
         //const url = req.nextUrl.clone()
        // url.pathname = '/admin'
-       const loginurl = new URL('/admin',req.nextUrl);
+       const loginurl = new URL('/auth',req.nextUrl);
        //loginurl.searchParams.set('from',req.nextUrl.pathname)
        return NextResponse.redirect(loginurl)
     }
