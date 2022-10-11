@@ -61,7 +61,7 @@ const BagItem = ({ item, idx }) => {
     return (
         <div className="grid grid-cols-6 p-3 items-center m-2">
             <div className="col-span-2 space-x-10 flex items-center">
-                <img src={item.product_id.img_url} height={80} width={80} />
+                <img src={item.product_id?.img_url} height={80} width={80} />
                 <div>
                     <p className="font-semibold">{item.name}</p>
                     <p className="text-orange-400">{item.product_id.category}</p>

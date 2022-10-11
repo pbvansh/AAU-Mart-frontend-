@@ -18,16 +18,21 @@ const Cart = () => {
     const { userId } = JWT.decode(localStorage.getItem('token'))
     axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/cart/' + userId).then((res) => {
       setBasketItem(res.data);
+    })
+  }, []);
+
+  basketItem && (
+    useEffect(() => {
       let total = 0;
       for (let i = 0; i < basketItem.length; i++) {
         let sum = Number(basketItem[i].quantity) * Number(basketItem[i].product_id.price)
         total += sum;
       }
       setBagTotale(total)
-    })
-  }, []);
+    }, [basketItem])
+  )
 
-  
+
   return (
     <div className="min-h-screen bg-gray-100 select-none">
       <Header name='Basket' />
@@ -68,7 +73,9 @@ const Cart = () => {
                 <p className="text-sm text-gray-600">Subtotal:  </p>
                 <p className="bg-gray-100 inline p-2 font-semibold"> <span className="text-orange-500">₹ </span>{bagTotal}</p>
               </div>
-              <p className="bg-orange-500 p-3 text-center m-5 rounded-sm text-white cursor-pointer font-semibold hover:bg-orange-400">Check Out</p>
+              <Link href={'/order'}>
+                <p className="bg-orange-500 p-3 text-center m-5 rounded-sm text-white cursor-pointer font-semibold hover:bg-orange-400">Check Out</p>
+              </Link>
             </div>
           </main>
         ) : (

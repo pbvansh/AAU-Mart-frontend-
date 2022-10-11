@@ -73,9 +73,10 @@ const Navbar = () => {
             </Link>
           }
           <Link href={'/wishlist'}>
-            <div className="flex flex-col p-1 cursor-pointer group">
-              <HeartIcon className="sidenavmenu group-hover:animate-pulse group-hover:text-red-500" />
-              <p className="text-sm">Wishlist</p>
+            <div className='flex flex-col p-1 cursor-pointer group'>
+              {/* <HeartIcon className="sidenavmenu group-hover:animate-pulse group-hover:text-red-500" /> */}
+              <img src="https://img.icons8.com/external-flat-icons-inmotus-design/344/external-Order-round-mobile-ui-set-flat-icons-inmotus-design.png" height={30} width={30} />
+              <p className="text-sm">Orders</p>
             </div>
           </Link>
           <Link href={"/basket"}>
