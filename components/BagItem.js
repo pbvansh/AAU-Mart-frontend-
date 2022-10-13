@@ -5,7 +5,6 @@ import { useEffect, useState } from "react"
 import { useRecoilState } from "recoil"
 import { basketAtomState } from "../Atoms/basketAtom"
 
-
 const BagItem = ({ item, idx }) => {
 
     const [total, setTotale] = useState(0)
@@ -64,7 +63,7 @@ const BagItem = ({ item, idx }) => {
                 <img src={item.product_id?.img_url} height={80} width={80} />
                 <div>
                     <p className="font-semibold">{item.name}</p>
-                    <p className="text-orange-400">{item.product_id.category}</p>
+                    <p className="text-orange-400">{item.product_id?.category}</p>
                 </div>
             </div>  
             <div>

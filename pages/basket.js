@@ -6,16 +6,19 @@ import Link from "next/link";
 import BagItem from "../components/BagItem";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import JWT from 'jsonwebtoken'
+import JWT from 'jsonwebtoken';
+import setHeader from '../Atoms/setHeader'
 
 const Cart = () => {
 
   const [bagTotal, setBagTotale] = useState(0)
+  const [userId, setUserId] = useState(null)
   const [basketItem, setBasketItem] = useRecoilState(basketAtomState);
   const basketTotal = useRecoilValue(basketItemTotalAmountAtom);
 
   useEffect(() => {
     const { userId } = JWT.decode(localStorage.getItem('token'))
+    setUserId(userId)
     axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/cart/' + userId).then((res) => {
       setBasketItem(res.data);
     })
@@ -32,6 +35,40 @@ const Cart = () => {
     }, [basketItem])
   )
 
+  const handlePyment = async (e) => {
+    const products = basketItem.map((pro) => {
+      return { id: pro.product_id?._id, quantity: pro.quantity }
+    })
+
+    const { data: { razorOrder } } = await axios.post('https://AAUMartBackend.pratikvansh.repl.co/api/order/placeOrder', {
+      products, user_id: userId
+    }, setHeader())
+    console.log(razorOrder);
+    var options = {
+      key: "rzp_test_YcA9wL420Hdf9Q", 
+      amount: razorOrder.amount, 
+      currency: "INR",
+      name: "AAU-Mart",
+      description: "Test Transaction",
+      image: "https://img.freepik.com/free-vector/cute-shopping-cart-logo_23-2148453859.jpg",
+      order_id: razorOrder.id, 
+      callback_url: "https://AAUMartBackend.pratikvansh.repl.co/api/order/payment",
+      prefill: {
+        name: localStorage.getItem('userAAU').split('@')[0],
+        email: localStorage.getItem('userAAU'),
+        contact: "9999999999"
+      },
+      notes: {
+        address: "Razorpay Corporate Office"
+      },
+      theme: {
+        color: "#3399cc"
+      }
+    };
+
+    const RAZOR = new window.Razorpay(options);
+    RAZOR.open();
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 select-none">
@@ -73,9 +110,14 @@ const Cart = () => {
                 <p className="text-sm text-gray-600">Subtotal:  </p>
                 <p className="bg-gray-100 inline p-2 font-semibold"> <span className="text-orange-500">₹ </span>{bagTotal}</p>
               </div>
-              <Link href={'/order'}>
-                <p className="bg-orange-500 p-3 text-center m-5 rounded-sm text-white cursor-pointer font-semibold hover:bg-orange-400">Check Out</p>
-              </Link>
+              <div className="flex items-center justify-between max-w-xs mb-3">
+                <p className="text-sm text-gray-600">Delivery Charges:</p>
+                <p className="bg-gray-100 inline p-2 text-green-600">FREE</p>
+              </div>
+
+              <p onClick={handlePyment} className="bg-orange-500 p-3 text-center m-5 rounded-sm text-white cursor-pointer font-semibold hover:bg-orange-400">Check Out</p>
+
+
             </div>
           </main>
         ) : (
