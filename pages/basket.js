@@ -62,7 +62,7 @@ const Cart = () => {
         address: "Razorpay Corporate Office"
       },
       theme: {
-        color: "#3399cc"
+        color: "#3449b2"
       }
     };
 
