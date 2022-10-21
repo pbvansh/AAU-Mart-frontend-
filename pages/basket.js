@@ -16,8 +16,7 @@ const Cart = () => {
   const [basketItem, setBasketItem] = useRecoilState(basketAtomState);
   const basketTotal = useRecoilValue(basketItemTotalAmountAtom);
 
-
-  if (typeof window !== 'undefined') {
+  useEffect(()=>{
     try {
       const { userId } = JWT.decode(localStorage.getItem('token'))
       setUserId(userId)
@@ -28,9 +27,8 @@ const Cart = () => {
     catch (e) {
       alert('Please login your account')
     }
-  }
+  },[])
 
-  basketItem && (
     useEffect(() => {
       let total = 0;
       for (let i = 0; i < basketItem.length; i++) {
@@ -39,7 +37,6 @@ const Cart = () => {
       }
       setBagTotale(total)
     }, [basketItem])
-  )
 
   const handlePyment = async (e) => {
     const products = basketItem.map((pro) => {
