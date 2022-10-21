@@ -16,7 +16,7 @@ const Product = ({ name, id, desc, catname, price, url }) => {
       }
 
       {url && (
-        <Link href={`/product/${id}`}>
+        <Link href={`/product/${id}`}  as={`/product/${id}`}>
           <img src={url} alt="img" className="mt-10 px-10 rounded-xl object-contain cursor-pointer bg-transparent" />
         </Link>
       )

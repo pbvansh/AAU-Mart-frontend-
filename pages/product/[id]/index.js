@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRecoilState } from 'recoil'
 import { basketAtomState, getAgainAllItemtAtom } from "../../../Atoms/basketAtom";
 import JWT from 'jsonwebtoken'
+import Header from "../../../components/Header";
 
 const Index = ({ product }) => {
   // const router = useRouter()
@@ -55,6 +56,7 @@ const Index = ({ product }) => {
 
   return (
     <div className="min-h-screen max-w-screen-lg mx-10 md:mx-auto md:mt-20 py-10">
+      <Header name={`Product | ${product.name}`} />
       <div className="grid md:grid-cols-2">
         <div className="flex items-center justify-center flex-col">
           <img src={product.img_url} className='max-w-sm mb-10' />
