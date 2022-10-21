@@ -17,11 +17,16 @@ const Cart = () => {
   const basketTotal = useRecoilValue(basketItemTotalAmountAtom);
 
   useEffect(() => {
-    const { userId } = JWT.decode(localStorage.getItem('token'))
-    setUserId(userId)
-    axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/cart/' + userId).then((res) => {
-      setBasketItem(res.data);
-    })
+    try {
+      const { userId } = JWT.decode(localStorage.getItem('token'))
+      setUserId(userId)
+      axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/cart/' + userId).then((res) => {
+        setBasketItem(res.data);
+      })
+    } catch (error) {
+        alert('Please login your account')
+    }
+
   }, []);
 
   basketItem && (
@@ -45,13 +50,13 @@ const Cart = () => {
     }, setHeader())
     console.log(razorOrder);
     var options = {
-      key: "rzp_test_YcA9wL420Hdf9Q", 
-      amount: razorOrder.amount, 
+      key: "rzp_test_YcA9wL420Hdf9Q",
+      amount: razorOrder.amount,
       currency: "INR",
       name: "AAU-Mart",
       description: "Test Transaction",
       image: "https://img.freepik.com/free-vector/cute-shopping-cart-logo_23-2148453859.jpg",
-      order_id: razorOrder.id, 
+      order_id: razorOrder.id,
       callback_url: "https://AAUMartBackend.pratikvansh.repl.co/api/order/payment",
       prefill: {
         name: localStorage.getItem('userAAU').split('@')[0],
