@@ -3,7 +3,7 @@ import Banner from "../components/Banner";
 import Header from "../components/Header";
 import ProductFeed from "../components/ProductFeed";
 import JWT from 'jsonwebtoken'
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { FlagIcon } from "@heroicons/react/outline";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { isAdminAtomState } from "../Atoms/authAtom";
@@ -43,6 +43,7 @@ export default function Home() {
       {
         authUse()
       }
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     </div>
   )
 }

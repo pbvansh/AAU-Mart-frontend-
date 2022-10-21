@@ -16,18 +16,19 @@ const Cart = () => {
   const [basketItem, setBasketItem] = useRecoilState(basketAtomState);
   const basketTotal = useRecoilValue(basketItemTotalAmountAtom);
 
-  useEffect(() => {
+
+  if (typeof window !== 'undefined') {
     try {
       const { userId } = JWT.decode(localStorage.getItem('token'))
       setUserId(userId)
       axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/cart/' + userId).then((res) => {
         setBasketItem(res.data);
       })
-    } catch (error) {
-        alert('Please login your account')
     }
-
-  }, []);
+    catch (e) {
+      alert('Please login your account')
+    }
+  }
 
   basketItem && (
     useEffect(() => {
