@@ -1,6 +1,6 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import Header from "../components/Header"
-import { basketAtomState, basketItemTotalAmountAtom } from "../Atoms/basketAtom"
+import { basketAtomState, basketItemTotalAmountAtom, getAgainAllItemtAtom } from "../Atoms/basketAtom"
 import { ChevronDoubleLeftIcon } from '@heroicons/react/solid'
 import Link from "next/link";
 import BagItem from "../components/BagItem";
@@ -15,6 +15,7 @@ const Cart = () => {
   const [userId, setUserId] = useState(null)
   const [basketItem, setBasketItem] = useRecoilState(basketAtomState);
   const basketTotal = useRecoilValue(basketItemTotalAmountAtom);
+
 
   useEffect(()=>{
     try {
