@@ -56,7 +56,7 @@ const Cart = () => {
       description: "Test Transaction",
       image: "https://img.freepik.com/free-vector/cute-shopping-cart-logo_23-2148453859.jpg",
       order_id: razorOrder.id,
-      callback_url: "https://AAUMartBackend.pratikvansh.repl.co/api/order/payment",
+      callback_url: "https://AAUMartBackend.pratikvansh.repl.co/api/order/"+userId+"/payment",
       prefill: {
         name: localStorage.getItem('userAAU').split('@')[0],
         email: localStorage.getItem('userAAU'),
