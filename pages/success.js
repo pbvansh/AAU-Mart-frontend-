@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import setHeader from "../Atoms/setHeader";
 import Header from "../components/Header";
 
-const success = () => {
+const Success = () => {
   const route = useRouter()
   const { payment_id } = route.query;
 
@@ -25,4 +25,4 @@ const success = () => {
   )
 }
 
-export default success
+export default Success
