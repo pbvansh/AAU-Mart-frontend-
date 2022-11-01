@@ -65,12 +65,10 @@ const Navbar = () => {
 
         <div className="flex space-x-5 items-center mx-10">
           {route.asPath != '/auth' &&
-            <Link href={'/'}>
               <div className="flex flex-col p-1 cursor-pointer group" onClick={() => setshowDrop(true)}>
                 <UserCircleIcon className="sidenavmenu group-hover:animate-pulse group-hover:text-blue-500" />
                 <p className="text-sm">Profile</p>
               </div>
-            </Link>
           }
           <Link href={'/order'}>
             <div className='flex flex-col p-1 cursor-pointer group items-center'>
@@ -125,7 +123,9 @@ const Navbar = () => {
 
                           </div>
                         </li>
+                        <Link href={'/profile'}>
                         <li className="inline dropLi">Profile</li>
+                        </Link>
                         <li className="inline dropLi">Setting</li>
                         {
                           localStorage.getItem('token') ?
@@ -136,12 +136,11 @@ const Navbar = () => {
                               setshowDrop(false);
                               setIsAdmin(false)
                               toast.success('Logout Succsessfully', { autoClose: 1500 });
-
+                              route.push('/')
                             }}>Logout</li>
                           ) : null
                         }
                       </ul>
-
                     </div>
                   </div>
                 </div>

@@ -1,16 +1,16 @@
 
-const OrderProducts = ({ img, name, price ,desc}) => {
+const OrderProducts = ({ img, name, price, desc, status }) => {
     return (
         <div>
             <div className='border bg-white shadow-lg p-3 m-3 flex justify-around'>
-                <img src={img} height={80} width={80}/>
+                <img src={img} height={80} width={80} />
                 <div>
                     <p>{name}</p>
                     <p>{desc}</p>
                 </div>
                 <p> ₹{price}</p>
                 <div>
-                    <p className="border bg-gray-200 pr-3 py-2 rounded-md font-semibold"><span className="rounded-full h-1 p-1 bg-orange-400 mr-3 "></span>Order Placed</p>
+                    <p className="border bg-gray-200 pr-3 py-2 rounded-md font-semibold"><span className="rounded-full h-1 p-1 bg-orange-400 mr-3 "></span>{status}</p>
                     <p className="p-2 text-sm">We processing your Order</p>
                 </div>
             </div>

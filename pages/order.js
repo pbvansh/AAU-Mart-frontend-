@@ -34,7 +34,7 @@ const Order = () => {
                   products &&
                   products.map((order) =>
                   (
-                    <OrdersComp key={order._id} products={order.products} date={order.createdAt}/>
+                    <OrdersComp key={order._id} products={order.products} date={order.createdAt} status = {order.status}/>
                   )
                   )
                 }
