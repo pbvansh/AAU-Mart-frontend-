@@ -32,8 +32,8 @@ const AdminProductFeed = () => {
                 <p className="text-4xl font-semibold">Products</p>
                 <button onClick={() => setShowModal(true)} className="bg-blue-500 flex items-center text-white text-[1.2rem] p-2 px-4 rounded-sm hover:bg-blue-600 justify-center"><PlusIcon className="h-5 inline mr-2" />Add new</button>
             </div>
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 shadow-md sm:rounded-lg">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <table className="w-full text-sm text-left text-gray-500  shadow-md sm:rounded-lg">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
                     <tr>
                         <th scope="col" className="py-3 px-6">
                             Product
