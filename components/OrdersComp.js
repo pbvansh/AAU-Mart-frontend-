@@ -4,7 +4,7 @@ const OrdersComp = ({ products ,date,status }) => {
 
     return (
         <div className="border border-black m-3 rounded-sm">
-            <p className="text-end p-3">{date.split('T')[0]}</p>
+            <p className="text-end p-3 text-gray-600 italic">{date.split('T')[0]}</p>
             {
             products.map((product, i) =>
             (
