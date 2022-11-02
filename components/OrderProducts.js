@@ -1,5 +1,5 @@
 
-const OrderProducts = ({ img, name, price, desc, status }) => {
+const OrderProducts = ({ img, name, price, desc, status, quantity }) => {
 
     return (
         <div>

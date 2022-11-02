@@ -8,7 +8,7 @@ const OrdersComp = ({ products ,date,status }) => {
             {
             products.map((product, i) =>
             (
-                <OrderProducts key={i} img={product.id.img_url} name={product.id.name} price={product.id.price} desc={product.id.desc} status={status} />
+                <OrderProducts key={i} img={product.id.img_url} name={product.id.name} price={product.id.price} desc={product.id.desc} status={status} quantity={product.quantity}/>
             )
             )
         }
