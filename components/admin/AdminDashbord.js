@@ -3,24 +3,25 @@ import { useState } from "react"
 import AdminProductFeed from "./AdminProductFeed"
 import AdminCategory from "./AdminCategory"
 import AdminOrder from "./AdminOrder"
+import { useRouter } from "next/router"
 
 
 const AdminDashbord = () => {
-    const [option, setOption] = useState('Product');
-    const showComponent =(option)=>{
-        if(option=='Product'){
-            return(
+    const route = useRouter();
+    const showComponent = () => {
+        if (route.query.section == 'Product') {
+            return (
                 <AdminProductFeed />
             )
-        }else if(option=='Categories'){
-            return(
-                <AdminCategory/>
-            )
-        }else if(option=='Order'){
+        } else if (route.query.section == 'Categories') {
             return (
-                <AdminOrder/>
+                <AdminCategory />
             )
-        }
+        } else if (route.query.section == 'Order') {
+            return (
+                <AdminOrder />
+            )
+        } else return (<AdminProductFeed />)
     }
     return (
         <div className="bg-gray-50 p-5">
@@ -38,16 +39,16 @@ const AdminDashbord = () => {
                             </span>
                             <ChevronDownIcon className="h-5 inline" />
                         </p>
-                        <p onClick={()=>setOption('Product')} className="p-2 px-10 mx-10 hover:text-blue-600 cursor-pointer border border-white hover:border-blue-300">Products</p>
-                        <p onClick={()=>setOption('Categories')} className="p-2 px-10 mx-10 hover:text-blue-600 cursor-pointer border border-white hover:border-blue-300">Categories</p>
-                        <p  onClick={()=>setOption('Order')} className="p-2 px-10 mx-10 hover:text-blue-600 cursor-pointer border border-white hover:border-blue-300">Order</p>
+                        <p onClick={() => { route.push('?section=Product') }} className="p-2 px-10 mx-10 hover:text-blue-600 cursor-pointer border border-white hover:border-blue-300">Products</p>
+                        <p onClick={() => { route.push('?section=Categories') }} className="p-2 px-10 mx-10 hover:text-blue-600 cursor-pointer border border-white hover:border-blue-300">Categories</p>
+                        <p onClick={() => { route.push('?section=Order') }} className="p-2 px-10 mx-10 hover:text-blue-600 cursor-pointer border border-white hover:border-blue-300">Order</p>
                         <p></p>
                     </section>
                 </div>
                 {/* right side */}
-                    {
-                        showComponent(option)
-                    }
+                {
+                    showComponent()
+                }
             </div>
         </div >
     )

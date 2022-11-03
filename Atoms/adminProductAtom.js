@@ -9,3 +9,9 @@ export const addCatDoneState = atom({
     key : 'addCatDoneStateKey',
     default : false
 }) 
+
+
+export const orderStatusState = atom({
+    key : 'addCatDoneStateKey',
+    default : 'Order Placed'
+}) 
