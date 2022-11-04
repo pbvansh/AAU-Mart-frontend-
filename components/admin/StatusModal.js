@@ -1,16 +1,19 @@
 
 import axios from 'axios';
 import React, { useRef, useState } from 'react'
-import { useRecoilState } from 'recoil';
-import { addCatDoneState, orderStatusState } from '../../Atoms/adminProductAtom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { orderIdForUpdateOrderState, orderStatusState, orderUpdatedState } from '../../Atoms/adminProductAtom';
+import setHeader from '../../Atoms/setHeader';
 
 const StatusModal = ({ setshowStatusModal }) => {
 
     const status = ['Order Placed', 'Preparing', 'Shipped', 'Delivered'];
     const [preStatus, setPreStatus] = useRecoilState(orderStatusState);
-    const idx = status.findIndex((value) => value == preStatus)
+    const [orderIdforUpdate] = useRecoilValue(orderIdForUpdateOrderState)
+    const [isOrderUpdated, setIsOrderUpdated] = useRecoilState(orderUpdatedState)
+    const idx = status.findIndex((value) => value == preStatus);
     const getStyle = (i) => {
-        if (i <= idx) return 'bg-[#61d647] disabled'
+        if (i <= idx) return 'bg-[#61d647]'
     }
     const changeStatus = (e) => {
         e.preventDefault();
@@ -36,7 +39,14 @@ const StatusModal = ({ setshowStatusModal }) => {
                                         {
                                             status.map((item, i) => {
                                                 return (
-                                                    <button key={i} onClick={() => { if (i > idx) setPreStatus(item) }} className={`p-2 border inline rounded-md cursor-pointer hover:border-black duration-300 ${getStyle(i)}`}>{item}</button>
+                                                    <button key={i} onClick={() => {
+                                                        if (i > idx) {
+                                                            setPreStatus(item);
+                                                            axios.put(`https://AAUMartBackend.pratikvansh.repl.co/api/admin/order/${orderIdforUpdate}`, { status: item }, setHeader()).then((res) => {
+                                                                setIsOrderUpdated(!isOrderUpdated);
+                                                            })
+                                                        }
+                                                    }} className={`p-2 border inline rounded-md cursor-pointer hover:border-black duration-300 ${getStyle(i)}`}>{item}</button>
                                                 )
                                             })
                                         }

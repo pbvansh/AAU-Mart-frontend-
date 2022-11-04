@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil';
+import { orderUpdatedState } from '../../Atoms/adminProductAtom';
 import setHeader from '../../Atoms/setHeader';
 import AdminCatogoryModal from './AdminCatogoryModal';
 import AdminOrderComp from './AdminOrderComp';
@@ -8,13 +10,14 @@ import StatusModal from './StatusModal';
 const AdminOrder = () => {
 
     const [showStatusModal, setshowStatusModal] = useState(false);
+    const isOrderUpdated = useRecoilValue(orderUpdatedState)
     const [orders, setOrders] = useState([]);
     useEffect(() => {
         axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/admin/orders', setHeader()).then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             setOrders(res.data)
         })
-    }, [])
+    }, [isOrderUpdated])
 
     return (
         <div className='p-10 flex-1 bg-gray-100'>
@@ -67,7 +70,7 @@ const AdminOrder = () => {
                     <tbody>
                         {
                             orders?.map((order, _i) => (
-                                <AdminOrderComp key={_i} idx={_i} date={order.createdAt.split('T')[0]} products={order.products} total={order.total} status={order.status} setshowStatusModal={setshowStatusModal}/>
+                                <AdminOrderComp key={_i} idx={_i} order_id={order._id} date={order.createdAt.split('T')[0]} products={order.products} total={order.total} status={order.status} setshowStatusModal={setshowStatusModal}/>
                             ))
                         }
                     </tbody>

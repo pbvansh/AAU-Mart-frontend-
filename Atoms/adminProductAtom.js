@@ -15,3 +15,13 @@ export const orderStatusState = atom({
     key : 'addCatDoneStateKey',
     default : 'Order Placed'
 }) 
+
+export const orderIdForUpdateOrderState = atom({
+    key : 'orderIdForUpdateOrderStateKey',
+    default : []
+}) 
+
+export const orderUpdatedState = atom({
+    key : 'orderUpdatedStateKey',
+    default : false
+}) 
