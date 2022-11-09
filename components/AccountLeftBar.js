@@ -1,22 +1,24 @@
 import { ChevronRightIcon } from "@heroicons/react/outline"
 import { UserIcon } from "@heroicons/react/solid"
+import Link from "next/link"
 
-const AccountLeftBar = () => {
+const AccountLeftBar = ({ Fname }) => {
     return (
         <div className='p-10 w-full max-w-[400px] space-y-6'>
             <div className='flex items-center bg-white p-3 space-x-5 shadow-lg'>
                 <img src='https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/profile-pic-male_4811a1.svg' />
-                <p className='font-bold text-xl'>Hello</p>
+                <p className='font-bold text-xl'>{Fname ? 'Hello ' + Fname : 'Hello'}</p>
             </div>
             <div className='bg-white'>
-
-                <div className='flex justify-between p-3 items-center cursor-pointer'>
-                    <div className='flex space-x-3 items-center'>
-                        <img src='https://img.icons8.com/external-flat-icons-inmotus-design/344/external-Order-round-mobile-ui-set-flat-icons-inmotus-design.png' height={30} width={30} />
-                        <p className='font-bold text-gray-400'>MY ORDERS</p>
+                <Link href={'/order'}>
+                    <div className='flex justify-between p-3 items-center cursor-pointer'>
+                        <div className='flex space-x-3 items-center'>
+                            <img src='https://img.icons8.com/external-flat-icons-inmotus-design/344/external-Order-round-mobile-ui-set-flat-icons-inmotus-design.png' height={30} width={30} />
+                            <p className='font-bold text-gray-400'>MY ORDERS</p>
+                        </div>
+                        <ChevronRightIcon className='h-5 text-gray-400' />
                     </div>
-                    <ChevronRightIcon className='h-5 text-gray-400' />
-                </div>
+                </Link>
                 <hr />
                 <div>
                     <div className='p-3'>
@@ -26,7 +28,9 @@ const AccountLeftBar = () => {
                         </div>
                         <div>
                             <p className='pl-12 p-2  hover:bg-blue-50 hover:text-blue-500 cursor-pointer'>Profile Information</p>
-                            <p className='pl-12 p-2 hover:bg-blue-50 hover:text-blue-500 cursor-pointer'>Manage Addresses</p>
+                            <Link href={'addresses'}>
+                                <p className='pl-12 p-2 hover:bg-blue-50 hover:text-blue-500 cursor-pointer'>Manage Addresses</p>
+                            </Link>
                         </div>
                     </div>
                 </div>

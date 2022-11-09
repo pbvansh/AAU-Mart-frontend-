@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil";
 import { addItemDoneState } from "../../Atoms/adminProductAtom";
 // import { storage } from '../firebase';
 
-const EditProductModal = ({ setshowEditModal, Eid, Eimg_url, Ename, Eprice, Edesc, Ecategory}) => {
+const EditProductModal = ({ setshowEditModal, Eid, img_url, Ename, Eprice, Edesc, Ecategory}) => {
     const [productImage, setImage] = useState(null)
     const [catName, setCatName] = useState(Ecategory)
     const imageRef = useRef(null)
