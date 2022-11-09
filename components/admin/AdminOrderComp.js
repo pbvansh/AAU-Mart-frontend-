@@ -3,7 +3,7 @@ import { orderIdForUpdateOrderState, orderStatusState } from "../../Atoms/adminP
 
 const AdminOrderComp = ({ idx, date, products, total, status, setshowStatusModal, order_id }) => {
     const getBG = () => {
-        if (status == 'Order Placed') return 'bg-[#e3c05f]';
+        if (status == 'Order Placed') return 'bg-[#d6ab35]';
         else if (status == 'Preparing'.trim()) return 'bg-[#f54983]';
         else if (status == 'Shipped'.trim()) return 'bg-[#794ef2]';
         else if (status == 'Delivered'.trim()) return 'bg-[#258a2c]';
@@ -16,7 +16,7 @@ const AdminOrderComp = ({ idx, date, products, total, status, setshowStatusModal
     // const idx = statusList.findIndex((value)=>value==orderStatus)
 
     return (
-        <tr className="bg-white border-b  hover:bg-gray-50">
+        <tr className="bg-white border-b  hover:bg-gray-50 ">
             <th scope="row" className="py-4 px-6 border-[1px] border-gray-300">
                 {idx + 1}
             </th>
