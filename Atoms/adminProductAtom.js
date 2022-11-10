@@ -25,3 +25,9 @@ export const orderUpdatedState = atom({
     key : 'orderUpdatedStateKey',
     default : false
 }) 
+
+
+export const isAddressAddesState = atom({
+    key : 'isAddressAddesStateKey',
+    default : false
+}) 

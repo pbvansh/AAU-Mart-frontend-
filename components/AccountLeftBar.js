@@ -27,9 +27,11 @@ const AccountLeftBar = ({ Fname }) => {
                             <p className='font-bold text-gray-400'>ACCOUNT SETTINGS</p>
                         </div>
                         <div>
-                            <p className='pl-12 p-2  hover:bg-blue-50 hover:text-blue-500 cursor-pointer'>Profile Information</p>
-                            <Link href={'addresses'}>
-                                <p className='pl-12 p-2 hover:bg-blue-50 hover:text-blue-500 cursor-pointer'>Manage Addresses</p>
+                            <Link href={'/profile'}>
+                                <p className='pl-12 p-2 text-sm hover:bg-blue-50 hover:text-blue-500 cursor-pointer'>Profile Information</p>
+                            </Link>
+                            <Link href={'/addresses'}>
+                                <p className='pl-12 p-2 text-sm hover:bg-blue-50 hover:text-blue-500 cursor-pointer'>Manage Addresses</p>
                             </Link>
                         </div>
                     </div>
