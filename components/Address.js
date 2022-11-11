@@ -1,6 +1,11 @@
 import { DotsVerticalIcon } from "@heroicons/react/outline"
+import { useRecoilState } from "recoil"
+import { isAddressAddesState } from "../Atoms/adminProductAtom"
+import { deleteAddress } from "../Atoms/deleteAddress"
 
 const Address = ({ data }) => {
+
+    const [isDeleted, setIsDeleted] = useRecoilState(isAddressAddesState)
     return (
         <div className="border p-5 space-y-1 relative">
             <div className="flex justify-between">
@@ -9,7 +14,11 @@ const Address = ({ data }) => {
                 <div className="absolute invisible peer-hover:visible hover:visible top-5 right-5 p-5">
                     <div className=" border rounded-md shadow-xl p-2">
                         <p className="hover:text-blue-500 cursor-pointer text-sm">Edit</p>
-                        <p className="hover:text-blue-500 cursor-pointer text-sm">Delete</p>
+                        <p onClick={() => {
+                            const value = deleteAddress(data._id);
+                            console.log(value);
+                            if (value) setIsDeleted(!isDeleted);
+                        }} className="hover:text-blue-500 cursor-pointer text-sm">Delete</p>
                     </div>
                 </div>
             </div>

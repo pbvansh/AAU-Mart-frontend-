@@ -34,7 +34,7 @@ const addresses = () => {
                     </div>
                     {showNewAddress ? <AddNewAddress setShowNewAddress={setShowNewAddress}/> : null}
                     {
-                       addresses && addresses.map((data) =><Address data={data} />)
+                       addresses && addresses.map((data) =><Address key={data._id} data={data}/>)
                     }
                 </div>
             </div>
