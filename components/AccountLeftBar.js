@@ -1,8 +1,13 @@
 import { ChevronRightIcon } from "@heroicons/react/outline"
 import { UserIcon } from "@heroicons/react/solid"
 import Link from "next/link"
+import { useRouter } from "next/router";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure()
 
 const AccountLeftBar = ({ Fname }) => {
+    const route = useRouter()
     return (
         <div className='p-10 w-full max-w-[400px] space-y-6'>
             <div className='flex items-center bg-white p-3 space-x-5 shadow-lg'>
@@ -38,11 +43,16 @@ const AccountLeftBar = ({ Fname }) => {
                 </div>
                 <hr />
                 <div className='flex justify-between p-3'>
-                    <div className='flex space-x-3 items-center cursor-pointer w-full'>
+                    <div className='flex space-x-3 items-center cursor-pointer w-full group'>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5 text-blue-600">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5.636 5.636a9 9 0 1012.728 0M12 3v9" />
                         </svg>
-                        <p className='font-semibold hover:text-blue-500 text-gray-400'>Logout</p>
+                        <p onClick={() => {
+                            localStorage.removeItem('token');
+                            localStorage.removeItem('userAAU');
+                            toast.success('Logout Succsessfully', { autoClose: 1500 });
+                            route.push('/')
+                        }} className='font-semibold group-hover:text-blue-600 text-gray-400'>Logout</p>
                     </div>
                 </div>
             </div>

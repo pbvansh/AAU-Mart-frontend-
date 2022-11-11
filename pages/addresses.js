@@ -32,9 +32,9 @@ const addresses = () => {
                         <p className='font-semibold text-xl'>Personal Information</p>
                         <p onClick={() => setShowNewAddress(true)} className='border p-3 mt-5 flex items-center text-blue-600 font-semibold cursor-pointer  text-sm'><PlusIcon className='h-5 mx-3 text-blue-600' />ADD A NEW ADDRESS</p>
                     </div>
-                    {showNewAddress ? <AddNewAddress setShowNewAddress={setShowNewAddress}/> : null}
+                    {showNewAddress ? <AddNewAddress setShowNewAddress={setShowNewAddress} /> : null}
                     {
-                       addresses && addresses.map((data) =><Address key={data._id} data={data}/>)
+                        addresses && addresses.map((data) => <Address key={data._id} data={data}/>)
                     }
                 </div>
             </div>

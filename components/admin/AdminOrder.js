@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useRecoilValue } from 'recoil';
 import { orderUpdatedState } from '../../Atoms/adminProductAtom';
 import setHeader from '../../Atoms/setHeader';
+import AddressModal from './AddressModal';
 import AdminCatogoryModal from './AdminCatogoryModal';
 import AdminOrderComp from './AdminOrderComp';
 import StatusModal from './StatusModal';
@@ -53,6 +54,9 @@ const AdminOrder = () => {
                             <th scope="col" className="py-3 px-6 border-[1px] border-gray-300">
                                 Purchase On
                             </th>
+                            <th scope="col" className="py-3 px-6 border-[1px] border-gray-300 max-w-sm">
+                                Ship To
+                            </th>
                             <th scope="col" className="py-3 px-6 border-[1px] border-gray-300">
                                 Items
                             </th>
@@ -70,7 +74,7 @@ const AdminOrder = () => {
                     <tbody>
                         {
                             orders?.map((order, _i) => (
-                                <AdminOrderComp key={_i} idx={_i} order_id={order._id} date={order.createdAt.split('T')[0]} products={order.products} total={order.total} status={order.status} setshowStatusModal={setshowStatusModal}/>
+                                <AdminOrderComp key={_i} idx={_i} user_id={order.user_id} order_id={order._id} date={order.createdAt.split('T')[0]} products={order.products} total={order.total} status={order.status} setshowStatusModal={setshowStatusModal} />
                             ))
                         }
                     </tbody>
@@ -78,11 +82,10 @@ const AdminOrder = () => {
             </section>
             {
                 showStatusModal ?
-                    <>
-                        <StatusModal setshowStatusModal={setshowStatusModal} />
-                    </>
+                    <StatusModal setshowStatusModal={setshowStatusModal} />
                     : null
             }
+            
         </div>
     )
 }
