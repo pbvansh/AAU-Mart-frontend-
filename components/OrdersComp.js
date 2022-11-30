@@ -13,38 +13,43 @@ const OrdersComp = ({ products, date, status }) => {
         address: "922 Campus Road, Drytown, Wisconsin, 1986",
         trans_date: "2019-09-12",
         due_date: "2019-10-12",
-        items: [
-            {
-                sno: 1,
-                desc: "ad sunt culpa occaecat qui",
-                qty: 5,
-                rate: 405.89,
-            },
-            {
-                sno: 2,
-                desc: "cillum quis sunt qui aute",
-                qty: 5,
-                rate: 373.11,
-            },
-            {
-                sno: 3,
-                desc: "ea commodo labore culpa irure",
-                qty: 5,
-                rate: 458.61,
-            },
-            {
-                sno: 4,
-                desc: "nisi consequat et adipisicing dolor",
-                qty: 10,
-                rate: 725.24,
-            },
-            {
-                sno: 5,
-                desc: "proident cillum anim elit esse",
-                qty: 4,
-                rate: 141.02,
-            },
-        ],
+        items: products.map((product, i) => ({
+            sno: i,
+            desc: product.id.desc,
+            qty: product.quantity,
+            rate: 405.89,
+        }))
+        //     {
+        //         sno: 1,
+        //         desc: "ad sunt culpa occaecat qui",
+        //         qty: 5,
+        //         rate: 405.89,
+        //     },
+        //     {
+        //         sno: 2,
+        //         desc: "cillum quis sunt qui aute",
+        //         qty: 5,
+        //         rate: 373.11,
+        //     },
+        //     {
+        //         sno: 3,
+        //         desc: "ea commodo labore culpa irure",
+        //         qty: 5,
+        //         rate: 458.61,
+        //     },
+        //     {
+        //         sno: 4,
+        //         desc: "nisi consequat et adipisicing dolor",
+        //         qty: 10,
+        //         rate: 725.24,
+        //     },
+        //     {
+        //         sno: 5,
+        //         desc: "proident cillum anim elit esse",
+        //         qty: 4,
+        //         rate: 141.02,
+        //     },
+        // ],
     };
     return (
         <div className="border border-black m-3 rounded-sm">
