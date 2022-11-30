@@ -36,7 +36,7 @@ const AdminOrderComp = ({ idx, date, products, total, status, setshowStatusModal
                 {date}
             </td>
             <td className="py-4 px-6 border-[1px] border-gray-300 relative max-w-sm">
-                {address?.length > 0 ?
+                {address && (
                     <>
                         <span onClick={() => setshowAddressModal(true)} className="absolute right-0 m-3 hover:bg-gray-300 cursor-pointer rounded-md">
                             <DotsVerticalIcon className="h-5 my-1" />
@@ -44,7 +44,7 @@ const AdminOrderComp = ({ idx, date, products, total, status, setshowStatusModal
                         {address.address}<br />
                         {address.city},{address.state} - <span className="font-semibold">{address.pincode}</span>
                     </>
-                    : null
+                    )
                 }
             </td>
             <td className="py-4 px-6 border-[1px] border-gray-300">
