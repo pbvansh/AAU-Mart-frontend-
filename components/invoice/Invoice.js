@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
 });
 
 const Invoice = ({ invoice }) => {
-    console.log(invoice);
     return (
         <Document>
             <Page size="A4" style={styles.page}>

@@ -11,8 +11,10 @@ const styles = StyleSheet.create({
         color: '#32a866',
         letterSpacing: 4,
         fontSize: 25,
-        textAlign: 'center',
+        // textAlign: 'center',
         textTransform: 'uppercase',
+        marginLeft: 'auto',
+        marginRight: 'auto'
     }
 });
 

@@ -48,7 +48,6 @@ const Pdf = () => {
         ],
     };
     const [isClient, setIsClient] = useState(false)
-    console.log(invoice);
     useEffect(() => {
         setIsClient(true)
     }, [])

@@ -23,7 +23,6 @@ const AdminOrderComp = ({ idx, date, products, total, status, setshowStatusModal
     useEffect(() => {
         axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/admin/order/address/' + user_id).then((res) => {
             setAddress(res.data)
-            console.log(res.data);
         })
     }, [])
 
