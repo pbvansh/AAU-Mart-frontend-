@@ -9,8 +9,6 @@ import JWT from 'jsonwebtoken'
 import Header from "../../../components/Header";
 
 const Index = ({ product }) => {
-  // const router = useRouter()
-  // const pid = router.query.id;
   const [items, setItems] = useRecoilState(basketAtomState)
   const [getAgainAllItem, setGAAI] = useRecoilState(getAgainAllItemtAtom)
   async function addProductToBag() {
