@@ -9,7 +9,7 @@ import setHeader from '../Atoms/setHeader'
 import Address from '../components/Address'
 import { isAddressAddesState } from '../Atoms/adminProductAtom'
 
-const addresses = () => {
+const Addresses = () => {
 
     const profile = useRecoilValue(profileState)
     const [addresses, setAddresses] = useState([])
@@ -42,5 +42,5 @@ const addresses = () => {
     )
 }
 
-export default addresses;
+export default Addresses;
 
