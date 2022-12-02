@@ -1,16 +1,14 @@
 
 import { ChevronDoubleLeftIcon } from "@heroicons/react/solid";
 import axios from "axios";
-import { JsonWebTokenError } from "jsonwebtoken";
 import Link from "next/link";
 import { useRecoilState } from 'recoil'
-import { basketAtomState, getAgainAllItemtAtom } from "../../../Atoms/basketAtom";
+import { basketAtomState } from "../../../Atoms/basketAtom";
 import JWT from 'jsonwebtoken'
 import Header from "../../../components/Header";
 
 const Index = ({ product }) => {
   const [items, setItems] = useRecoilState(basketAtomState)
-  const [getAgainAllItem, setGAAI] = useRecoilState(getAgainAllItemtAtom)
   async function addProductToBag() {
 
     if (localStorage.getItem('token')) {
