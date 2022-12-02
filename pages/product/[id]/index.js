@@ -15,7 +15,8 @@ const Index = ({ product }) => {
       const { userId } = JWT.decode(localStorage.getItem('token'));
 
       const idx = items.findIndex((item) => item.product_id._id == product._id)
-      if (idx >= 0) {
+      if (idx >= 0)
+       {
         let newItem = [...items]
         let obj = { ...newItem[idx] }
         obj.quantity++;
@@ -76,16 +77,6 @@ const Index = ({ product }) => {
 
 export default Index;
 
-export async function getStaticProps(context) {
-  const { id } = context.params;
-  const res = await axios.get('https://aaumartbackend.pratikvansh.repl.co/api/product/' + id)
-  const product = res.data;
-  return {
-    props: {
-      product,
-    }
-  }
-}
 
 export async function getStaticPaths() {
   const res = await axios.get('https://aaumartbackend.pratikvansh.repl.co/api/product')
@@ -97,3 +88,16 @@ export async function getStaticPaths() {
     fallback: false
   }
 }
+
+export async function getStaticProps(context) {
+  const { id } = context.params;
+  const res = await axios.get('https://aaumartbackend.pratikvansh.repl.co/api/product/' + id)
+  const product = res.data;
+  return {
+    props: {
+      product,
+    }
+  }
+}
+
+
