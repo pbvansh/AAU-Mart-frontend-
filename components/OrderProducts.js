@@ -22,7 +22,7 @@ const OrderProducts = ({ img, name, price, desc, status, quantity }) => {
                     <p className="font-semibold text-blue-500">{name}</p>
                     <p>{desc}</p>
                 </div>
-                <p> ₹{price} * {quantity}</p>
+                <p> ₹{price}<span className="text-blue-400"> x </span> {quantity}</p>
                 <div>
                     <p className="border bg-gray-200 pr-3 py-2 rounded-md font-semibo"><span className={`rounded-full h-1 p-1  mr-3 ${getStyle()}`}></span>{status}</p>
                     <p className="p-2 text-sm">{ getText() }</p>

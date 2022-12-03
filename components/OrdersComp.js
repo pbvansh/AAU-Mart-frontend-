@@ -12,9 +12,11 @@ const OrdersComp = ({ products, date, status }) => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         const user = JWT.decode(token)
+        console.log(user);
         setEmail(user.userEmail)
         axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/admin/order/address/' + user.userId).then((res) => {
             setAddress(res.data)
+            console.log(res.data);
         })
     }, [])
     const invoice = {
