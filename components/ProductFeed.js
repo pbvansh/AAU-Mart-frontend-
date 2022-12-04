@@ -38,7 +38,7 @@ const ProductFeed = () => {
           </div>
           :
           <div className='flex items-center justify-center '>
-            <img src='item-not-found.png'/>
+            <img src='item-not-found.png' />
           </div>
         }
 
