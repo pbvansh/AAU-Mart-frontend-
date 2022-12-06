@@ -22,6 +22,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRecoilState } from "recoil";
 import { isAdminAtomState } from "../Atoms/authAtom";
+import { URLState } from "../Atoms/adminProductAtom";
 
 const Navbar = () => {
 
@@ -31,7 +32,18 @@ const Navbar = () => {
 
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useRecoilState(isAdminAtomState)
-  
+  const [URL,setURL] = useRecoilState(URLState)
+
+  const serachProduct = (name) => {
+    if(name==''){
+      setURL('https://aaumartbackend.pratikvansh.repl.co/api/product')
+    }
+    else{
+      route.push('/products')
+      setURL('https://aaumartbackend.pratikvansh.repl.co/api/product?name='+name)
+    }
+  }
+
   useEffect(() => {
     setUser(localStorage.getItem('userAAU'))
   })
@@ -56,19 +68,22 @@ const Navbar = () => {
 
 
         {/* serch bar */}
-        <div className="bg-gray-100 flex items-center justify-center mx-5 rounded-full md:rounded-sm border md:flex-grow">
+        <form onSubmit={(e) => {
+          e.preventDefault()
+          serachProduct(e.target.productName.value)
+        }} className="bg-gray-100 flex items-center justify-center mx-5 rounded-full md:rounded-sm border md:flex-grow">
           <SearchIcon className="h-8 p-1 hover:animate-pulse hover:text-orange-400 items-center justify-center md:animate-none md:px-2 md:text-gray-500" />
-          <input type={'text'} placeholder='Search for Products' className="hidden md:inline-flex p-2 outline-none md:flex-1" />
-        </div>
+          <input type={'text'} name='productName' placeholder='Search for Products' className="hidden md:inline-flex p-2 outline-none md:flex-1" />
+        </form>
 
         {/* side bar */}
 
         <div className="flex space-x-5 items-center mx-10">
           {route.asPath != '/auth' &&
-              <div className="flex flex-col p-1 cursor-pointer group" onClick={() => setshowDrop(true)}>
-                <UserCircleIcon className="sidenavmenu group-hover:animate-pulse group-hover:text-blue-500" />
-                <p className="text-sm">Profile</p>
-              </div>
+            <div className="flex flex-col p-1 cursor-pointer group" onClick={() => setshowDrop(true)}>
+              <UserCircleIcon className="sidenavmenu group-hover:animate-pulse group-hover:text-blue-500" />
+              <p className="text-sm">Profile</p>
+            </div>
           }
           <Link href={'/order'}>
             <div className='flex flex-col p-1 cursor-pointer group items-center'>
@@ -116,7 +131,7 @@ const Navbar = () => {
                                 : <>
                                   <span className="text-xs">To access account and manage orders</span>
                                   <Link href={'/auth'}>
-                                    <button onClick={()=>setshowDrop(false)} className="w-fit mx-auto border px-5 font-medium p-2 border-gray-300 text-[#45C9A5] hover:border-[#45C9A5] ">LOGIN/SIGNUP</button>
+                                    <button onClick={() => setshowDrop(false)} className="w-fit mx-auto border px-5 font-medium p-2 border-gray-300 text-[#45C9A5] hover:border-[#45C9A5] ">LOGIN/SIGNUP</button>
                                   </Link>
                                 </>
                             }
@@ -124,21 +139,21 @@ const Navbar = () => {
                           </div>
                         </li>
                         <Link href={'/profile'}>
-                        <li className="inline dropLi">Profile</li>
+                          <li className="inline dropLi">Profile</li>
                         </Link>
                         <li className="inline dropLi">Setting</li>
                         {
                           localStorage.getItem('token') ?
-                          (
-                            <li className="inline dropLi" onClick={() => {
-                              localStorage.removeItem('token');
-                              localStorage.removeItem('userAAU');
-                              setshowDrop(false);
-                              setIsAdmin(false)
-                              toast.success('Logout Succsessfully', { autoClose: 1500 });
-                              route.push('/')
-                            }}>Logout</li>
-                          ) : null
+                            (
+                              <li className="inline dropLi" onClick={() => {
+                                localStorage.removeItem('token');
+                                localStorage.removeItem('userAAU');
+                                setshowDrop(false);
+                                setIsAdmin(false)
+                                toast.success('Logout Succsessfully', { autoClose: 1500 });
+                                route.push('/')
+                              }}>Logout</li>
+                            ) : null
                         }
                       </ul>
                     </div>
