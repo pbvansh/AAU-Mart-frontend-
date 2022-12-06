@@ -5,23 +5,20 @@ import OrderProducts from "./OrderProducts";
 import JWT from 'jsonwebtoken'
 import axios from "axios";
 
-const OrdersComp = ({ products, date, status }) => {
+const OrdersComp = ({ products, date, status,invoice_id }) => {
 
     const [address, setAddress] = useState([])
     const [email,setEmail] = useState(null)
     useEffect(() => {
         const token = localStorage.getItem('token');
         const user = JWT.decode(token)
-        console.log(user);
         setEmail(user.userEmail)
         axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/admin/order/address/' + user.userId).then((res) => {
-            setAddress(res.data)
-            console.log(res.data);
+            setAddress(res.data);
         })
     }, [])
     const invoice = {
-        id: "5df3180a09ea16dc4b95f910",
-        invoice_no: "201906-28",
+        invoice_no: invoice_id.substr(-10),
         balance: "$2,283.74",
         company: address.name,
         email,

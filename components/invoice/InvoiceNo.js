@@ -28,6 +28,7 @@ const InvoiceNo = ({ invoice }) => {
             <View style={styles.invoiceNoContainer}>
                 <Text style={styles.label}>Invoice No:</Text>
                 <Text style={styles.invoiceDate}>{invoice.invoice_no}</Text>
+                {/* {console.log(invoice.invoice_no)} */}
             </View >
             <View style={styles.invoiceDateContainer}>
                 <Text style={styles.label}>Date: </Text>
