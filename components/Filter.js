@@ -17,10 +17,10 @@ const Filter = ({setURL}) => {
 
     const clear = (e)=>{
         e.preventDefault();
-        setCatName('All');
+        setCatName('all');
         setMax(5000)
         setMin(0)
-        setProduct('All')
+        setProduct(null)
         setURL(`https://aaumartbackend.pratikvansh.repl.co/api/product`)
     }
 
@@ -50,9 +50,9 @@ const Filter = ({setURL}) => {
             <div className="p-5 space-y-3">
                 <p className="font-bold text-sm">CATEGORIES</p>
                 <select value={category} onChange={(e)=>setCatName(e.target.value)} className="focus:outline-none border p-[9px] text-sm w-full rounded-sm" name="state">
-                    <option value="All">--All--</option>
+                    <option value="all">--All--</option>
                     {
-                        cat.map(({ name }) => <option className="" value={name}>{name}</option>)
+                        cat.map(({ name }) => <option key={name} className="" value={name}>{name}</option>)
                     }
                 </select>
             </div>

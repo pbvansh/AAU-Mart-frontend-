@@ -31,3 +31,8 @@ export const isAddressAddesState = atom({
     key : 'isAddressAddesStateKey',
     default : false
 }) 
+
+export const URLState = atom({
+    key : 'URLStateKey',
+    default : 'https://aaumartbackend.pratikvansh.repl.co/api/product'
+}) 

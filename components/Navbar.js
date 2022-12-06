@@ -49,8 +49,8 @@ const Navbar = () => {
         {/* right side */}
         <div className="flex items-center justify-end space-x-5 md:space-x-2">
           <NavbarItem Icon={HomeIcon} title='Home' />
-          <NavbarItem Icon={ShoppingBagIcon} title='Products' path={'/addProduct'} />
-          <NavbarItem Icon={FireIcon} title='For You' />
+          <NavbarItem Icon={ShoppingBagIcon} title='Products' path={'/products'} />
+          {/* <NavbarItem Icon={FireIcon} title='For You' />/ */}
           <NavbarItem Icon={UserIcon} title='Contact' path={'/contact'} />
         </div>
 

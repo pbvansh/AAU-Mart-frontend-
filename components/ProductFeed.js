@@ -1,12 +1,14 @@
 import axios from 'axios'
 import { useEffect, useState } from "react";
+import { useRecoilState } from 'recoil';
+import { URLState } from '../Atoms/adminProductAtom';
 import Filter from './Filter';
 import Product from './Product';
 
 const ProductFeed = () => {
 
   const [products, setProducts] = useState([])
-  const [URL, setURL] = useState('https://aaumartbackend.pratikvansh.repl.co/api/product');
+  const [URL, setURL] = useRecoilState(URLState);
 
   useEffect(() => {
     axios.get(URL).then((prod) => {
