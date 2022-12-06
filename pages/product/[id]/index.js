@@ -6,6 +6,9 @@ import { useRecoilState } from 'recoil'
 import { basketAtomState } from "../../../Atoms/basketAtom";
 import JWT from 'jsonwebtoken'
 import Header from "../../../components/Header";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure()
 
 const Index = ({ product }) => {
   const [items, setItems] = useRecoilState(basketAtomState)
@@ -25,7 +28,7 @@ const Index = ({ product }) => {
         await axios.put(`https://aaumartbackend.pratikvansh.repl.co/api/cart/${items[idx]._id}`, {
           quantity: obj.quantity,
         })
-
+        toast.success(`increase quantity of ${product.name} - ${obj.quantity}` , {autoClose : 1500})
 
       } else {
         const cartItem = await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/cart/addItem', {
@@ -46,6 +49,7 @@ const Index = ({ product }) => {
             img: product.img_url
           }
         }])
+        toast.success(`${product.name} added successfully`, {autoClose : 1500})
       }
     }
 
@@ -57,7 +61,7 @@ const Index = ({ product }) => {
       <div className="grid md:grid-cols-2">
         <div className="flex items-center justify-center flex-col">
           <img src={product.img_url} className='max-w-sm mb-10' />
-          <Link href={'/'}>
+          <Link href={'/products'}>
             <span className="cursor-pointer p-2 rounded-sm bg-gray-100  hover:bg-gray-300 px-3"><ChevronDoubleLeftIcon className="h-5 inline" /> Continue Shopping </span>
           </Link>
         </div>

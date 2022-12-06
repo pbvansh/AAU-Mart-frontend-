@@ -47,7 +47,6 @@ const Cart = () => {
     const { data: { razorOrder } } = await axios.post('https://AAUMartBackend.pratikvansh.repl.co/api/order/placeOrder', {
       products, user_id: userId
     }, setHeader())
-    console.log(razorOrder);
     var options = {
       key: "rzp_test_YcA9wL420Hdf9Q",
       amount: razorOrder.amount,
@@ -132,9 +131,9 @@ const Cart = () => {
             <div className="border mx-8" />
             <p className="p-10 text-xl">Your Shopping Bag is Empty.</p>
             <div className="p-10">
-              <Link href={'/'}>
+            <Link href='/products'>
                 <span className="cursor-pointer p-2 rounded-sm border border-black  hover:bg-gray-300 px-3"><ChevronDoubleLeftIcon className="h-5 inline" /> Continue Shopping </span>
-              </Link>
+            </Link>
             </div>
           </div>
         )

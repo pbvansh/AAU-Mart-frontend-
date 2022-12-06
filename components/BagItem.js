@@ -6,8 +6,6 @@ import { useRecoilState } from "recoil"
 import { basketAtomState } from "../Atoms/basketAtom"
 
 const BagItem = ({ item, idx }) => {
-
-    console.log(item);
     const [total, setTotale] = useState(0)
     const [items, setItem] = useRecoilState(basketAtomState)
 

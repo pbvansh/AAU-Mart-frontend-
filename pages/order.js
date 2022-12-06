@@ -41,7 +41,7 @@ const Order = () => {
               </div>
 
               <div className="m-10 items-center">
-                <Link href={'/'}>
+                <Link href={'/products'}>
                   <span className="cursor-pointer p-2 rounded-sm hover:bg-gray-100 px-3"><ChevronDoubleLeftIcon className="h-5 inline" /> Continue Shopping </span>
                 </Link>
               </div>

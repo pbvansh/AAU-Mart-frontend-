@@ -23,6 +23,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useRecoilState } from "recoil";
 import { isAdminAtomState } from "../Atoms/authAtom";
 import { URLState } from "../Atoms/adminProductAtom";
+import axios from "axios";
+import JWT from 'jsonwebtoken'
 
 const Navbar = () => {
 
@@ -32,17 +34,26 @@ const Navbar = () => {
 
   const [user, setUser] = useState(null);
   const [isAdmin, setIsAdmin] = useRecoilState(isAdminAtomState)
-  const [URL,setURL] = useRecoilState(URLState)
+  const [URL, setURL] = useRecoilState(URLState)
+  const [total, setTotal] = useState(0)
 
   const serachProduct = (name) => {
-    if(name==''){
+    if (name == '') {
       setURL('https://aaumartbackend.pratikvansh.repl.co/api/product')
     }
-    else{
+    else {
       route.push('/products')
-      setURL('https://aaumartbackend.pratikvansh.repl.co/api/product?name='+name)
+      setURL('https://aaumartbackend.pratikvansh.repl.co/api/product?name=' + name)
     }
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const user = JWT.decode(token)
+    axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/cart/getTotal/' + user.userId).then((res) => {
+      setTotal(res.data);
+    })
+  }, [])
 
   useEffect(() => {
     setUser(localStorage.getItem('userAAU'))
@@ -94,7 +105,7 @@ const Navbar = () => {
           </Link>
           <Link href={"/basket"}>
             <div className="flex flex-col p-1 cursor-pointer group relative">
-              <span className="absolute -top-2 -right-2 border rounded-full text-xs border-gray-400 text-orange-500 px-[0.3rem] font-semibold">{bagItem.length}</span>
+              <span className="absolute -top-2 -right-2 border rounded-full text-xs border-gray-400 text-orange-500 px-[0.3rem] font-semibold">{bagItem.length ?bagItem.length : total}</span>
               <ShoppingCartIcon className="sidenavmenu group-hover:animate-pulse group-hover:text-lime-500" />
               <p className="text-sm">Bag</p>
             </div>
