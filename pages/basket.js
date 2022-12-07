@@ -8,6 +8,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import JWT from 'jsonwebtoken';
 import setHeader from '../Atoms/setHeader'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from "next/router";
+toast.configure()
 
 const Cart = () => {
 
@@ -15,9 +19,10 @@ const Cart = () => {
   const [userId, setUserId] = useState(null)
   const [basketItem, setBasketItem] = useRecoilState(basketAtomState);
   const basketTotal = useRecoilValue(basketItemTotalAmountAtom);
+  const route = useRouter()
 
 
-  useEffect(()=>{
+  useEffect(() => {
     try {
       const { userId } = JWT.decode(localStorage.getItem('token'))
       setUserId(userId)
@@ -28,49 +33,59 @@ const Cart = () => {
     catch (e) {
       alert('Please login your account')
     }
-  },[])
+  }, [])
 
-    useEffect(() => {
-      let total = 0;
-      for (let i = 0; i < basketItem.length; i++) {
-        let sum = Number(basketItem[i].quantity) * Number(basketItem[i].product_id.price)
-        total += sum;
-      }
-      setBagTotale(total)
-    }, [basketItem])
+  useEffect(() => {
+    let total = 0;
+    for (let i = 0; i < basketItem.length; i++) {
+      let sum = Number(basketItem[i].quantity) * Number(basketItem[i].product_id.price)
+      total += sum;
+    }
+    setBagTotale(total)
+  }, [basketItem])
 
   const handlePyment = async (e) => {
-    const products = basketItem.map((pro) => {
-      return { id: pro.product_id?._id, quantity: pro.quantity }
-    })
 
-    const { data: { razorOrder } } = await axios.post('https://AAUMartBackend.pratikvansh.repl.co/api/order/placeOrder', {
-      products, user_id: userId
-    }, setHeader())
-    var options = {
-      key: "rzp_test_YcA9wL420Hdf9Q",
-      amount: razorOrder.amount,
-      currency: "INR",
-      name: "AAU-Mart",
-      description: "Test Transaction",
-      image: "https://img.freepik.com/free-vector/cute-shopping-cart-logo_23-2148453859.jpg",
-      order_id: razorOrder.id,
-      callback_url: "https://AAUMartBackend.pratikvansh.repl.co/api/order/"+userId+"/payment",
-      prefill: {
-        name: localStorage.getItem('userAAU').split('@')[0],
-        email: localStorage.getItem('userAAU'),
-        contact: "9999999999"
-      },
-      notes: {
-        address: "Razorpay Corporate Office"
-      },
-      theme: {
-        color: "#3449b2"
-      }
-    };
+    const address = await axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/user/address', setHeader());
+    if(address.length > 0){
+      const products = basketItem.map((pro) => {
+        return { id: pro.product_id?._id, quantity: pro.quantity }
+      })
+  
+      const { data: { razorOrder } } = await axios.post('https://AAUMartBackend.pratikvansh.repl.co/api/order/placeOrder', {
+        products, user_id: userId
+      }, setHeader())
+      var options = {
+        key: "rzp_test_YcA9wL420Hdf9Q",
+        amount: razorOrder.amount,
+        currency: "INR",
+        name: "AAU-Mart",
+        description: "Test Transaction",
+        image: "https://img.freepik.com/free-vector/cute-shopping-cart-logo_23-2148453859.jpg",
+        order_id: razorOrder.id,
+        callback_url: "https://AAUMartBackend.pratikvansh.repl.co/api/order/" + userId + "/payment",
+        prefill: {
+          name: localStorage.getItem('userAAU').split('@')[0],
+          email: localStorage.getItem('userAAU'),
+          contact: "9999999999"
+        },
+        notes: {
+          address: "Razorpay Corporate Office"
+        },
+        theme: {
+          color: "#3449b2"
+        }
+      };
+  
+      const RAZOR = new window.Razorpay(options);
+      RAZOR.open();
+    }
+    else{
+        toast.warning('We need your address. first Add it then continue..',{autoClose : 2000 , position:"top-center"});
+        route.push('/addresses')
+    }
 
-    const RAZOR = new window.Razorpay(options);
-    RAZOR.open();
+    
   }
 
   return (
@@ -101,7 +116,7 @@ const Cart = () => {
                 }
               </div>
               <div className="m-10 items-center">
-                <Link href={'/'}>
+                <Link href={'/products'}>
                   <span className="cursor-pointer p-2 rounded-sm hover:bg-gray-100 px-3"><ChevronDoubleLeftIcon className="h-5 inline" /> Continue Shopping </span>
                 </Link>
               </div>
@@ -131,9 +146,9 @@ const Cart = () => {
             <div className="border mx-8" />
             <p className="p-10 text-xl">Your Shopping Bag is Empty.</p>
             <div className="p-10">
-            <Link href='/products'>
+              <Link href='/products'>
                 <span className="cursor-pointer p-2 rounded-sm border border-black  hover:bg-gray-300 px-3"><ChevronDoubleLeftIcon className="h-5 inline" /> Continue Shopping </span>
-            </Link>
+              </Link>
             </div>
           </div>
         )

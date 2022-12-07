@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import validator from 'validator'
 import { useRecoilState } from 'recoil'
 import { profileState } from '../Atoms/authAtom'
+import Header from '../components/Header'
 toast.configure()
 
 const Profile = () => {
@@ -72,6 +73,7 @@ const Profile = () => {
 
   return (
     <div className='bg-gray-100'>
+      <Header name='My Profile'/>
       <div className='min-h-screen max-w-screen-2xl mx-auto flex'>
         {/* left side */}
         <AccountLeftBar Fname={profile.firstName} />

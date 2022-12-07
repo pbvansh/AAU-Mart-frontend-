@@ -8,6 +8,7 @@ import AddNewAddress from '../components/AddNewAddress'
 import setHeader from '../Atoms/setHeader'
 import Address from '../components/Address'
 import { isAddressAddesState } from '../Atoms/adminProductAtom'
+import Header from '../components/Header'
 
 const Addresses = () => {
 
@@ -23,6 +24,7 @@ const Addresses = () => {
 
     return (
         <div className='bg-gray-100'>
+            <Header name='My addresses'/>
             <div className='min-h-screen max-w-screen-2xl mx-auto flex'>
                 {/* left side */}
                 <AccountLeftBar Fname={profile.firstName} />
