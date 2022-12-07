@@ -11,6 +11,7 @@ import setHeader from '../Atoms/setHeader'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/router";
+import Loader from "../components/Loader";
 toast.configure()
 
 const Cart = () => {
@@ -19,6 +20,7 @@ const Cart = () => {
   const [userId, setUserId] = useState(null)
   const [basketItem, setBasketItem] = useRecoilState(basketAtomState);
   const basketTotal = useRecoilValue(basketItemTotalAmountAtom);
+  const [loder, setLoder] = useState(false)
   const route = useRouter()
 
 
@@ -45,7 +47,7 @@ const Cart = () => {
   }, [basketItem])
 
   const handlePyment = async (e) => {
-
+    setLoder(true)
     const {data} = await axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/user/address', setHeader());
     console.log(data);
     if(data > 0){
@@ -77,7 +79,7 @@ const Cart = () => {
           color: "#3449b2"
         }
       };
-  
+      setLoder(false)
       const RAZOR = new window.Razorpay(options);
       RAZOR.open();
     }
@@ -91,6 +93,11 @@ const Cart = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 select-none">
+       {loder && (
+                <div className='z-50 flex backdrop-blur-[1px] h-full w-full items-center justify-center absolute mx-auto'>
+                    <Loader className="bg-red-300" />
+                </div>
+            )}
       <Header name='Basket' />
       {
         basketItem.length > 0 ? (
