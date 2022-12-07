@@ -47,10 +47,11 @@ const Cart = () => {
   }, [basketItem])
 
   const handlePyment = async (e) => {
-    setLoder(true)
+  
     const {data} = await axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/user/address', setHeader());
     console.log(data);
     if(data > 0){
+      setLoder(true)
       const products = basketItem.map((pro) => {
         return { id: pro.product_id?._id, quantity: pro.quantity }
       })
