@@ -46,8 +46,9 @@ const Cart = () => {
 
   const handlePyment = async (e) => {
 
-    const address = await axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/user/address', setHeader());
-    if(address.length > 0){
+    const {data} = await axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/user/address', setHeader());
+    console.log(data);
+    if(data > 0){
       const products = basketItem.map((pro) => {
         return { id: pro.product_id?._id, quantity: pro.quantity }
       })
