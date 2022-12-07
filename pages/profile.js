@@ -93,11 +93,11 @@ const Profile = () => {
             <span className='text-sm'>Your Gender</span>
             <div className='flex space-x-5 p-3'>
               <div className='space-x-2'>
-                <input type={'radio'} name='Gender' checked={profile?.Gender == 'Male' ? true : false} value={'Male'} onChange={(e) => setGender(e.target.value)} />
+                <input type={'radio'} name='Gender' defaultChecked={profile?.Gender == 'Male' ? true : false} value={'Male'} onChange={(e) => setGender(e.target.value)} />
                 <label>Male</label>
               </div>
               <div className='space-x-2'>
-                <input type={'radio'} name='Gender' checked={profile?.Gender == 'Female' ? true : false} value={'Female'} onChange={(e) => setGender(e.target.value)} />
+                <input type={'radio'} name='Gender' defaultChecked={profile?.Gender == 'Female' ? true : false} value={'Female'} onChange={(e) => setGender(e.target.value)} />
                 <label>Female</label>
               </div>
             </div>
