@@ -15,7 +15,7 @@ const Order = () => {
   const route = useRouter()
 
   useEffect(() => {
-    if (localStorage.getItem('tokan')) {
+    if (localStorage.getItem('token')) {
       Axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/order/products', setHeader()).then((res) => {
         setProducts(res.data)
       })

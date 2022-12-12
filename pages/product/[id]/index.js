@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
 
 const Index = ({ product }) => {
+  console.log(product);
   const [items, setItems] = useRecoilState(basketAtomState)
   async function addProductToBag() {
 
