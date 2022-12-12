@@ -8,6 +8,7 @@ import { useRecoilState } from "recoil";
 import { addItemDoneState } from "../../Atoms/adminProductAtom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Loader from "../Loader";
 
 const ProductModal = ({setShowModal}) => {
     const [productImage, setImage] = useState(null)
@@ -78,6 +79,11 @@ const ProductModal = ({setShowModal}) => {
     }
     return (
         <div className="fixed inset-0 z-10 overflow-y-auto">
+             {loder && (
+                <div className='z-50 flex backdrop-blur-[1px] h-full w-full items-center justify-center absolute mx-auto'>
+                    <Loader className="bg-red-300" />
+                </div>
+            )}
             <div
                 className="fixed inset-0 w-full h-full bg-black opacity-40"
                 onClick={() => setShowModal(false)}

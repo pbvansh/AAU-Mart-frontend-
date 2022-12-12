@@ -28,7 +28,7 @@ const Index = ({ product }) => {
         await axios.put(`https://aaumartbackend.pratikvansh.repl.co/api/cart/${items[idx]._id}`, {
           quantity: obj.quantity,
         })
-        toast.success(`increase quantity of ${product.name} - ${obj.quantity}` , {autoClose : 1500})
+        toast.success(`increase quantity of ${product?.name} - ${obj?.quantity}` , {autoClose : 1500})
 
       } else {
         const cartItem = await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/cart/addItem', {
@@ -57,20 +57,20 @@ const Index = ({ product }) => {
 
   return (
     <div className="min-h-screen max-w-screen-lg mx-10 md:mx-auto md:mt-20 py-10">
-      <Header name={`Product | ${product.name}`} />
+      <Header name={`Product | ${product?.name}`} />
       <div className="grid md:grid-cols-2">
         <div className="flex items-center justify-center flex-col">
-          <img src={product.img_url} className='max-w-sm mb-10' />
+          <img src={product?.img_url} className='max-w-sm mb-10' />
           <Link href={'/products'}>
             <span className="cursor-pointer p-2 rounded-sm bg-gray-100  hover:bg-gray-300 px-3"><ChevronDoubleLeftIcon className="h-5 inline" /> Continue Shopping </span>
           </Link>
         </div>
         <div className="flex mx-auto mt-14 md:mt-0 md:mx-0 flex-col justify-center space-y-5">
           <span className="w-14 h-1 bg-green-600" />
-          <p className="font-bold text-2xl">{product.name}</p>
-          <p className="text-green-500 font-bold text-2xl"><span>₹</span> {product.price}</p>
+          <p className="font-bold text-2xl">{product?.name}</p>
+          <p className="text-green-500 font-bold text-2xl"><span>₹</span> {product?.price}</p>
           <p className="font-semibold text-xl">
-            {product.desc}
+            {product?.desc}
           </p>
           <button onClick={addProductToBag} className="bg-green-500 p-3 rounded-sm max-w-xs font-semibold text-white hover:bg-gray-500">ADD TO BAG</button>
         </div>
