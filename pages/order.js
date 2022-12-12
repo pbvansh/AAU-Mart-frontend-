@@ -5,16 +5,25 @@ import { useEffect, useState } from "react"
 import setHeader from "../Atoms/setHeader"
 import Header from "../components/Header"
 import OrdersComp from "../components/OrdersComp"
-
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from "next/router"
+toast.configure()
 
 const Order = () => {
   const [products, setProducts] = useState(null)
+  const route = useRouter()
 
   useEffect(() => {
-    Axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/order/products',setHeader()).then((res) => {
-      setProducts(res.data)
-    })
+    if (localStorage.getItem('tokan')) {
+      Axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/order/products', setHeader()).then((res) => {
+        setProducts(res.data)
+      })
+    } else {
+      route.push('/auth')
+      toast.warning('Please login your account than access your orders', { autoClose: 2000 })
 
+    }
   }, [])
 
   return (
@@ -34,7 +43,7 @@ const Order = () => {
                   products &&
                   products.map((order) =>
                   (
-                    <OrdersComp key={order._id} invoice_id={order._id} products={order.products} date={order.createdAt} status = {order.status}/>
+                    <OrdersComp key={order._id} invoice_id={order._id} products={order.products} date={order.createdAt} status={order.status} />
                   )
                   )
                 }

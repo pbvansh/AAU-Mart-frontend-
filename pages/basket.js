@@ -21,7 +21,7 @@ const Cart = () => {
   const [basketItem, setBasketItem] = useRecoilState(basketAtomState);
   const basketTotal = useRecoilValue(basketItemTotalAmountAtom);
   const [loder, setLoder] = useState(false)
-  const route = useRouter()
+  const route = useRouter();
 
 
   useEffect(() => {
