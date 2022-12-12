@@ -8,7 +8,6 @@ const HomeFeed = () => {
     const route = useRouter();
 
     const BuyNow =(cat)=>{
-        console.log(cat);
         route.push('/products')
         setURL(`https://aaumartbackend.pratikvansh.repl.co/api/product?category=${cat}`);
     }

@@ -11,7 +11,6 @@ import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
 
 const Index = ({ product }) => {
-  console.log(product);
   const [items, setItems] = useRecoilState(basketAtomState)
   async function addProductToBag() {
 
@@ -90,7 +89,7 @@ export async function getStaticPaths() {
   const paths = ids.map(id => ({ params: { id: id.toString() } }))
   return {
     paths,
-    fallback: false
+    fallback: 'blocking'
   }
 }
 
