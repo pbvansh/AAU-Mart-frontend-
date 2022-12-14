@@ -4,6 +4,7 @@ import AdminProductFeed from "./AdminProductFeed"
 import AdminCategory from "./AdminCategory"
 import AdminOrder from "./AdminOrder"
 import { useRouter } from "next/router"
+import AdminUserFeed from "./AdminUserFeed"
 
 
 const AdminDashbord = () => {
@@ -16,6 +17,10 @@ const AdminDashbord = () => {
         } else if (route.query.section == 'Categories') {
             return (
                 <AdminCategory />
+            )
+        } else if (route.query.section == 'Users') {
+            return (
+                <AdminUserFeed />
             )
         } else if (route.query.section == 'Order') {
             return (
@@ -42,6 +47,7 @@ const AdminDashbord = () => {
                         <p onClick={() => { route.push('?section=Product') }} className="p-2 px-10 mx-10 hover:text-blue-600 cursor-pointer border border-white hover:border-blue-300">Products</p>
                         <p onClick={() => { route.push('?section=Categories') }} className="p-2 px-10 mx-10 hover:text-blue-600 cursor-pointer border border-white hover:border-blue-300">Categories</p>
                         <p onClick={() => { route.push('?section=Order') }} className="p-2 px-10 mx-10 hover:text-blue-600 cursor-pointer border border-white hover:border-blue-300">Order</p>
+                        <p onClick={() => { route.push('?section=Users') }} className="p-2 px-10 mx-10 hover:text-blue-600 cursor-pointer border border-white hover:border-blue-300">Users</p>
                         <p></p>
                     </section>
                 </div>

@@ -1,9 +1,9 @@
 import { ColorRing } from 'react-loader-spinner'
     ;
 
-const Loader = () => {
+const Loader = ({setLoder}) => {
     return (
-        <div>
+        <div onClick={()=>setLoder(false)} className='w-full h-full flex items-center justify-center'>
             <ColorRing
                 visible={true}
                 height="80"

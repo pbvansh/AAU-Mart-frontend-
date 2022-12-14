@@ -13,10 +13,27 @@ const AdminOrder = () => {
     const [showStatusModal, setshowStatusModal] = useState(false);
     const isOrderUpdated = useRecoilValue(orderUpdatedState)
     const [orders, setOrders] = useState([]);
+    const [status, setStatus] = useState(null)
     useEffect(() => {
+        let Placed = 0
+        let Preparing = 0
+        let Delivered = 0
+        let Shipped = 0
         axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/admin/orders', setHeader()).then((res) => {
-            // console.log(res.data);
+            console.log(res.data);
             setOrders(res.data)
+            res.data?.forEach(obj => {
+                if (obj.status == 'Order Placed') Placed++;
+                if (obj.status == 'Preparing') Preparing++;
+                if (obj.status == 'Shipped') Shipped++;
+                if (obj.status == 'Delivered') Delivered++;
+            })
+            setStatus({
+                Placed,
+                Preparing,
+                Shipped,
+                Delivered
+            })
         })
     }, [isOrderUpdated])
 
@@ -28,19 +45,19 @@ const AdminOrder = () => {
             <section className='grid grid-cols-4'>
                 <div className='flex flex-col items-center justify-center m-5 bg-white h-40 rounded-md'>
                     <p className='font-bold text-2xl  text-gray-600 m-2'>Order Placed</p>
-                    <p className='font-semibold text-lg'>{orders.length}</p>
+                    <p className='font-semibold text-lg'>{status?.Placed}</p>
                 </div>
                 <div className='flex flex-col items-center justify-center m-5 bg-white h-40 rounded-md'>
                     <p className='font-bold text-2xl text-gray-600 m-2'>Preparing</p>
-                    <p className='font-semibold text-lg '>1</p>
+                    <p className='font-semibold text-lg '>{status?.Preparing}</p>
                 </div>
                 <div className='flex flex-col items-center justify-center m-5 bg-white h-40 rounded-md'>
                     <p className='font-bold text-2xl text-gray-600 m-2'>Shipped</p>
-                    <p className='font-semibold text-lg '>0</p>
+                    <p className='font-semibold text-lg '>{status?.Shipped}</p>
                 </div>
                 <div className='flex flex-col items-center justify-center m-5 bg-white h-40 rounded-md'>
                     <p className='font-bold text-2xl text-gray-600 m-2'>Delivered</p>
-                    <p className='font-semibold text-lg '>0</p>
+                    <p className='font-semibold text-lg '>{status?.Delivered}</p>
                 </div>
             </section>
             <section className='bg-white rounded-md p-5'>
@@ -85,7 +102,7 @@ const AdminOrder = () => {
                     <StatusModal setshowStatusModal={setshowStatusModal} />
                     : null
             }
-            
+
         </div>
     )
 }

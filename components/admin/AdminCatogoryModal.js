@@ -1,21 +1,32 @@
 
 import axios from 'axios';
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { addCatDoneState } from '../../Atoms/adminProductAtom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure();
 
-const AdminCatogoryModal = ({setShoCatModal}) => {
+const AdminCatogoryModal = ({ setShoCatModal }) => {
     const catRef = useRef()
-    const [addCatDone,setAddCatDone] = useRecoilState(addCatDoneState)
+    const [addCatDone, setAddCatDone] = useRecoilState(addCatDoneState)
     const [added, setAdded] = useState(false);
     const addCatogory = (e) => {
         e.preventDefault();
-        axios.post('https://aaumartbackend.pratikvansh.repl.co/api/category/addNew',{
-            name : catRef.current.value
-        }).then((res)=>{
-            setAdded(true);
-            setAddCatDone(!addCatDone);
-        })
+        if (catRef.current.value.length > 2) {
+            if (Number.isInteger(Number(catRef.current.value))) {
+                toast.warning('you have to enter at least 3 letter! Not integer')
+            } else {
+                axios.post('https://aaumartbackend.pratikvansh.repl.co/api/category/addNew', {
+                    name: catRef.current.value
+                }).then((res) => {
+                    setAdded(true);
+                    setAddCatDone(!addCatDone);
+                })
+            }
+        } else {
+            toast.warning('you have to enter at least 3 letter!')
+        }
     }
     return (
         <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -46,7 +57,7 @@ const AdminCatogoryModal = ({setShoCatModal}) => {
                                 <>
                                     <img src="https://cdn-icons-png.flaticon.com/512/2143/2143150.png" height={100} width={100} className='mx-auto p-3' />
                                     <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Catogory Added successfully</h3>
-                                    <button onClick={()=>setShoCatModal(false)} data-modal-toggle="popup-modal" type="button" className="text-gray-500 bg-white hover:bg-[#45C9A5] focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Go Back</button>
+                                    <button onClick={() => setShoCatModal(false)} data-modal-toggle="popup-modal" type="button" className="text-gray-500 bg-white hover:bg-[#45C9A5] focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Go Back</button>
                                 </>
                             }
 

@@ -129,7 +129,7 @@ const EditProductModal = ({ setshowEditModal, Eid, img_url, Ename, Eprice, Edesc
                                 )
                             }
                             <div className=" flex justify-center m-5 bottom-0 whitespace-nowrap">
-                                <button className="bg-black shadow-sm hover:bg-gray-900 text-sm text-white font-semibold p-3 rounded-md px-8 px-100" onClick={SubmitData}>Add Product</button>
+                                <button className="bg-black shadow-sm hover:bg-gray-900 text-sm text-white font-semibold p-3 rounded-md px-8 px-100" onClick={SubmitData}>Edit Product</button>
                             </div>
                         </div>
                     </div>

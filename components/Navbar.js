@@ -92,11 +92,21 @@ const Navbar = () => {
         {/* side bar */}
 
         <div className="flex space-x-5 items-center mx-10">
-          {route.asPath != '/auth' &&
+          {route.asPath != '/auth' && (user ?
             <div className="flex flex-col p-1 cursor-pointer group" onClick={() => setshowDrop(true)}>
               <UserCircleIcon className="sidenavmenu group-hover:animate-pulse group-hover:text-blue-500" />
               <p className="text-sm">Profile</p>
-            </div>
+            </div> :
+            <Link href={'/auth'}>
+              <div className="flex flex-col p-1 cursor-pointer group items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 group-hover:animate-pulse group-hover:text-lime-500">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+                </svg>
+                <p className="text-sm">Login</p>
+              </div>
+            </Link>
+
+          )
           }
           <Link href={'/order'}>
             <div className='flex flex-col p-1 cursor-pointer group items-center'>
@@ -154,7 +164,6 @@ const Navbar = () => {
                         <Link href={'/profile'}>
                           <li className="inline dropLi">Profile</li>
                         </Link>
-                        <li className="inline dropLi">Setting</li>
                         {
                           localStorage.getItem('token') ?
                             (

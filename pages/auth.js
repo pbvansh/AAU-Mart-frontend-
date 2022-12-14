@@ -22,41 +22,48 @@ const Auth = () => {
         // Calling toast method by passing string
         if (code == 'warning') {
             toast.warning(msg,
-                { position: toast.POSITION.BOTTOM_RIGHT,autoClose:1500})
+                { position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1500 })
         }
         else if (code == 'success') {
             toast.success(msg,
-                { position: toast.POSITION.BOTTOM_RIGHT,autoClose:1500 })
+                { position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1500 })
         }
         else if (code == 'error') {
             toast.error(msg,
-                { position: toast.POSITION.BOTTOM_RIGHT,autoClose:1500 })
+                { position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1500 })
         }
 
     }
 
     const SIGNUP = async () => {
-        setLoder(true)
-        if (validator.isEmail(SEmail)) {
-            axios.post('https://AAUMartBackend.pratikvansh.repl.co/api/auth/signup', {
-                email: SEmail,
-                password: SPassword
-            }).then((res) => {
-                setLoder(false)
-                notify('success', 'Signup Successfully')
-                setLoginSignup(true);
-            }).catch((e) => {
-                if (e.response.status == 400) {
-                    setLoder(false)
-                    notify('warning', e.response.data.msg)
-                } else {
-                    setLoder(false)
-                    notify('', e.response.data.msg)
-                }
-            })
+        const valid = SPassword.search(/^[A-Za-z0-9@_]{6,20}$/);
+        if (valid != 0) {
+            toast.warning("Please enter strong Password", { autoClose: 2000 });
+        } else if (SPassword.length < 6) {
+            toast.warning("you have to enter at least 6 digit!", { autoClose: 2000 });
         } else {
-            setLoder(false)
-            notify('warning', 'Invalid Email')
+            if (validator.isEmail(SEmail)) {
+                setLoder(true)
+                axios.post('https://AAUMartBackend.pratikvansh.repl.co/api/auth/signup', {
+                    email: SEmail,
+                    password: SPassword
+                }).then((res) => {
+                    setLoder(false)
+                    notify('success', 'Signup Successfully')
+                    setLoginSignup(true);
+                }).catch((e) => {
+                    if (e.response.status == 400) {
+                        setLoder(false)
+                        notify('warning', e.response.data.msg)
+                    } else {
+                        setLoder(false)
+                        notify('', e.response.data.msg)
+                    }
+                })
+            } else {
+                setLoder(false)
+                notify('warning', 'Invalid Email')
+            }
         }
     }
 
@@ -99,7 +106,7 @@ const Auth = () => {
         <div className='min-h-screen flex bg-gray-200 items-center justify-center space-x-10'>
             {loder && (
                 <div className='z-50 flex backdrop-blur-[1px] h-full w-full items-center justify-center absolute mx-auto'>
-                    <Loader className="bg-red-300" />
+                    <Loader setLoder={setLoder} className="bg-red-300" />
                 </div>
             )}
             <Header name='Login | Signup' />

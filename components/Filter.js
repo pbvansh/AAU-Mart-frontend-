@@ -58,7 +58,7 @@ const Filter = ({setURL}) => {
             </div>
             <div className="p-5 space-y-3">
                 <p className="font-bold text-sm">PRICE</p>
-                <input className="w-full" type={'range'} />
+                {/* <input className="w-full" type={'range'} /> */}
                 <div className="flex justify-evenly items-center">
                     <select value={Min} onChange={(e)=>setMin(e.target.value)} className="focus:outline-none border p-1 rounded-sm">
                         <option value={0}>--Min--</option>

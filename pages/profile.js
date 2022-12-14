@@ -51,7 +51,7 @@ const Profile = () => {
     } else toast.warning('Please provide valid email ID', { autoClose: 1500 })
   }
 
-  const updateMobileNO = () => {
+ const updateMobileNO = () => {
     var p = /^\d{10}$/;
     if (mobileNumber.length != 10) {
       toast.warning('Please provide valid Mobile Number', { autoClose: 1500 })
