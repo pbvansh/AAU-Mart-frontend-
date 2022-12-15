@@ -28,7 +28,7 @@ const Invoice = ({ invoice }) => {
     return (
         <Document>
             <Page size="A4" style={styles.page}>
-                <Image style={styles.logo} src={'http://static.aau.in/sites/all/themes/sr2015/images/template/logo.png'} />
+                <Image style={styles.logo} src={'AAU-logo.png'} />
                 <InvoiceTitle title='Invoice' />
                 <InvoiceNo invoice={invoice} />
                 <BillTo invoice={invoice} />
