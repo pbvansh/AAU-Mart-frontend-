@@ -39,6 +39,9 @@ const AdminProductFeed = () => {
                             Product
                         </th>
                         <th scope="col" className="py-3 px-6">
+                            Stock
+                        </th>
+                        <th scope="col" className="py-3 px-6">
                             Description
                         </th>
                         <th scope="col" className="py-3 px-6">
@@ -58,7 +61,7 @@ const AdminProductFeed = () => {
                 <tbody>
                     {
                         products?.map((pro, _i) => (
-                            <AdminProduct key={_i} idx={_i} id={pro._id} name={pro.name} desc={pro.desc} cat={pro.category} price={pro.price} imgurl={pro.img_url} setshowEditModal={setshowEditModal} setUpadateProductId={setUpadateProductId} setDeleteProductId={setDeleteProductId} setShowDeleteModal={setShowDeleteModal} />
+                            <AdminProduct key={_i} idx={_i} id={pro._id} name={pro.name} desc={pro.desc} cat={pro.category} price={pro.price} stock={pro.stock} imgurl={pro.img_url} setshowEditModal={setshowEditModal} setUpadateProductId={setUpadateProductId} setDeleteProductId={setDeleteProductId} setShowDeleteModal={setShowDeleteModal} />
                         ))
                     }
                 </tbody>
@@ -70,7 +73,8 @@ const AdminProductFeed = () => {
             ) : null}
             {showEditModal ? (
                 <>
-                    <EditProductModal setshowEditModal={setshowEditModal} Eid={products[updateProductId]?._id} Ename={products[updateProductId]?.name} Edesc={products[updateProductId]?.desc} Eprice={products[updateProductId]?.price} Eimg_url={products[updateProductId]?.img_url} Ecategory={products[updateProductId]?.category} />
+                    <EditProductModal setshowEditModal={setshowEditModal} Eid={products[updateProductId]?._id} Ename={products[updateProductId]?.name} Edesc={products[updateProductId]?.desc} Eprice={products[updateProductId]?.price}
+                    Estock={products[updateProductId]?.stock} Eimg_url={products[updateProductId]?.img_url} Ecategory={products[updateProductId]?.category} />
                 </>
             ) : null}
             {

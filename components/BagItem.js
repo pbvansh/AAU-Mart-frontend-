@@ -4,6 +4,9 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useRecoilState } from "recoil"
 import { basketAtomState } from "../Atoms/basketAtom"
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+toast.configure()
 
 const BagItem = ({ item, idx }) => {
     const [total, setTotale] = useState(0)
@@ -14,11 +17,17 @@ const BagItem = ({ item, idx }) => {
         setTotale(num);
     }, [items])
 
-    async function addOneItem() {
+    async function addOneItem(q) {
         const idx = items.findIndex(bagItem => bagItem._id == item._id)
         let newItems = [...items]
         let obj = { ...newItems[idx] }
-        obj.quantity++;
+        if (q == '') {
+            toast.warning('Please enter valid quantity', { autoClose: 2000 })
+        } else if (q !== undefined) {
+            obj.quantity = q;
+        } else {
+            obj.quantity++;
+        }
         obj.total = Number(obj.quantity) * Number(item.product_id.price)
         newItems[idx] = obj;
         setItem(newItems)
@@ -27,7 +36,7 @@ const BagItem = ({ item, idx }) => {
         })
     }
 
-   async function removeItem() {
+    async function removeItem() {
         const index = items.findIndex((item, i) => i === idx)
         let newItem = [...items];
         if (index >= 0) {
@@ -37,7 +46,7 @@ const BagItem = ({ item, idx }) => {
         } else {
             console.warn(`Cant remove product as its not in`)
         }
-        
+
     }
 
     async function removeOne() {
@@ -64,14 +73,16 @@ const BagItem = ({ item, idx }) => {
                     <p className="font-semibold">{item.name}</p>
                     <p className="text-orange-400">{item.product_id?.category}</p>
                 </div>
-            </div>  
+            </div>
             <div>
                 <p className="bg-gray-100 inline p-2"> <span className="text-orange-500">₹ </span>{item.product_id.price}</p>
             </div>
-            <div className="flex space-x-5">
+            <div className="flex space-x-2">
                 <span onClick={removeOne} className="bg-gray-100 px-3 cursor-pointer">-</span>
-                <p>{item.quantity}</p>
-                <span onClick={addOneItem} className="bg-gray-100 px-2 cursor-pointer">+</span>
+                <div className="max-w-xs">
+                    <input type='text' defaultValue={item.quantity} onChange={(e) => addOneItem(e.target.value)} className="border max-w-[50px] focus:outline-none focus:border-black rounded-sm" />
+                </div>
+                <span onClick={() => addOneItem()} className="bg-gray-100 px-2 cursor-pointer">+</span>
             </div>
             <p> <span className="text-green-500">₹</span> {total}</p>
             <XIcon className="w-5 cursor-pointer text-gray-500" onClick={removeItem} />

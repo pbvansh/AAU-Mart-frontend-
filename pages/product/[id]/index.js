@@ -18,8 +18,7 @@ const Index = ({ product }) => {
       const { userId } = JWT.decode(localStorage.getItem('token'));
 
       const idx = items.findIndex((item) => item.product_id._id == product._id)
-      if (idx >= 0)
-       {
+      if (idx >= 0) {
         let newItem = [...items]
         let obj = { ...newItem[idx] }
         obj.quantity++;
@@ -28,7 +27,7 @@ const Index = ({ product }) => {
         await axios.put(`https://aaumartbackend.pratikvansh.repl.co/api/cart/${items[idx]._id}`, {
           quantity: obj.quantity,
         })
-        toast.success(`increase quantity of ${product?.name} - ${obj?.quantity}` , {autoClose : 1500})
+        toast.success(`increase quantity of ${product?.name} - ${obj?.quantity}`, { autoClose: 1500 })
 
       } else {
         const cartItem = await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/cart/addItem', {
@@ -38,7 +37,7 @@ const Index = ({ product }) => {
         })
 
         setItems([...items, {
-          _id : cartItem._id,
+          _id: cartItem._id,
           product_id: {
             _id: product._id,
             name: product.name,
@@ -49,7 +48,7 @@ const Index = ({ product }) => {
             img: product.img_url
           }
         }])
-        toast.success(`${product.name} added successfully`, {autoClose : 1500})
+        toast.success(`${product.name} added successfully`, { autoClose: 1500 })
       }
     }
 
@@ -72,6 +71,16 @@ const Index = ({ product }) => {
           <p className="font-semibold text-xl">
             {product?.desc}
           </p>
+          {
+            product.stock < 20 && (
+              <p className="font-semibold text-sm">
+                only
+                <span className="text-red-500 font-sm">
+                  {` ${product?.stock} `}
+                </span>
+                unit item left
+              </p>)
+          }
           <button onClick={addProductToBag} className="bg-green-500 p-3 rounded-sm max-w-xs font-semibold text-white hover:bg-gray-500">ADD TO BAG</button>
         </div>
       </div>

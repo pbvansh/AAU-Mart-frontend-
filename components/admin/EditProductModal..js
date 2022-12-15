@@ -1,23 +1,28 @@
 import { XIcon, PhotographIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
-import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import setHeader from "../../Atoms/setHeader";
 import { useRecoilState } from "recoil";
 import { addItemDoneState } from "../../Atoms/adminProductAtom";
-// import { storage } from '../firebase';
+import { toast } from "react-toastify";
+import Loader from "../Loader";
+import { storage } from "../../firebase";
+import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 
-const EditProductModal = ({ setshowEditModal, Eid, img_url, Ename, Eprice, Edesc, Ecategory}) => {
+
+const EditProductModal = ({ setshowEditModal, Eid, Estock, img_url, Ename, Eprice, Edesc, Ecategory }) => {
     const [productImage, setImage] = useState(null)
     const [catName, setCatName] = useState(Ecategory)
     const imageRef = useRef(null)
     const proNameRef = useRef(null)
     const descRef = useRef(null)
     const priceRef = useRef(null)
+    const stockRef = useRef(null)
     const formRef = useRef()
     const [dropName, setDropName] = useState()
     const [loder, setLoder] = useState(false)
-    const [additemdone,setAddItemDone] = useRecoilState(addItemDoneState)
+    const [additemdone, setAddItemDone] = useRecoilState(addItemDoneState)
+
     useEffect(() => {
         axios.get('https://aaumartbackend.pratikvansh.repl.co/api/category')
             .then(res => {
@@ -41,38 +46,49 @@ const EditProductModal = ({ setshowEditModal, Eid, img_url, Ename, Eprice, Edesc
         setImage(null)
     }
 
-    const SubmitData = async (e) => {
+    const SubmitData = (e) => {
         setLoder(true);
         e.preventDefault()
         if (proNameRef.current.value && descRef.current.value && priceRef.current.value) {
-            const newProduct = await axios.put('https://aaumartbackend.pratikvansh.repl.co/api/product/' + Eid + '/update', {
+            axios.put('https://aaumartbackend.pratikvansh.repl.co/api/product/' + Eid + '/update', {
                 name: proNameRef.current.value,
                 desc: descRef.current.value,
                 price: Number(priceRef.current.value),
+                stock: Number(stockRef.current.value),
                 category: catName,
-            }, setHeader())
-            setAddItemDone(!additemdone)
-            setshowEditModal(false)
-            
-            // const firestoreImgPath = ref(storage, `Images/${product.data._id}/image`)
+            }, setHeader()).then(async (res) => {
+                const firestoreImgPath = ref(storage, `Images/${Eid}/image`)
 
-            // await uploadString(firestoreImgPath, productImage, 'data_url').then(async snapshot => {
-            //     const DURL = await getDownloadURL(firestoreImgPath)
-            //     const { data } = await axios.put('https://aaumartbackend.pratikvansh.repl.co/api/product/' + product.data._id + '/addImgUrl', {
-            //         img_url: DURL
-            //     })
-            //     setLoder(false);
-            //     formRef.current.reset();
-            //     removeImage();
-            //     setadditemdone(1);
-            // })
+                    uploadString(firestoreImgPath, productImage, 'data_url').then(async snapshot => {
+                    const DURL = await getDownloadURL(firestoreImgPath)
+                    axios.put('https://aaumartbackend.pratikvansh.repl.co/api/product/' + Eid + '/addImgUrl', {
+                        img_url: DURL
+                    }).then((res) => {
+                        setLoder(false);
+                        toast.success('Edit successfully', { autoClose: 2000, position: toast.POSITION.BOTTOM_RIGHT })
+                        removeImage();
+                        setshowEditModal(false)
+                        setAddItemDone(!additemdone)
+                    })
+                })
+
+            }).catch((e) => {
+                setLoder(false)
+                toast.warning('Please enter valid detail', { autoClose: 2000, position: toast.POSITION.BOTTOM_RIGHT })
+                console.log(e);
+            })
         }
         else {
-            console.log('please provide all details');
+            console.log('please provide all details', { autoClose: 2000, position: toast.POSITION.BOTTOM_RIGHT });
         }
     }
     return (
         <div className="fixed inset-0 z-10 overflow-y-auto">
+            {loder && (
+                <div className='z-50 flex backdrop-blur-[1px] h-full w-full items-center justify-center absolute mx-auto'>
+                    <Loader className="bg-red-300" setLoder={setLoder} />
+                </div>
+            )}
             <div
                 className="fixed inset-0 w-full h-full bg-black opacity-40"
                 onClick={() => setshowEditModal(false)}
@@ -94,7 +110,11 @@ const EditProductModal = ({ setshowEditModal, Eid, img_url, Ename, Eprice, Edesc
                                 <label>Price*</label>
                                 <input type={'text'} defaultValue={Eprice} ref={priceRef} className="border border-gray-300 focus:outline-none p-2 rounded-md focus:border-gray-800" />
                             </div>
-                            <div className="flex flex-col col-span-2 space-y-2 justify-center">
+                            <div className="flex flex-col space-y-2 min-w-[150px]">
+                                <label>Stock*</label>
+                                <input type={'text'} defaultValue={Estock} ref={stockRef} className="border border-gray-300 focus:outline-none p-2 rounded-md focus:border-gray-800" />
+                            </div>
+                            <div className="flex flex-col min-w-[200px] space-y-2 justify-center">
                                 <label>Category*</label>
                                 <div>
                                     <p className="peer w-full text-center cursor-pointer bg-gray-100 p-2 rounded-md hover:bg-gray-200">{catName}</p>

@@ -3,9 +3,9 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import Header from '../components/Header';
 import validator from 'validator'
+import Loader from '../components/Loader';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Loader from '../components/Loader';
 toast.configure()
 
 const Auth = () => {

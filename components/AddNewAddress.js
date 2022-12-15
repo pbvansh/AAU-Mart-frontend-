@@ -54,7 +54,7 @@ const AddNewAddress = ({ setShowNewAddress }) => {
 
   const saveAddress = (e) => {
     e.preventDefault();
-    if (name.current.value.length > 0 && mobile && pincode && locality.current.value.length > 0 && address.current.value.length > 0 && city && state.current.value.length > 0 && type.current.value.length > 0 && CheckMobile(mobile.current.value) && CheckPin(pincode.current.value)) {
+    if (name.current.value.length > 0 && mobile && pincode && locality.current.value.length > 0 && address.current.value.length > 0 && city && state.current.value.length > 0 && type.length > 0 && CheckMobile(mobile.current.value) && CheckPin(pincode.current.value)) {
       axios.post('https://AAUMartBackend.pratikvansh.repl.co/api/profile/address/create', {
         name: name.current.value,
         mobile: Number(mobile.current.value),
@@ -68,6 +68,8 @@ const AddNewAddress = ({ setShowNewAddress }) => {
         toast.success('your new address is added', { autoClose: 1500 });
         setShowNewAddress(false);
         setIsAdded(!isAdded)
+      }).catch((e) => {
+        toast.error('Your session is dead. Please login again', { autoClose: 2000 })
       })
     } else {
       toast.warning('Please fill all information', { autoClose: 1500 })

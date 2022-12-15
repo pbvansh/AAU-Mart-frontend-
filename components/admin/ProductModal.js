@@ -2,7 +2,7 @@ import { XIcon, PhotographIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import setHeader from "../../Atoms/setHeader";
-import  {storage}  from "../../firebase";
+import { storage } from "../../firebase";
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { useRecoilState } from "recoil";
 import { addItemDoneState } from "../../Atoms/adminProductAtom";
@@ -10,17 +10,18 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from "../Loader";
 
-const ProductModal = ({setShowModal}) => {
+const ProductModal = ({ setShowModal }) => {
     const [productImage, setImage] = useState(null)
     const [catName, setCatName] = useState('Select')
     const imageRef = useRef(null)
     const proNameRef = useRef(null)
     const descRef = useRef(null)
     const priceRef = useRef(null)
+    const stockRef = useRef(null)
     const formRef = useRef()
     const [dropName, setDropName] = useState()
     const [loder, setLoder] = useState(false)
-    const [additemdone,setAddItemDone] = useRecoilState(addItemDoneState)
+    const [additemdone, setAddItemDone] = useRecoilState(addItemDoneState)
     useEffect(() => {
         axios.get('https://aaumartbackend.pratikvansh.repl.co/api/category')
             .then(res => {
@@ -45,33 +46,40 @@ const ProductModal = ({setShowModal}) => {
     }
 
     const SubmitData = async (e) => {
-        setLoder(true);
         e.preventDefault()
-        if (proNameRef.current.value && descRef.current.value && priceRef.current.value && productImage) {
-            const product = await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/product/create', {
-                name: proNameRef.current.value,
-                desc: descRef.current.value,
-                price: Number(priceRef.current.value),
-                category: catName
-            }, setHeader())
+        if (proNameRef.current.value && descRef.current.value && priceRef.current.value && stockRef.current.value && productImage) {
+            setLoder(true);
+            try {
+                const product = await axios.post('https://aaumartbackend.pratikvansh.repl.co/api/product/create', {
+                    name: proNameRef.current.value,
+                    desc: descRef.current.value,
+                    price: Number(priceRef.current.value),
+                    stock: Number(stockRef.current.value),
+                    category: catName
+                }, setHeader())
 
-            const firestoreImgPath = ref(storage, `Images/${product.data._id}/image`)
+                const firestoreImgPath = ref(storage, `Images/${product.data._id}/image`)
 
-            await uploadString(firestoreImgPath, productImage, 'data_url').then(async snapshot => {
-                const DURL = await getDownloadURL(firestoreImgPath)
-                const { data } = await axios.put('https://aaumartbackend.pratikvansh.repl.co/api/product/' + product.data._id + '/addImgUrl', {
-                    img_url: DURL
+                await uploadString(firestoreImgPath, productImage, 'data_url').then(async snapshot => {
+                    const DURL = await getDownloadURL(firestoreImgPath)
+                    const { data } = await axios.put('https://aaumartbackend.pratikvansh.repl.co/api/product/' + product.data._id + '/addImgUrl', {
+                        img_url: DURL
+                    })
+                    setLoder(false);
+                    formRef.current.reset();
+                    removeImage();
+                    setAddItemDone(!additemdone);
+                    setShowModal(false)
+                    toast.success('Product created successfuly', { position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1500 })
                 })
-                setLoder(false);
-                formRef.current.reset();
-                removeImage();
-                setAddItemDone(!additemdone);
-                setShowModal(false)
-                toast.success('Product created successfuly',{position: toast.POSITION.BOTTOM_RIGHT,autoClose:1500})
-            })
+            } catch (e) {
+                    setLoder(false);
+                    toast.warning('please enter valid details', { position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1500 })
+            }
+
         }
         else {
-            toast.warning('please provide all details',{position: toast.POSITION.BOTTOM_RIGHT,autoClose:1500})
+            toast.warning('please provide all details', { position: toast.POSITION.BOTTOM_RIGHT, autoClose: 1500 })
             console.log('please provide all details');
         }
 
@@ -79,9 +87,9 @@ const ProductModal = ({setShowModal}) => {
     }
     return (
         <div className="fixed inset-0 z-10 overflow-y-auto">
-             {loder && (
+            {loder && (
                 <div className='z-50 flex backdrop-blur-[1px] h-full w-full items-center justify-center absolute mx-auto'>
-                    <Loader className="bg-red-300" />
+                    <Loader className="bg-red-300" setLoder={setLoder} />
                 </div>
             )}
             <div
@@ -100,12 +108,16 @@ const ProductModal = ({setShowModal}) => {
                             <label>Enter Product Description*</label>
                             <textarea ref={descRef} className="border border-gray-300 focus:outline-none p-2 rounded-md focus:border-gray-800" />
                         </div>
-                        <div className="grid grid-cols-3 space-x-3">
+                        <div className="flex space-x-3">
                             <div className="flex flex-col space-y-2">
                                 <label>Price*</label>
                                 <input type={'text'} ref={priceRef} className="border border-gray-300 focus:outline-none p-2 rounded-md focus:border-gray-800" />
                             </div>
-                            <div className="flex flex-col col-span-2 space-y-2 justify-center">
+                            <div className="flex flex-col space-y-2 min-w-[150px]">
+                                <label>Stock*</label>
+                                <input type={'text'} ref={stockRef} className="border border-gray-300 focus:outline-none p-2 rounded-md focus:border-gray-800" />
+                            </div>
+                            <div className="flex flex-col min-w-[200px] space-y-2 justify-center">
                                 <label>Category*</label>
                                 <div>
                                     <p className="peer w-full text-center cursor-pointer bg-gray-100 p-2 rounded-md hover:bg-gray-200">{catName}</p>

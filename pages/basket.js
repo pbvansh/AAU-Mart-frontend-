@@ -110,7 +110,7 @@ const Cart = () => {
               </h1>
               <div className="grid grid-cols-6 shadow-md p-3">
                 <p className="font-semibold col-span-2">Product</p>
-                <p className="font-semibold">Price</p>
+                <p className="font-semibold">Price/<span className="text-[11px] text-green-500">KG</span></p>
                 <p className="font-semibold">Quantity</p>
                 <p className="font-semibold">Total Price</p>
                 <p></p>

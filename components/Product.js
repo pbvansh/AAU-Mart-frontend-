@@ -22,7 +22,7 @@ const Product = ({ name, id, desc, catname, price, url }) => {
         )
         }
         <p className="text-xl">{name}</p>
-        <p className="font-bold text-orange-400 text-xl"><span>₹</span>{price}</p>
+        <p className="font-bold text-orange-400 text-xl"><span>₹</span>{price}<span className="text-xs text-black">/kg</span></p>
         <p className="mb-16-10 line-clamp-3 text-sm">{desc}</p>
       </div>
   )
