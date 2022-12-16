@@ -5,6 +5,11 @@ export const addItemDoneState = atom({
     default : false
 }) 
 
+export const deleteUserDoneState = atom({
+    key : 'deleteUserDoneStateKey',
+    default : false
+}) 
+
 export const addCatDoneState = atom({
     key : 'addCatDoneStateKey',
     default : false

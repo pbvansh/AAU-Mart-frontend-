@@ -3,18 +3,20 @@ import { useEffect, useState } from "react"
 import setHeader from "../../Atoms/setHeader"
 import AdminUser from "./AdminUser"
 import AdminDeleteUserModal from "./AdminDeleteUserModal";
+import { useRecoilState } from "recoil";
+import { deleteUserDoneState } from "../../Atoms/adminProductAtom";
 
 const AdminUserFeed = () => {
 
     const [users, setUsers] = useState([])
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-
+    const [deleteUserId, setDeleteUserId] = useState(null)
+    const [deleteUser,setDeleteUser] = useRecoilState(deleteUserDoneState)
     useEffect(() => {
         axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/user/').then((res) => {
-            console.log(res.data);
             setUsers(res.data)
         })
-    }, [])
+    }, [deleteUser])
 
 
     return (
@@ -45,7 +47,7 @@ const AdminUserFeed = () => {
                 <tbody>
                     {
                         users?.map((user, _i) => (
-                            <AdminUser key={_i} idx={_i} id={user._id} name={user.firstName && user.lastName ? user.firstName + ' ' + user.lastName : '--'} email={user.email} mobile={user.mobileNumber} gender={user.Gender} setShowDeleteModal={setShowDeleteModal}
+                            <AdminUser key={_i} idx={_i} id={user._id} DUI={setDeleteUserId} name={user.firstName && user.lastName ? user.firstName + ' ' + user.lastName : '--'} email={user.email} mobile={user.mobileNumber} gender={user.Gender} setShowDeleteModal={setShowDeleteModal}
                             />
                         ))
                     }
@@ -64,7 +66,7 @@ const AdminUserFeed = () => {
             {
                 showDeleteModal ? (
                     <>
-                        <AdminDeleteUserModal setShowDeleteModal={setShowDeleteModal} />
+                        <AdminDeleteUserModal setShowDeleteModal={setShowDeleteModal} DUI={deleteUserId}/>
                     </>
                 ) : null
             }

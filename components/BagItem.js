@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
 
 const BagItem = ({ item, idx }) => {
+    console.log(idx);
     const [total, setTotale] = useState(0)
     const [items, setItem] = useRecoilState(basketAtomState)
 
@@ -21,19 +22,29 @@ const BagItem = ({ item, idx }) => {
         const idx = items.findIndex(bagItem => bagItem._id == item._id)
         let newItems = [...items]
         let obj = { ...newItems[idx] }
-        if (q == '') {
+        if (q > item.product_id.stock) {
+            toast.warning(`only ${item.product_id?.stock} item in stock`, { autoClose: 2000 });
+            obj.quantity = Number(item.product_id.stock);
+            document.getElementById(`qntIn${idx}`).value = Number(item.product_id.stock);
+        } else if (q == '') {
             toast.warning('Please enter valid quantity', { autoClose: 2000 })
         } else if (q !== undefined) {
             obj.quantity = q;
+            obj.total = Number(obj.quantity) * Number(item.product_id.price)
+            newItems[idx] = obj;
+            setItem(newItems)
+            await axios.put(`https://aaumartbackend.pratikvansh.repl.co/api/cart/${item._id}`, {
+                quantity: obj.quantity,
+            })
         } else {
             obj.quantity++;
+            obj.total = Number(obj.quantity) * Number(item.product_id.price)
+            newItems[idx] = obj;
+            setItem(newItems)
+            await axios.put(`https://aaumartbackend.pratikvansh.repl.co/api/cart/${item._id}`, {
+                quantity: obj.quantity,
+            })
         }
-        obj.total = Number(obj.quantity) * Number(item.product_id.price)
-        newItems[idx] = obj;
-        setItem(newItems)
-        await axios.put(`https://aaumartbackend.pratikvansh.repl.co/api/cart/${item._id}`, {
-            quantity: obj.quantity,
-        })
     }
 
     async function removeItem() {
@@ -80,7 +91,7 @@ const BagItem = ({ item, idx }) => {
             <div className="flex space-x-2">
                 <span onClick={removeOne} className="bg-gray-100 px-3 cursor-pointer">-</span>
                 <div className="max-w-xs">
-                    <input type='text' defaultValue={item.quantity} onChange={(e) => addOneItem(e.target.value)} className="border max-w-[50px] focus:outline-none focus:border-black rounded-sm" />
+                    <input type='text' id={`qntIn${idx}`} defaultValue={item.quantity} onChange={(e) => addOneItem(e.target.value)} className="border max-w-[50px] focus:outline-none focus:border-black rounded-sm" />
                 </div>
                 <span onClick={() => addOneItem()} className="bg-gray-100 px-2 cursor-pointer">+</span>
             </div>

@@ -47,9 +47,9 @@ const EditProductModal = ({ setshowEditModal, Eid, Estock, img_url, Ename, Epric
     }
 
     const SubmitData = (e) => {
-        setLoder(true);
         e.preventDefault()
         if (proNameRef.current.value && descRef.current.value && priceRef.current.value) {
+            setLoder(true);
             axios.put('https://aaumartbackend.pratikvansh.repl.co/api/product/' + Eid + '/update', {
                 name: proNameRef.current.value,
                 desc: descRef.current.value,
@@ -57,20 +57,28 @@ const EditProductModal = ({ setshowEditModal, Eid, Estock, img_url, Ename, Epric
                 stock: Number(stockRef.current.value),
                 category: catName,
             }, setHeader()).then(async (res) => {
-                const firestoreImgPath = ref(storage, `Images/${Eid}/image`)
-
+                if (productImage !== null) {
+                    const firestoreImgPath = ref(storage, `Images/${Eid}/image`)
                     uploadString(firestoreImgPath, productImage, 'data_url').then(async snapshot => {
-                    const DURL = await getDownloadURL(firestoreImgPath)
-                    axios.put('https://aaumartbackend.pratikvansh.repl.co/api/product/' + Eid + '/addImgUrl', {
-                        img_url: DURL
-                    }).then((res) => {
-                        setLoder(false);
-                        toast.success('Edit successfully', { autoClose: 2000, position: toast.POSITION.BOTTOM_RIGHT })
-                        removeImage();
-                        setshowEditModal(false)
-                        setAddItemDone(!additemdone)
+                        const DURL = await getDownloadURL(firestoreImgPath)
+                        axios.put('https://aaumartbackend.pratikvansh.repl.co/api/product/' + Eid + '/addImgUrl', {
+                            img_url: DURL
+                        }).then((res) => {
+                            setLoder(false);
+                            toast.success('Edit successfully', { autoClose: 2000, position: toast.POSITION.BOTTOM_RIGHT })
+                            removeImage();
+                            setshowEditModal(false)
+                            setAddItemDone(!additemdone)
+                        })
                     })
-                })
+                }
+                else {
+                    setLoder(false);
+                    toast.success('Edit successfully', { autoClose: 2000, position: toast.POSITION.BOTTOM_RIGHT })
+                    setshowEditModal(false)
+                    setAddItemDone(!additemdone)
+                }
+
 
             }).catch((e) => {
                 setLoder(false)

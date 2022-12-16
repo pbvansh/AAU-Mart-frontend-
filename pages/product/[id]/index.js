@@ -15,6 +15,7 @@ const Index = ({ product }) => {
   async function addProductToBag() {
 
     if (localStorage.getItem('token')) {
+      if(product.stock != 0){
       const { userId } = JWT.decode(localStorage.getItem('token'));
 
       const idx = items.findIndex((item) => item.product_id._id == product._id)
@@ -50,8 +51,29 @@ const Index = ({ product }) => {
         }])
         toast.success(`${product.name} added successfully`, { autoClose: 1500 })
       }
+    }else{
+      toast.error(`${product.name} is currently unavailable`, { autoClose: 1500 })
     }
+  }
+  }
 
+  const getStock = (n) => {
+    if (n == '0') {
+      return (
+        <p className="font-semibold text-sm text-red-500">
+          sold out
+        </p>)
+    }
+    if (n < 20) {
+      return (
+        <p className="font-semibold text-sm">
+          only
+          <span className="text-red-500 font-sm">
+            {` ${product?.stock} `}
+          </span>
+          unit item left
+        </p>)
+    }
   }
 
   return (
@@ -72,14 +94,7 @@ const Index = ({ product }) => {
             {product?.desc}
           </p>
           {
-            product.stock < 20 && (
-              <p className="font-semibold text-sm">
-                only
-                <span className="text-red-500 font-sm">
-                  {` ${product?.stock} `}
-                </span>
-                unit item left
-              </p>)
+            getStock(product.stock)
           }
           <button onClick={addProductToBag} className="bg-green-500 p-3 rounded-sm max-w-xs font-semibold text-white hover:bg-gray-500">ADD TO BAG</button>
         </div>

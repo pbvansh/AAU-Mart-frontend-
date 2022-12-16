@@ -2,20 +2,27 @@ import axios from "axios";
 import { useState } from "react";
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
+import setHeader from "../../Atoms/setHeader";
+import { useRecoilState } from "recoil";
+import { deleteUserDoneState } from "../../Atoms/adminProductAtom";
 toast.configure()
 
 
-const AdminDeleteUserModal = ({setShowDeleteModal}) => {
+const AdminDeleteUserModal = ({ setShowDeleteModal, DUI }) => {
     const [deleted, setDeleted] = useState(false);
-    const DeleteUser = (id) => {
-        axios.delete('https://AAUMartBackend.pratikvansh.repl.co/api/user/' + id, setHeader()).then((res) => {
+    const [deleteUser,setDeleteUser] = useRecoilState(deleteUserDoneState)
+    const DeleteUser = () => {
+        axios.delete('https://AAUMartBackend.pratikvansh.repl.co/api/user/' + DUI, setHeader()).then((res) => {
+            setDeleted(true)
+            setDeleteUser(!deleteUser)
             toast.success(res.data.msg, { autoClose: 1500 })
         }).catch((e) => {
-            toast.warning(e.massage, { autoClose: 1500 })
+            console.log(e);
+            // toast.warning(e.massage, { autoClose: 1500 })
         })
     }
-  return (
-    <div className="fixed inset-0 z-10 overflow-y-auto">
+    return (
+        <div className="fixed inset-0 z-10 overflow-y-auto">
             <div
                 className="fixed inset-0 w-full h-full bg-black opacity-40"
                 onClick={() => setShowDeleteModal(false)}
@@ -50,7 +57,7 @@ const AdminDeleteUserModal = ({setShowDeleteModal}) => {
                 </div>
             </div>
         </div>
-  )
+    )
 }
 
 export default AdminDeleteUserModal
