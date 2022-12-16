@@ -49,50 +49,52 @@ const Cart = () => {
   }, [basketItem])
 
   const handlePyment = async (e) => {
+    if (bagTotal != 0) {
+      const { data } = await axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/user/address', setHeader());
+      if (data > 0) {
+        setLoder(true)
+        const products = basketItem.map((pro) => {
+          if (pro.product_id?.stock > 0) {
+            return { id: pro.product_id?._id, quantity: pro.quantity }
+          }
+        })
 
-    const { data } = await axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/user/address', setHeader());
-    if (data > 0) {
-      setLoder(true)
-      const products = basketItem.map((pro) => {
-        if(pro.product_id?.stock > 0){
-          return { id: pro.product_id?._id, quantity: pro.quantity }
-        }
-      })
+        const { data: { razorOrder } } = await axios.post('https://AAUMartBackend.pratikvansh.repl.co/api/order/placeOrder', {
+          products, user_id: userId
+        }, setHeader())
+        var options = {
+          key: "rzp_test_YcA9wL420Hdf9Q",
+          amount: razorOrder.amount,
+          currency: "INR",
+          name: "AAU-Mart",
+          description: "Test Transaction",
+          image: "https://img.freepik.com/free-vector/cute-shopping-cart-logo_23-2148453859.jpg",
+          order_id: razorOrder.id,
+          callback_url: "https://AAUMartBackend.pratikvansh.repl.co/api/order/" + userId + "/payment",
+          prefill: {
+            name: localStorage.getItem('userAAU').split('@')[0],
+            email: localStorage.getItem('userAAU'),
+            contact: "9999999999"
+          },
+          notes: {
+            address: "Razorpay Corporate Office"
+          },
+          theme: {
+            color: "#3449b2"
+          }
+        };
+        setLoder(false)
+        const RAZOR = new window.Razorpay(options);
+        RAZOR.open();
+      }
+      else {
+        toast.warning('We need your address. first Add it then continue..', { autoClose: 2000, position: "top-center" });
+        route.push('/addresses')
+      }
 
-      const { data: { razorOrder } } = await axios.post('https://AAUMartBackend.pratikvansh.repl.co/api/order/placeOrder', {
-        products, user_id: userId
-      }, setHeader())
-      var options = {
-        key: "rzp_test_YcA9wL420Hdf9Q",
-        amount: razorOrder.amount,
-        currency: "INR",
-        name: "AAU-Mart",
-        description: "Test Transaction",
-        image: "https://img.freepik.com/free-vector/cute-shopping-cart-logo_23-2148453859.jpg",
-        order_id: razorOrder.id,
-        callback_url: "https://AAUMartBackend.pratikvansh.repl.co/api/order/" + userId + "/payment",
-        prefill: {
-          name: localStorage.getItem('userAAU').split('@')[0],
-          email: localStorage.getItem('userAAU'),
-          contact: "9999999999"
-        },
-        notes: {
-          address: "Razorpay Corporate Office"
-        },
-        theme: {
-          color: "#3449b2"
-        }
-      };
-      setLoder(false)
-      const RAZOR = new window.Razorpay(options);
-      RAZOR.open();
+    } else {
+      toast.warning('No items to order', { autoClose: 2000, position: "top-right" });
     }
-    else {
-      toast.warning('We need your address. first Add it then continue..', { autoClose: 2000, position: "top-center" });
-      route.push('/addresses')
-    }
-
-
   }
 
   return (

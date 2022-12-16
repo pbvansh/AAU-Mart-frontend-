@@ -28,8 +28,9 @@ import JWT from 'jsonwebtoken'
 
 const Navbar = () => {
 
-  const bagItem = useRecoilValue(basketAtomState)
+  const [bagItem,setBagItem] = useRecoilState(basketAtomState)
   const [showDrop, setshowDrop] = useState(false)
+  const [basketItem, setBasketItem] = useRecoilState(basketAtomState);
   const route = useRouter();
 
   const [user, setUser] = useState(null);
@@ -170,6 +171,8 @@ const Navbar = () => {
                               <li className="inline dropLi" onClick={() => {
                                 localStorage.removeItem('token');
                                 localStorage.removeItem('userAAU');
+                                setBagItem(null);
+                                setBasketItem([]);
                                 setshowDrop(false);
                                 setIsAdmin(false)
                                 toast.success('Logout Succsessfully', { autoClose: 1500 });

@@ -10,7 +10,7 @@ const AdminProduct = ({ idx, id, name, imgurl, cat, price, stock, desc, setshowE
                 <img src={imgurl} height={80} width={80} /> <span>{name}</span>
             </th>
             <td className="py-4 px-6">
-                {stock}
+                {stock > 0 ? stock : <span className='text-red-500 font-semibold'>Out of Stock</span>}
             </td>
             <td className="py-4 px-6">
                 {desc}

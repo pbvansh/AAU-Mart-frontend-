@@ -4,10 +4,14 @@ import Link from "next/link"
 import { useRouter } from "next/router";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRecoilState } from "recoil";
+import { basketAtomState } from "../Atoms/basketAtom";
 toast.configure()
 
 const AccountLeftBar = ({ Fname }) => {
     const route = useRouter()
+    const [basketItem, setBasketItem] = useRecoilState(basketAtomState);
+
     return (
         <div className='p-10 w-full max-w-[400px] space-y-6'>
             <div className='flex items-center bg-white p-3 space-x-5 shadow-lg'>
@@ -50,6 +54,7 @@ const AccountLeftBar = ({ Fname }) => {
                         <p onClick={() => {
                             localStorage.removeItem('token');
                             localStorage.removeItem('userAAU');
+                            setBasketItem([])
                             toast.success('Logout Succsessfully', { autoClose: 1500 });
                             route.push('/')
                         }} className='font-semibold group-hover:text-blue-600 text-gray-400'>Logout</p>
