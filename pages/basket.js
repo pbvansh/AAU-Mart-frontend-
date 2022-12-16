@@ -40,22 +40,25 @@ const Cart = () => {
   useEffect(() => {
     let total = 0;
     for (let i = 0; i < basketItem.length; i++) {
-      let sum = Number(basketItem[i].quantity) * Number(basketItem[i].product_id.price)
-      total += sum;
+      if (basketItem[i].product_id?.stock > 0) {
+        let sum = Number(basketItem[i].quantity) * Number(basketItem[i].product_id.price)
+        total += sum;
+      }
     }
     setBagTotale(total)
   }, [basketItem])
 
   const handlePyment = async (e) => {
-  
-    const {data} = await axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/user/address', setHeader());
-    console.log(data);
-    if(data > 0){
+
+    const { data } = await axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/user/address', setHeader());
+    if (data > 0) {
       setLoder(true)
       const products = basketItem.map((pro) => {
-        return { id: pro.product_id?._id, quantity: pro.quantity }
+        if(pro.product_id?.stock > 0){
+          return { id: pro.product_id?._id, quantity: pro.quantity }
+        }
       })
-  
+
       const { data: { razorOrder } } = await axios.post('https://AAUMartBackend.pratikvansh.repl.co/api/order/placeOrder', {
         products, user_id: userId
       }, setHeader())
@@ -84,21 +87,21 @@ const Cart = () => {
       const RAZOR = new window.Razorpay(options);
       RAZOR.open();
     }
-    else{
-        toast.warning('We need your address. first Add it then continue..',{autoClose : 2000 , position:"top-center"});
-        route.push('/addresses')
+    else {
+      toast.warning('We need your address. first Add it then continue..', { autoClose: 2000, position: "top-center" });
+      route.push('/addresses')
     }
 
-    
+
   }
 
   return (
     <div className="min-h-screen bg-gray-100 select-none">
-       {loder && (
-                <div className='z-50 flex backdrop-blur-[1px] h-full w-full items-center justify-center absolute mx-auto'>
-                    <Loader className="bg-red-300" />
-                </div>
-            )}
+      {loder && (
+        <div className='z-50 flex backdrop-blur-[1px] h-full w-full items-center justify-center absolute mx-auto'>
+          <Loader className="bg-red-300" />
+        </div>
+      )}
       <Header name='Basket' />
       {
         basketItem.length > 0 ? (

@@ -37,13 +37,18 @@ const BagItem = ({ item, idx }) => {
                 quantity: obj.quantity,
             })
         } else {
-            obj.quantity++;
-            obj.total = Number(obj.quantity) * Number(item.product_id.price)
-            newItems[idx] = obj;
-            setItem(newItems)
-            await axios.put(`https://aaumartbackend.pratikvansh.repl.co/api/cart/${item._id}`, {
-                quantity: obj.quantity,
-            })
+            if (obj.quantity < item.product_id?.stock) {
+                obj.quantity++;
+                obj.total = Number(obj.quantity) * Number(item.product_id.price)
+                newItems[idx] = obj;
+                setItem(newItems)
+                await axios.put(`https://aaumartbackend.pratikvansh.repl.co/api/cart/${item._id}`, {
+                    quantity: obj.quantity,
+                })
+            } else {
+                toast.warning(`only ${item.product_id?.stock} item in stock`, { autoClose: 2000 });
+                document.getElementById(`qntIn${idx}`).value = Number(item.product_id.stock);
+            }
         }
     }
 
@@ -76,13 +81,29 @@ const BagItem = ({ item, idx }) => {
         }
     }
 
+    const getStock = (n) => {
+        if (n == '0') {
+            return (
+                <p className="font-semibold text-sm text-red-500">
+                    sold out
+                </p>)
+        }
+        if (n < 10) {
+            return (
+                <p className="text-black"> Only<span className="text-red-500 font-semibold">{` ${n} `}</span>unit left</p>
+            )
+        }
+    }
+
     return (
         <div className="grid grid-cols-6 p-3 items-center m-2">
             <div className="col-span-2 space-x-10 flex items-center">
                 <img src={item.product_id?.img_url} height={80} width={80} />
-                <div>
-                    <p className="font-semibold">{item.name}</p>
-                    <p className="text-orange-400">{item.product_id?.category}</p>
+                <div className="space-y-1">
+                    <p className="font-semibold">{item.product_id.name}</p>
+                    {
+                        getStock(item.product_id?.stock)
+                    }
                 </div>
             </div>
             <div>
