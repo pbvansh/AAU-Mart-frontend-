@@ -1,14 +1,17 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Header from '../components/Header';
 import validator from 'validator'
 import Loader from '../components/Loader';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import emailjs from 'emailjs-com';
+import ResetModal from '../components/ResetModal';
 toast.configure()
 
 const Auth = () => {
+    const [shoeReset, setShowReset] = useState(false);
     const [loginSignup, setLoginSignup] = useState(true);
     const [LEmail, setLEmail] = useState("")
     const [LPassword, setLPassword] = useState("")
@@ -16,6 +19,8 @@ const Auth = () => {
     const [SPassword, setSPassword] = useState("")
     const [loginStatus, setLoginStatus] = useState(false)
     const [loder, setLoder] = useState(false)
+    const [OTP, setOTP] = useState(null)
+    const form = useRef();
     const route = useRouter()
 
     const notify = (code, msg) => {
@@ -89,6 +94,32 @@ const Auth = () => {
         })
     }
 
+    const resetPassword = () => {
+        if (LEmail && LEmail.includes('@')) {
+            setLoder(true)
+            axios.post('https://AAUMartBackend.pratikvansh.repl.co/api/user/reset', { email: LEmail }).then((res) => {
+                if (res.data.msg) {
+                    setOTP(res.data.OTP);
+                    // form.current.innerHTML += `<input id='otp' type="hidden" value=${res.data.OTP} name="message"/>`;
+                    document.getElementById('otp').value = res.data.OTP;
+                    console.log(res.data.OTP);
+                    emailjs.sendForm('service_efysap6', 'template_i6zn0ek', form.current, 'ZPr7bdcAZO9gCYI6I')
+                        .then((result) => {
+                            toast.success('We send you an OTP. check you email', { autoClose: 1500 });
+                            console.log(result.text);
+                            setLoder(false)
+                            setShowReset(true)
+                            form.current.reset()
+                        }, (error) => {
+                            console.log(error.text);
+                        });
+                }
+            })
+        } else {
+            notify('warning', 'Please enter valid email');
+        }
+    }
+
     //  const isUserAuth =()=>{
     //     axios.get("http://localhost:5000/api/auth/isUserAuth",{
     //         headers : { 
@@ -112,14 +143,15 @@ const Auth = () => {
             <Header name='Login | Signup' />
             {
                 loginSignup ?
-                    <form onSubmit={(e) => e.preventDefault()} className='bg-white rounded-md'>
+                    <form ref={form} onSubmit={(e) => e.preventDefault()} className='bg-white rounded-md'>
                         <div className='m-10 flex flex-col space-y-10'>
                             <p className='font-bold text-xl tracking-wide'>
                                 LOGIN
                             </p>
                             <div className='space-y-1'>
                                 <label className='block font-semibold text-gray-500'>Email</label>
-                                <input required type={'email'} value={LEmail} onInput={(e) => setLEmail(e.target.value)} className="border border-gray-500 outline-none rounded-md p-2 w-[300px]" />
+                                <input required type={'email'} name="to_name" value={LEmail} onInput={(e) => setLEmail(e.target.value)} className="border border-gray-500 outline-none rounded-md p-2 w-[300px]" />
+                                <input id='otp' type={'hidden'} name='message' />
                             </div>
                             <div className='space-y-1'>
                                 <label className='block font-semibold text-gray-500'>Password</label>
@@ -128,7 +160,7 @@ const Auth = () => {
                             <div className='relative'>
                                 <button onClick={LOGIN}
                                     className='bg-green-500 w-full p-2 rounded-md font-medium text-white shadow-2xl hover:bg-green-600'>LOGIN</button>
-                                {/* <p className='absolute right-0 p-1 text-gray-400 text-sm hover:text-black cursor-pointe'>Forgot Password?</p> */}
+                                <p onClick={(e) => { e.preventDefault(); console.log('hii2'); resetPassword(); }} className='absolute right-0 p-1 text-gray-400 text-sm hover:text-black cursor-pointe'>Forgot Password?</p>
                             </div>
 
                             {/* <div className='relative flex justify-center flex-col items-center'>
@@ -189,13 +221,11 @@ const Auth = () => {
                     </form>
             }
 
-            {/* {
-            loginStatus && (
-                <button className='bg-red-300 rounded-sm p-3 hover:bg-red-400' onClick={isUserAuth}>
-                    login success | check token auth
-                </button>
-            )
-        } */}
+            {
+                shoeReset ?
+                    <ResetModal setShowReset={setShowReset} OTP={OTP}/>
+                    : null
+            }
         </div>
     )
 }
