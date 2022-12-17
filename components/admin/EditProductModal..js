@@ -48,7 +48,8 @@ const EditProductModal = ({ setshowEditModal, Eid, Estock, img_url, Ename, Epric
 
     const SubmitData = (e) => {
         e.preventDefault()
-        if (proNameRef.current.value && descRef.current.value && priceRef.current.value) {
+        const p = /^\d*[1-9]\d*$/;
+        if (proNameRef.current.value && descRef.current.value && priceRef.current.value.match(p) && stockRef.current.value.match(p)) {
             setLoder(true);
             axios.put('https://aaumartbackend.pratikvansh.repl.co/api/product/' + Eid + '/update', {
                 name: proNameRef.current.value,
@@ -87,7 +88,7 @@ const EditProductModal = ({ setshowEditModal, Eid, Estock, img_url, Ename, Epric
             })
         }
         else {
-            console.log('please provide all details', { autoClose: 2000, position: toast.POSITION.BOTTOM_RIGHT });
+            toast.warning('please provide valid details', { autoClose: 2000, position: toast.POSITION.BOTTOM_RIGHT });
         }
     }
     return (
