@@ -223,7 +223,7 @@ const Auth = () => {
 
             {
                 shoeReset ?
-                    <ResetModal setShowReset={setShowReset} OTP={OTP}/>
+                    <ResetModal setShowReset={setShowReset} OTP={OTP} LEmail={LEmail}/>
                     : null
             }
         </div>

@@ -1,14 +1,34 @@
+import axios from "axios";
+import { useRouter } from "next/router";
 import { useRef } from "react"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 toast.configure()
 
-const ResetModal = ({ setShowReset, OTP }) => {
+const ResetModal = ({ setShowReset, OTP,LEmail }) => {
     const otpRef = useRef()
+    const route = useRouter()
     const verifyOTP = () => {
-        console.log(otpRef.current.value);
         if (OTP == otpRef.current.value) {
-            toast.success('Login successfully', { autoClose: 1500 })
+            axios.post('https://AAUMartBackend.pratikvansh.repl.co/api/auth/OTP', {
+            "email": LEmail.toString(),
+        }).then((res) => {
+            if (!res.data.auth) {
+                toast.warning('invalid email or password',{autoClose : 1500});
+            } else {
+                toast.success('Login successfully', { autoClose: 1500 })
+                localStorage.setItem('token', res.data.token);
+                localStorage.setItem('userAAU', res.data.user);
+                toast.success('Welcome ' + res.data.user.split('@')[0]);
+                route.push('/');
+                //setLoginStatus(true)
+            }
+        }).catch((e) => {
+            setShowReset(false)
+            console.log(e);
+            // toast.warning(e.response.data.msg);
+        })
+            
         } else {
             toast.error('Invalid OPT', { autoClose: 1500 })
         }
