@@ -21,7 +21,7 @@ import { useRouter } from "next/router";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRecoilState } from "recoil";
-import { isAdminAtomState } from "../Atoms/authAtom";
+import { isAdminAtomState, profileState } from "../Atoms/authAtom";
 import { URLState } from "../Atoms/adminProductAtom";
 import axios from "axios";
 import JWT from 'jsonwebtoken'
@@ -31,6 +31,7 @@ const Navbar = () => {
   const [bagItem,setBagItem] = useRecoilState(basketAtomState)
   const [showDrop, setshowDrop] = useState(false)
   const [basketItem, setBasketItem] = useRecoilState(basketAtomState);
+  const [profile, setProfile] = useRecoilState(profileState)
   const route = useRouter();
 
   const [user, setUser] = useState(null);
@@ -171,6 +172,7 @@ const Navbar = () => {
                               <li className="inline dropLi" onClick={() => {
                                 localStorage.removeItem('token');
                                 localStorage.removeItem('userAAU');
+                                setProfile([])
                                 setBagItem(null);
                                 setBasketItem([]);
                                 setshowDrop(false);

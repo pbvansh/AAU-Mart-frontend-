@@ -19,6 +19,7 @@ const Profile = () => {
   const [Gender, setGender] = useState('')
   const [email, setEmail] = useState('')
   const [mobileNumber, setmobile] = useState('')
+
   useEffect(() => {
     axios.get('https://AAUMartBackend.pratikvansh.repl.co/api/profile/me', setHeader()).then((res) => {
       setProfile(res.data)
@@ -51,7 +52,7 @@ const Profile = () => {
     } else toast.warning('Please provide valid email ID', { autoClose: 1500 })
   }
 
- const updateMobileNO = () => {
+  const updateMobileNO = () => {
     var p = /^\d{10}$/;
     if (mobileNumber.length != 10) {
       toast.warning('Please provide valid Mobile Number', { autoClose: 1500 })
@@ -73,7 +74,7 @@ const Profile = () => {
 
   return (
     <div className='bg-gray-100'>
-      <Header name='My Profile'/>
+      <Header name='My Profile' />
       <div className='min-h-screen max-w-screen-2xl mx-auto flex'>
         {/* left side */}
         <AccountLeftBar Fname={profile.firstName} />
@@ -93,12 +94,25 @@ const Profile = () => {
             <span className='text-sm'>Your Gender</span>
             <div className='flex space-x-5 p-3'>
               <div className='space-x-2'>
-                <input type={'radio'} name='Gender' defaultChecked={profile?.Gender == 'Male' ? true : false} value={'Male'} onChange={(e) => setGender(e.target.value)} />
-                <label>Male</label>
+                {
+                  profile && (
+                    <>
+                      <input type={'radio'} name='Gender' defaultChecked={profile.Gender == 'Male' ? true : false} value={'Male'} onChange={(e) => setGender(e.target.value)} />
+                      <label>Male</label>
+                    </>
+                  )
+                }
+
               </div>
               <div className='space-x-2'>
-                <input type={'radio'} name='Gender' defaultChecked={profile?.Gender == 'Female' ? true : false} value={'Female'} onChange={(e) => setGender(e.target.value)} />
-                <label>Female</label>
+                {
+                  profile && (
+                    <>
+                      <input type={'radio'} name='Gender' defaultChecked={profile.Gender == 'Female' ? true : false} value={'Female'} onChange={(e) => setGender(e.target.value)} />
+                      <label>Female</label>
+                    </>
+                  )
+                }
               </div>
             </div>
           </div>
