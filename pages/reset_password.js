@@ -58,7 +58,7 @@ const Reset_password = () => {
                     </div>
                     <div className='relative'>
                         <button type="submit" onClick={RESET}
-                            className='bg-green-500 w-full p-2 rounded-md font-medium text-white shadow-2xl hover:bg-green-600'>Chage</button>
+                            className='bg-green-500 w-full p-2 rounded-md font-medium text-white shadow-2xl hover:bg-green-600'>Change Password</button>
                     </div>
                 </div>
             </form>
