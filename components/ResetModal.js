@@ -20,7 +20,7 @@ const ResetModal = ({ setShowReset, OTP,LEmail }) => {
                 localStorage.setItem('token', res.data.token);
                 localStorage.setItem('userAAU', res.data.user);
                 toast.success('Welcome ' + res.data.user.split('@')[0]);
-                route.push('/');
+                route.push('/reset_password');
                 //setLoginStatus(true)
             }
         }).catch((e) => {

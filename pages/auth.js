@@ -97,7 +97,7 @@ const Auth = () => {
     const resetPassword = () => {
         if (LEmail && LEmail.includes('@')) {
             setLoder(true)
-            axios.post('https://AAUMartBackend.pratikvansh.repl.co/api/user/reset', { email: LEmail }).then((res) => {
+            axios.post('https://AAUMartBackend.pratikvansh.repl.co/api/user/resrt', { email: LEmail }).then((res) => {
                 if (res.data.msg) {
                     setOTP(res.data.OTP);
                     // form.current.innerHTML += `<input id='otp' type="hidden" value=${res.data.OTP} name="message"/>`;
