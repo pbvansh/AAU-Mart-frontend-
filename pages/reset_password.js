@@ -7,7 +7,7 @@ import JWT from 'jsonwebtoken'
 import { useRouter } from "next/router";
 toast.configure()
 
-const reset_password = () => {
+const Reset_password = () => {
     const [password, setPassword] = useState(null)
     const [Cpassword, setCPassword] = useState(null)
     const [loder, setLoder] = useState(false)
@@ -67,4 +67,4 @@ const reset_password = () => {
     )
 }
 
-export default reset_password
+export default Reset_password
