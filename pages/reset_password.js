@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import JWT from 'jsonwebtoken'
 import { useRouter } from "next/router";
+import Loader from "../components/Loader";
 toast.configure()
 
 const Reset_password = () => {
@@ -20,15 +21,18 @@ const Reset_password = () => {
             } else if (password.length < 6) {
                 toast.warning("you have to enter at least 6 digit!", { autoClose: 2000 });
             } else {
+                setLoder(true)
                 const { userEmail } = JWT.decode(localStorage.getItem('token'))
                 axios.post('https://AAUMartBackend.pratikvansh.repl.co/api/user/changePassword', {
                     email: userEmail,
                     password
                 },setHeader()).then((res) => {
                     if (res.data.done) {
+                        setLoder(false)
                         toast.success(res.data.msg, { autoClose: 1500 })
                         route.push('/')
                     } else {
+                        setLoder(false)
                         toast.warning(res.data.msg, { autoClose: 1500 })
                     }
                 })
